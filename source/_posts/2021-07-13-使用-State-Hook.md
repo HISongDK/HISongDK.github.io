@@ -6,6 +6,18 @@ tags:
 
 ## 使用 State Hook
 
+- [使用 State Hook](#使用-state-hook)
+  - [等价的 class 示例](#等价的-class-示例)
+  - [Hook 和 函数组件](#hook-和-函数组件)
+  - [Hook 是什么](#hook-是什么)
+  - [声明 state 变量](#声明-state-变量)
+  - [读取 state](#读取-state)
+  - [更新 State](#更新-state)
+  - [总结](#总结)
+  - [提示：方括号有什么用？](#提示方括号有什么用)
+  - [提示：使用多个 state 变量](#提示使用多个-state-变量)
+  - [下一步](#下一步)
+
 *Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。*
 
 Hook 简介章节中使用了下面的例子介绍了 Hook：
@@ -214,4 +226,47 @@ const [count,setCount] = useState(0)
 const [fruit ,setFruit]=useState('apple')
 ```
 
-这种 JavaScript 语法叫 *数组解构* 它意味着
+这种 JavaScript 语法叫 *数组解构* 它意味着我们同时创建了 fruit 和 setFruit 两个变量，fruit 的值为 useState 返回的第一个值， setFruit 是返回的第二个值。它等价于下面的代码：
+
+```js
+var fruitStateVariable = useState('banana') // 返回一个有两个元素的数组
+var fruit = fruitStateVariable[0] // 数组的第一个值
+var setFruit = fruitStateVariable[1] // 数组里的第二个值
+```
+
+当我们使用 useState 定义 state 变量时候，它返回一个有两个值的数组。第一个值是当前的 state ，第二个值是更新 state 的函数。使用 [0] 和 [1] 来访问有点令人困惑，因为他们有特定的含义。这就是我们使用数组结构的原因。
+
+**`注意： 你可能会好奇 React 怎么知道 useState 对应的是哪个组件，因为我们并没有传递 this 给 React。 我们将在 FAQ 部分回到这个问题以及许多其他问题。`**
+
+### 提示：使用多个 state 变量
+
+将 state 变量声明为一对 [something,setSomething] 也很方便，因为如果我们想使用多个 state 变量，它允许我们给不同的 state 变量取不同的名称：
+
+```js
+function ExampleWithManyStates(){
+  const [age,setAge]= useState(42)
+  const [fruit,setFruit]=useState('banana')
+  const [todos,setTodos]=useState([{text:'学习Hook'}])
+}
+```
+
+在以上组件中，我们有局部变量 age ，fruit 和 todos，并且我们可以单独更新它们：
+
+```js
+function handleOrangeClick(){
+  // 和 this.setState({fruit:'orage'}) 类似
+  setFruit('orange')
+}
+```
+
+你不必使用多个 state 变量。State 变量可以很好的存储对象和数组，因此，你仍然可以将相关数据分为一组。然而，不像 class 中的 this。setState，更新 state 变量总是 *替换* 而不是合并它。
+
+我们在 FAQ 中提供了跟多关于分离独立 state 变量的建议。
+
+### 下一步
+
+从上述内容中，我们了解了 React 提供的 useState Hook ，有时候我们也叫它 "State Hook"。他让我们在 React 函数组件上添加内部 state ———— 这是我们首次尝试。
+
+我们还学到了一些只是比如什么是 Hook 。Hook 是能让你在函数组件中“钩入”React 特性的函数。它们名字通常都以 use 开始，还有更多 Hook 等着我们去探索。
+
+先再我们将学习另一个 Hook ： useEffect。它能在函数组件中执行副作用，并且它与 class 中的生命周期函数极为类似。
