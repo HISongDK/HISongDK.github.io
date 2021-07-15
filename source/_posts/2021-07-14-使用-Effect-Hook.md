@@ -6,6 +6,19 @@ tags:
 
 ## 使用 Effect Hook
 
+- [使用 Effect Hook](#使用-effect-hook)
+  - [无需清楚的 effect](#无需清楚的-effect)
+    - [使用 class 的示例](#使用-class-的示例)
+    - [使用 Hook 的示例](#使用-hook-的示例)
+  - [详细说明](#详细说明)
+  - [需要清除的 effect](#需要清除的-effect)
+    - [使用 Class 的示例](#使用-class-的示例-1)
+    - [使用`Hook`的示例](#使用hook的示例)
+  - [小结](#小结)
+  - [使用 Effect 的提示](#使用-effect-的提示)
+    - [提示：使用多个 Effect 实现关注点分离](#提示使用多个-effect-实现关注点分离)
+    - [解释： 为什么每次更新的时候都要运行 Effect](#解释-为什么每次更新的时候都要运行-effect)
+
 _Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。_
 
 _Effect Hook_ 可以让你在函数中执行副作用操作
@@ -252,3 +265,97 @@ effect Hook 使用同一个 API 来满足这两种情况。
 ---
 
 ### 使用 Effect 的提示
+
+在本节中将继续深入了解 useEffect 的某些特性，有经验的 React 使用者可能会对此感兴趣。你不一定要在现在了解他们，你可以随时查看此页面以了解有关 Effect Hook 的更多详细信息。
+
+#### 提示：使用多个 Effect 实现关注点分离
+
+使用 Hook 其中一个目的就是要解决 class 生命周期函数经常包含不相关的逻辑，但又把相关逻辑分离到了几个不同方法中的问题。下述代码是将前述示例中的计数器和好友状态指示器逻辑组合在一起的组件：
+
+```js
+class FriendStatusWithCounter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0, isOnline: null };
+    this.handleStatusChange = this.handleStatusChange.bind(this);
+  }
+
+  componentDidMount() {
+    document.title = `You clicked ${this.state.count} times`;
+    ChatAPI.subscribeToFriendStatus(
+      this.props.friend.id,
+      this.handleStatusChange
+    );
+  }
+
+  componentDidUpdate() {
+    document.title = `You clicked ${this.state.count} times`;
+  }
+
+  componentWillUnmount() {
+    ChatAPI.unsubscribeFromFriendStatus(
+      this.props.friend.id,
+      this.handleStatusChange
+    );
+  }
+
+  handleStatusChange(status) {
+    this.setState({
+      isOnline: status.isOnline
+    });
+  }
+  // ...
+```
+
+可以发现设置 document.title 的逻辑是如何被分割到 componentDidMount 和 componentDidUpdate 中的，订阅逻辑又是如何被分割到 componentDidMount 和 componentWillUnmount 中的。而且 componentDidMount 中同时包含了两个不同功能的代码。
+
+那么 Hook 如何解决这个问题呢？就像你可以使用多个 state 的 Hook 一样，你也可以使用多个 effect 。这会将不相关逻辑分离到不同的 effect 中：
+
+```js
+function FriendStatusWithCounter(props) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+  });
+
+  const [isOnline, setIsOnline] = useState(null);
+  useEffect(() => {
+    function handleStatusChange(status) {
+      setIsOnline(status.isOnline);
+    }
+
+    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+    return () => {
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+    };
+  });
+  // ...
+}
+```
+
+**Hook 允许我们按照代码的用途分离他们，**而不是像生命周期函数那样。React将按照 effect 声明的顺序依次调用组件中的每一个 effect。
+
+#### 解释： 为什么每次更新的时候都要运行 Effect
+
+如果你已经习惯了使用 class ，那么你或许会疑惑为什么 effect 的清除阶段在每次重新渲染时都会执行，而不只在卸载组件的时候执行一次。让我们看一个实际的例子，看看为什么这个设计可以帮助我们创建 bug 更少的组件。
+
+在本章节开始时，我们介绍了一个用于显示好友是否在线的 FriendStatus 组件。从 clas 中 props 读取 friend.id,然后在组件挂载后订阅好友的状态，并在卸载组件的时候取消订阅：
+
+```js
+ componentDidMount() {
+    ChatAPI.subscribeToFriendStatus(
+      this.props.friend.id,
+      this.handleStatusChange
+    );
+  }
+
+  componentWillUnmount() {
+    ChatAPI.unsubscribeFromFriendStatus(
+      this.props.friend.id,
+      this.handleStatusChange
+    );
+  }
+```
+
+**但是当组件已经显示在屏幕上时，friend prop 发生变化时会发生什么？**
+我们的组件将继续展示原来的好友状态。这是一个 bug。
