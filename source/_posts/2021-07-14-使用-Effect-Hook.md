@@ -7,7 +7,7 @@ tags:
 ## 使用 Effect Hook
 
 - [使用 Effect Hook](#使用-effect-hook)
-  - [无需清楚的 effect](#无需清楚的-effect)
+  - [无需清除的 effect](#无需清除的-effect)
     - [使用 class 的示例](#使用-class-的示例)
     - [使用 Hook 的示例](#使用-hook-的示例)
   - [详细说明](#详细说明)
@@ -18,6 +18,8 @@ tags:
   - [使用 Effect 的提示](#使用-effect-的提示)
     - [提示：使用多个 Effect 实现关注点分离](#提示使用多个-effect-实现关注点分离)
     - [解释： 为什么每次更新的时候都要运行 Effect](#解释-为什么每次更新的时候都要运行-effect)
+    - [提示： 通过跳过 Effect 进行性能优化](#提示-通过跳过-effect-进行性能优化)
+  - [下一步](#下一步)
 
 _Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。_
 
@@ -52,7 +54,7 @@ function Example() {
 
 在 React 组件中有两种常见的副作用操作：需要清除的和不需要清除的。我们来更仔细地看一下它们之间的区别。
 
-### 无需清楚的 effect
+### 无需清除的 effect
 
 有时候，我们只想 **在 React 更新 DOM 之后运行一些额外的代码。**比如发送网络请求，手动变更 DOM ，记录日志，这些都是常见的无需清除地操作。因为我们执行完这些操作之后，就可以忽略他们了。让我们对比一下使用 class 和 Hook 都是怎么实现这些副作用的。
 
@@ -101,7 +103,7 @@ class Example extends React.Component {
 我们在本章节开始时已经看到了这个示例，但让我们再仔细观察它：
 
 ```js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function Example() {
   const [count, setCount] = useState(0);
@@ -113,9 +115,7 @@ function Example() {
   return (
     <div>
       <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
     </div>
   );
 }
@@ -141,7 +141,7 @@ function Example() {
 }
 ```
 
-我们声明了 count state 变量，并告诉 React 我们需要使用 effect 。紧接着传递给 useEffect Hook。此函数就是我们的effect。然后使用 document.title 浏览器 API 设置 document的title。我们可以在 effect 中获取到最新的 count 值，因为他在函数的作用域内。当 React 渲染组件时，会保存以使用的 effect，并在更新完 DOM 后执行它。这个过程在每次渲染时都会发生，包括首次渲染。
+我们声明了 count state 变量，并告诉 React 我们需要使用 effect 。紧接着传递给 useEffect Hook。此函数就是我们的 effect。然后使用 document.title 浏览器 API 设置 document 的 title。我们可以在 effect 中获取到最新的 count 值，因为他在函数的作用域内。当 React 渲染组件时，会保存以使用的 effect，并在更新完 DOM 后执行它。这个过程在每次渲染时都会发生，包括首次渲染。
 
 经验丰富的 JavaScript 开发人员可能会注意到，传递给 useEffect 的函数在每次渲染中都会有所不同，这是刻意为之的。事实上这真是我们可以在 effect 中获取最新的 count 的值，而不用担心其过期的原因。每次我们重新渲染，都会生成新的 effect ，替换掉之前的。莫种意义上讲，effect 渲染结果的一部分————每个 effect “属于”一次特定的渲染。我们将在本章节后续部分更清楚地了解这样做的意义。
 
@@ -177,15 +177,15 @@ class FriendStatus extends React.Component {
   }
   handleStatusChange(status) {
     this.setState({
-      isOnline: status.isOnline
+      isOnline: status.isOnline,
     });
   }
 
   render() {
     if (this.state.isOnline === null) {
-      return 'Loading...';
+      return "Loading...";
     }
-    return this.state.isOnline ? 'Online' : 'Offline';
+    return this.state.isOnline ? "Online" : "Offline";
   }
 }
 ```
@@ -196,12 +196,12 @@ class FriendStatus extends React.Component {
 
 #### 使用`Hook`的示例
 
-如何使用 Hook编写这个组件
+如何使用 Hook 编写这个组件
 
 你可能认为需要单独的 effect 来执行清楚操作。但由于添加和删除订阅的代码的紧密性，所以 useEffect 的设计是在同一个地方执行。如果你的 effect 返回一个函数，React 将会在执行清除操作时调用它：
 
 ```js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function FriendStatus(props) {
   const [isOnline, setIsOnline] = useState(null);
@@ -218,9 +218,9 @@ function FriendStatus(props) {
   });
 
   if (isOnline === null) {
-    return 'Loading...';
+    return "Loading...";
   }
-  return isOnline ? 'Online' : 'Offline';
+  return isOnline ? "Online" : "Offline";
 }
 ```
 
@@ -236,23 +236,23 @@ function FriendStatus(props) {
 
 ```js
 useEffect(() => {
-    function handleStatusChange(status) {
-      setIsOnline(status.isOnline);
-    }
+  function handleStatusChange(status) {
+    setIsOnline(status.isOnline);
+  }
 
-    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
-    return () => {
-      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
-    };
-  });
+  ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+  return () => {
+    ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+  };
+});
 ```
 
 其他的 effect 可能不必清除，所以不需要返回。
 
 ```js
-useEffect(()=>{
-  document.title = `You clicked ${count} times`
-})
+useEffect(() => {
+  document.title = `You clicked ${count} times`;
+});
 ```
 
 effect Hook 使用同一个 API 来满足这两种情况。
@@ -262,6 +262,7 @@ effect Hook 使用同一个 API 来满足这两种情况。
 **如果你对 Effect Hook 的机制已经有很好的把握，或者暂时难以消化更多内容，你现在就可以跳转到下一章节学习 Hook 的规则。**
 
 ---
+
 ---
 
 ### 使用 Effect 的提示
@@ -333,7 +334,7 @@ function FriendStatusWithCounter(props) {
 }
 ```
 
-**Hook 允许我们按照代码的用途分离他们，**而不是像生命周期函数那样。React将按照 effect 声明的顺序依次调用组件中的每一个 effect。
+**Hook 允许我们按照代码的用途分离他们，**而不是像生命周期函数那样。React 将按照 effect 声明的顺序依次调用组件中的每一个 effect。
 
 #### 解释： 为什么每次更新的时候都要运行 Effect
 
@@ -358,4 +359,125 @@ function FriendStatusWithCounter(props) {
 ```
 
 **但是当组件已经显示在屏幕上时，friend prop 发生变化时会发生什么？**
-我们的组件将继续展示原来的好友状态。这是一个 bug。
+我们的组件将继续展示原来的好友状态。这是一个 bug。而且我们还会因为取消订阅时使用错误的好友 ID 导致内存泄漏或崩溃的问题。
+
+在 class 组件中，我们需要添加 componentDidUpdate 来解决这个问题：
+
+```js
+componentDidMount(){
+  ChatAPI.subscribeToFriendStatus(
+  this.props.friend.id,
+  this.handleStatusChange
+  );
+}
+componentDidUpdate(prevProps){
+  // 取消订阅之前的 friend.id
+  ChatAPI.unsubscribeFromFriendStatus(
+    prevProps.friend.id,
+    this.handleStatusChange
+  );
+  // 订阅新的 friend.id
+  ChatAPI.subscribeToFriendStatus(
+    this.props.friend.id,
+    this.handleStatusChange
+  );
+}
+componentWillUnmount() {
+  ChatAPI.unsubscribeFromFriendStatus(
+    this.props.friend.id,
+    this.handleStatusChange
+  );
+}
+```
+
+忘记正确地处理 componentDidUpdate 是 React 应用中常见的 bug 来源。
+
+现在看一下使用 Hook 的版本：
+
+```js
+function FriendStatus(props) {
+  // ...
+  useEffect(() => {
+    // ...
+    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+    return () => {
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+    };
+  });
+```
+
+它并不会受到此 bug 影响。（虽然我们并没有对它做任何改动。）
+
+并不需要特定的代码来处理更新逻辑，因为 useEffect *默认*就会处理。它会在调用一个新的 effect 之前对一个 effect 进行清理。为了说明这一点，下面按时间列出一个可能会产生的订阅和取消订阅的调用顺序：
+
+```js
+// Mount with { friend: { id: 100 } } props
+ChatAPI.subscribeToFriendStatus(100, handleStatusChange);     // 运行第一个 effect
+
+// Update with { friend: { id: 200 } } props
+ChatAPI.unsubscribeFromFriendStatus(100, handleStatusChange); // 清除上一个 effect
+ChatAPI.subscribeToFriendStatus(200, handleStatusChange);     // 运行下一个 effect
+
+// Update with { friend: { id: 300 } } props
+ChatAPI.unsubscribeFromFriendStatus(200, handleStatusChange); // 清除上一个 effect
+ChatAPI.subscribeToFriendStatus(300, handleStatusChange);     // 运行下一个 effect
+
+// Unmount
+ChatAPI.unsubscribeFromFriendStatus(300, handleStatusChange); // 清除最后一个 effect
+```
+
+此默认行为保证了一致性，避免了在 class 组件中因为没有处理更新逻辑而导致常见的 bug。
+
+#### 提示： 通过跳过 Effect 进行性能优化
+
+在某些情况下，每次渲染后都执行清理或者执行 effect 可能会导致性能问题。在 class 组件中，我们可以通过在 componentDidUpdate 中添加对 prevProps 或 prevState 的比较逻辑解决：
+
+```js
+componentDidUpdate(prevProps,prevState){
+  if(prevState.count !== this.state.count){
+    // 虽说没用过但是确实是这么个理
+    // 不过我记得可以使用 PureComponent 自动处理啊
+    // 现在 effect 是添加依赖项数组，自动判断是否执行 effect
+    document.title = `You clicked ${this.state.count} times`;
+  }
+}
+```
+
+这是很常见的需求，所以它被内置到了 useEffect 的 Hook API 中。如果某些特定值在两次重渲染之间没有发生变化，你可以通知 React **跳过** effect 的调用，只要传递数组作为 useEffect 的第二个可选参数即可：
+
+```js
+useEffect(()=>{
+  document.title = `You clicked ${count} times`
+},[count]) // 仅在 count 更改时执行
+```
+
+上面这个示例中，我们传入 [count] 作为第二个参数。这个参数是什么作用呢？如果 count 的值是 5 ，而且我们的组件重渲染的时候 count 还是等于 5 ，React 将对前一次渲染的 [5] 进行比较。因为数组中的所有元素都是相等的（5 === 5），React 会跳过这个 effect ，这就实现了性能的优化。
+
+当渲染时，如果 count 的值更新成了 6 , React 将会把前一次渲染时的数组 [5] 和这次渲染的数组 [6] 中的元素进行对比。这次因为 5 !== 6, react 就会再次调用 effect 。**如果数组中有多个元素,即使只有一个元素发生变化，React 也会执行 effect。**
+
+对于有清除操作的 effect 同样适用：
+
+```js
+useEffect(() => {
+  function handleStatusChange(status) {
+    setIsOnline(status.isOnline);
+  }
+
+  ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+  return () => {
+    ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+  };
+}, [props.friend.id]); // 仅在 props.friend.id 发生变化时，重新订阅
+```
+
+未来版本，可能会在构建时自动添加第二个参数。
+
+**`注意： 如果你要使用此优化方式，请确保数组中包含了【所有外部作用域中会随时间变化并且在 effect 中使用的变量】，否则你的代码会引用到先前渲染中的旧变量。参阅文档，了解更多关于如何处理函数以及数组频繁变化时的措施内容。    如果想执行只运行一次的 effect （仅在组件挂载和卸载时执行），可以传递一个空数组（[])作为第二个参数。这就是告诉 React 你的 effect 不依赖于 props 或 staet 中的任何值，所以它永远不需要重复执行。这并不属于特殊情况————它依然遵循依赖数组的工作方式。   如果你传入了一个空数组（[]),effect 内部的 props 和 state 就会一直拥有其初始值。尽管传入[]作为第二个参数更接近大家更熟悉的 componentDidMount 和 componentWillUnmount 思维模式，但我们有更好的方式来避免过于频繁的重复调用 effect 。除此之外，请记得 React 会等待浏览器完成画面渲染之后才会延迟调用 useEffect ，因此会使得额外操作很方便。    我们推荐启用 eslint-plugin-react-hooks 中的 exhaustive-deps 规则。此规则会在添加错误依赖时发出警告并给出修复建议。`**
+
+### 下一步
+
+恭喜你！完成本章的学习，希望关于 effect 的大多数问题都得到了解答。你已经学习了 State Hook 和 Effect Hook ，将它们结合起来你可以做很多事情了。他们涵盖了大多数使用 class 的用例————如果没有，你可以查看其他的 Hook 。
+
+我们看到了 Hook 如何解决简介章节中动机部分提出的问题。我们也发现 effect 的清除机制可以避免 componentDidUpdate 和 componentWillUnmount 中的重复，同时让相关的代码关联更加紧密，帮助我们避免一些 bug 。我们还看到了我们如何根据 effect 的功能分隔它们，这是在 class 中无法做到的。
+
+此时你可能会好奇 Hook 是如何工作的。在两次渲染间，React 如何知道哪个 useState 调用对应于哪个 state 变量？ React 又是如何匹配前后两次渲染中的每一个 effect 的？**在下一章节中我们会学习使用 Hook 的规则————这对 Hook 的工作至关重要。**
