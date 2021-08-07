@@ -15,6 +15,7 @@ tags:
 		- [与标准同步发展](#与标准同步发展)
 	- [总结](#总结)
 	- [附：TypeScript 的发展历史](#附typescript-的发展历史)
+<!-- more -->
 
 ## 什么是 TypeScript
 

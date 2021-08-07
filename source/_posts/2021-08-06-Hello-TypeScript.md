@@ -16,6 +16,7 @@ function sayHello(person: string){
 let user = 'Tom'
 console.log(sayHello(user))
 ```
+<!-- more -->
 
 然后执行
 `tsc hello.ts`
