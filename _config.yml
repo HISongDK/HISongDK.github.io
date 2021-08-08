@@ -111,3 +111,15 @@ deploy:
 # markdown 支持脚注插件
 plugins:
   - hexo-footnotes
+
+# 文章篇数
+# index_generator:
+  # per_page: 5
+
+archive_generator:
+  per_page: 150
+  yearly: true
+  monthly: true
+
+tag_generator:
+  per_page: 10
