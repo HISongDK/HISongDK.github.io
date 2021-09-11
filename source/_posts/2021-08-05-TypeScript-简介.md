@@ -6,15 +6,7 @@ tags:
 
 本部分介绍了在学习 TypeScript 之前都需要了解的知识，具体内容包括：
 
-- [什么是 TypeScript](#什么是-typescript)
-	- [TypeScript 的特性](#typescript-的特性)
-		- [类型系统](#类型系统)
-			- [TypeScript 是静态类型](#typescript-是静态类型)
-			- [TypeScript 是弱类型](#typescript-是弱类型)
-		- [适用于任何规模](#适用于任何规模)
-		- [与标准同步发展](#与标准同步发展)
-	- [总结](#总结)
-	- [附：TypeScript 的发展历史](#附typescript-的发展历史)
+- [什么是 TypeScript](#什么是-typescript) - [TypeScript 的特性](#typescript-的特性) - [类型系统](#类型系统) - [TypeScript 是静态类型](#typescript-是静态类型) - [TypeScript 是弱类型](#typescript-是弱类型) - [适用于任何规模](#适用于任何规模) - [与标准同步发展](#与标准同步发展) - [总结](#总结) - [附：TypeScript 的发展历史](#附typescript-的发展历史)
 <!-- more -->
 
 ## 什么是 TypeScript
@@ -58,8 +50,8 @@ foo.split(' ')
 静态类型是指在编译阶段就能确定每个变量的类型，这种语言的类型错误往往会导致语法错误。TypeScript 在运行前需要先编译为 JavaScript，而在编译阶段就会进行类型检查，所以 TypeScript 是静态类型，这段 TypeScript 代码在编译阶段就会报错了：
 
 ```js
-let foo = 1;
-foo.split(' ');
+let foo = 1
+foo.split(' ')
 // Property 'split' does not exist on type 'number'.
 // 编译时报错（数字没有 split 方法），无法通过编译
 ```
@@ -71,8 +63,8 @@ foo.split(' ');
 完整 TypeScript 代码是这样的：
 
 ```js
-let foo: number = 1;
-foo.split(' ');
+let foo: number = 1
+foo.split(' ')
 // Property 'split' does not exist on type 'number'
 // 编译时会报错（数字没有 split 方法），无法通过编译
 ```
