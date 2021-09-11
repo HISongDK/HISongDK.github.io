@@ -29,7 +29,7 @@ TypeScript 虽然有 官方手册 及其非官方中文版，但是它每一章�
 
 ## 关于 TypeScript
 
-TypeScript 是 JavaScript 的一个超集，主要提供了 **类型系统** 和 **对ES6的支持**，它由 Microsoft 开发，代码开源于 GitHub 上。
+TypeScript 是 JavaScript 的一个超集，主要提供了 **类型系统** 和 **对 ES6 的支持**，它由 Microsoft 开发，代码开源于 GitHub 上。
 
 它的第一个版本发布于 2012 年 10 月，经历了多次更新后，现在已成为前端社区中不可忽视的力量，不仅在 Microsoft 内部得到广泛运用，而且 Google 开发的 Angular 从 2.0 开始就使用了 TypeScript 作为开发语言， Vue 3.0 也使用 TypeScript 进行了重构。
 
@@ -37,7 +37,7 @@ TypeScript 是 JavaScript 的一个超集，主要提供了 **类型系统** 和
 
 本书适合以下人群
 
-- 熟悉 JavaScript，至少阅读过一遍《JavaScript高级程序设计》
+- 熟悉 JavaScript，至少阅读过一遍《JavaScript 高级程序设计》
 - 了解 ES6，推荐阅读 ECMAScript6 入门
 - 了解 Node.js,会用 npm 安装及使用一些工具
 - 想了解 TypeScript 或者想对 TypeScript 有更深的理解

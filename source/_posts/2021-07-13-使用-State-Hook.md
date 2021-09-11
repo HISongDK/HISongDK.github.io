@@ -18,26 +18,25 @@ tags:
   - [提示：使用多个 state 变量](#提示使用多个-state-变量)
   - [下一步](#下一步)
 
-*Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。*
+_Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。_
 
 Hook 简介章节中使用了下面的例子介绍了 Hook：
+
 <!-- more -->
 
 ```js
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 function Example() {
   // 声明一个叫 "count" 的 state 变量
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   return (
     <div>
       <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
     </div>
-  );
+  )
 }
 ```
 
@@ -74,22 +73,22 @@ state 初始值为 { count: 0 },当用户点击按钮后，我们通过调用 th
 复习一下，React 的函数组件是这样的：
 
 ```js
-const Example = (props) =>{
- // 你可以在这使用 Hook 
- return <div/>
+const Example = (props) => {
+  // 你可以在这使用 Hook
+  return <div />
 }
 ```
 
 或是这样的：
 
 ```js
-function Example(props){
- // 你可以在这使用 Hook
- return <div/>
+function Example(props) {
+  // 你可以在这使用 Hook
+  return <div />
 }
 ```
 
-你之前可能把他们叫做 *无状态组件* 。但现在我们为它们引入了使用 React state 的能力，所以我们更喜欢叫他 *函数组件* 。
+你之前可能把他们叫做 _无状态组件_ 。但现在我们为它们引入了使用 React state 的能力，所以我们更喜欢叫他 _函数组件_ 。
 
 Hook 在 class 内部是不起作用的。但是你可以使用他们来取代 class 。
 
@@ -173,15 +172,17 @@ React 会在重复渲染的时候记住他们当前的值，并且提供最新�
 在 class 中，我们需要调用 `this.setState()` 来更新 count 值：
 
 ```js
-  <button onClick={() => this.setState({ count: this.state.count + 1 })}>
-    Click me
-  </button>
+<button onClick={() => this.setState({ count: this.state.count + 1 })}>
+  Click me
+</button>
 ```
 
 在函数中，我们已经有了 setCount 和 count 变量，我们不需要 this：
 
 ```js
-<button> onClick={()=>setCount(count+1)}
+<button>
+  {' '}
+  onClick={() => setCount(count + 1)}
   Click me
 </button>
 ```
@@ -218,16 +219,16 @@ React 会在重复渲染的时候记住他们当前的值，并且提供最新�
 你可能注意到我们用方括号定义了一个 state 变量
 
 ```js
-const [count,setCount] = useState(0)
+const [count, setCount] = useState(0)
 ```
 
 等号左边名字并不是 React API 的部分，你可以自己取名字：
 
 ```js
-const [fruit ,setFruit]=useState('apple')
+const [fruit, setFruit] = useState('apple')
 ```
 
-这种 JavaScript 语法叫 *数组解构* 它意味着我们同时创建了 fruit 和 setFruit 两个变量，fruit 的值为 useState 返回的第一个值， setFruit 是返回的第二个值。它等价于下面的代码：
+这种 JavaScript 语法叫 _数组解构_ 它意味着我们同时创建了 fruit 和 setFruit 两个变量，fruit 的值为 useState 返回的第一个值， setFruit 是返回的第二个值。它等价于下面的代码：
 
 ```js
 var fruitStateVariable = useState('banana') // 返回一个有两个元素的数组
@@ -244,23 +245,23 @@ var setFruit = fruitStateVariable[1] // 数组里的第二个值
 将 state 变量声明为一对 [something,setSomething] 也很方便，因为如果我们想使用多个 state 变量，它允许我们给不同的 state 变量取不同的名称：
 
 ```js
-function ExampleWithManyStates(){
-  const [age,setAge]= useState(42)
-  const [fruit,setFruit]=useState('banana')
-  const [todos,setTodos]=useState([{text:'学习Hook'}])
+function ExampleWithManyStates() {
+  const [age, setAge] = useState(42)
+  const [fruit, setFruit] = useState('banana')
+  const [todos, setTodos] = useState([{ text: '学习Hook' }])
 }
 ```
 
 在以上组件中，我们有局部变量 age ，fruit 和 todos，并且我们可以单独更新它们：
 
 ```js
-function handleOrangeClick(){
+function handleOrangeClick() {
   // 和 this.setState({fruit:'orage'}) 类似
   setFruit('orange')
 }
 ```
 
-你不必使用多个 state 变量。State 变量可以很好的存储对象和数组，因此，你仍然可以将相关数据分为一组。然而，不像 class 中的 this。setState，更新 state 变量总是 *替换* 而不是合并它。
+你不必使用多个 state 变量。State 变量可以很好的存储对象和数组，因此，你仍然可以将相关数据分为一组。然而，不像 class 中的 this。setState，更新 state 变量总是 _替换_ 而不是合并它。
 
 我们在 FAQ 中提供了跟多关于分离独立 state 变量的建议。
 

@@ -9,13 +9,14 @@ tags:
 将以下代码复制到 `hello.ts` 中：
 
 ```ts
-function sayHello(person: string){
-  return 'Hello, ' + person;
+function sayHello(person: string) {
+  return 'Hello, ' + person
 }
 
 let user = 'Tom'
 console.log(sayHello(user))
 ```
+
 <!-- more -->
 
 然后执行
@@ -24,14 +25,14 @@ console.log(sayHello(user))
 这时候会生成一个编译好的文件 `hello.js`:
 
 ```js
-function sayHello(person){
-  return 'Hello, ' + person;
+function sayHello(person) {
+  return 'Hello, ' + person
 }
 var user = 'Tom'
 console.log(sayHello(user))
 ```
 
-在 TypeScript 中，我们使用 ` : ` ，指定变量的类型，` : ` 的前后有没有空格都可以。
+在 TypeScript 中，我们使用 `:` ，指定变量的类型，`:` 的前后有没有空格都可以。
 
 上述例子中，我们使用 : 指定 person 参数的类型为 string。但是编译为 js 之后，并么有什么检查的代码被插入进来。
 
@@ -40,10 +41,10 @@ console.log(sayHello(user))
 如果我们需要保证运行时的参数类型，还是得手动对类型进行判断：
 
 ```ts
-function sayHello(person: string){
-  if(typeof person === 'string'){
-    return 'hello, ' + person;
-  }else{
+function sayHello(person: string) {
+  if (typeof person === 'string') {
+    return 'hello, ' + person
+  } else {
     throw new Error('person is not a string')
   }
 }
@@ -56,11 +57,11 @@ console.log(sayHello(user))
 下面尝试把这段代码编译以下：
 
 ```ts
-function sayHello(person: string){
+function sayHello(person: string) {
   return 'Hello, ' + person
 }
 
-let user = [0,1,2]
+let user = [0, 1, 2]
 console.log(sayHello(user))
 ```
 
@@ -71,10 +72,10 @@ console.log(sayHello(user))
 但是还是生成了 js 文件：
 
 ```js
-function sayHello(person){
-  return 'Hello, ' + person;
+function sayHello(person) {
+  return 'Hello, ' + person
 }
-var user = [0,1,2]
+var user = [0, 1, 2]
 console.log(sayHello(user))
 ```
 
