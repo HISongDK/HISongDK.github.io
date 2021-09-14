@@ -1,7 +1,7 @@
 ---
 title: Hello TypeScript
 date: 2021-08-06 00:16:52
-tags:
+tags: TypeScript
 ---
 
 我们从一个简单的例子开始。
