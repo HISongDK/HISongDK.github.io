@@ -1,7 +1,8 @@
 ---
 title: TypeScript 简介
 date: 2021-08-05 12:59:37
-tags:
+tags: TypeScript
+categories: TypeScript
 ---
 
 本部分介绍了在学习 TypeScript 之前都需要了解的知识，具体内容包括：
