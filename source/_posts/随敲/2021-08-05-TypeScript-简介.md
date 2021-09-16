@@ -2,12 +2,22 @@
 title: TypeScript 简介
 date: 2021-08-05 12:59:37
 tags: TypeScript
-categories: TypeScript
+categories:
+  - [随敲, TypeScript]
+typewrite: TypeScript
 ---
 
 本部分介绍了在学习 TypeScript 之前都需要了解的知识，具体内容包括：
 
-- [什么是 TypeScript](#什么是-typescript) - [TypeScript 的特性](#typescript-的特性) - [类型系统](#类型系统) - [TypeScript 是静态类型](#typescript-是静态类型) - [TypeScript 是弱类型](#typescript-是弱类型) - [适用于任何规模](#适用于任何规模) - [与标准同步发展](#与标准同步发展) - [总结](#总结) - [附：TypeScript 的发展历史](#附typescript-的发展历史)
+- [什么是 TypeScript](#什么是-typescript)
+  - [TypeScript 的特性](#typescript-的特性)
+    - [类型系统](#类型系统)
+      - [TypeScript 是静态类型](#typescript-是静态类型)
+      - [TypeScript 是弱类型](#typescript-是弱类型)
+    - [适用于任何规模](#适用于任何规模)
+    - [与标准同步发展](#与标准同步发展)
+  - [总结](#总结)
+  - [附：TypeScript 的发展历史](#附typescript-的发展历史)
 <!-- more -->
 
 ## 什么是 TypeScript
