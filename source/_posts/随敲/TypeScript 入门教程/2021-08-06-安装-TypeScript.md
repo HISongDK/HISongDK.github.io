@@ -2,6 +2,8 @@
 title: 安装 TypeScript
 date: 2021-08-06 00:06:48
 tags: TypeScript
+categories:
+  - [随敲, TypeScript]
 ---
 
 TypeScript 的命令行工具安装方法如下：

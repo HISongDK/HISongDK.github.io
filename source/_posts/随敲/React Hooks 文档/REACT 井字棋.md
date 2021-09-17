@@ -1,6 +1,8 @@
 ---
 title: REACT 井字棋
-tags:
+date: 2021-07-10
+categories:
+  - [随敲, Hooks]
 ---
 
 - [环境准备](#环境准备)

@@ -1,6 +1,8 @@
 ---
 title: TypeScript 入门教程
 date: 2021-08-04 23:54:34
+categories:
+  - [随敲, TypeScript]
 tags:
 ---
 
