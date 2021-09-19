@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="HOOK 简介Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。 12345678910111213import React, &amp;#123; useState &amp;#125; from &amp;#x27;react&amp;#x27;function Example() &amp;#123;  &#x2F;&#x2F; 声明一个叫做 count 的 sta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React hook">
+<meta property="og:url" content="http://example.com/2021/07/12/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-12-React-hook/index.html">
+<meta property="og:site_name" content="某人写字的地方">
+<meta property="og:description" content="HOOK 简介Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。 12345678910111213import React, &amp;#123; useState &amp;#125; from &amp;#x27;react&amp;#x27;function Example() &amp;#123;  &#x2F;&#x2F; 声明一个叫做 count 的 sta">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-12T14:03:20.000Z">
+<meta property="article:modified_time" content="2021-09-17T15:25:32.472Z">
+<meta property="article:author" content="Somebody">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/07/12/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-12-React-hook/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>React hook | 某人写字的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">某人写字的地方</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-sitemap fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/12/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-12-React-hook/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React hook
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-12 22:03:20" itemprop="dateCreated datePublished" datetime="2021-07-12T22:03:20+08:00">2021-07-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-17 23:25:32" itemprop="dateModified" datetime="2021-09-17T23:25:32+08:00">2021-09-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/Hooks/" itemprop="url" rel="index"><span itemprop="name">Hooks</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="HOOK-简介"><a href="#HOOK-简介" class="headerlink" title="HOOK 简介"></a>HOOK 简介</h2><p><em>Hook</em> 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Example</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 声明一个叫做 count 的 state 变量</span></span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>You clicked &#123;count&#125; times<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount(count + 1)&#125;&gt;Click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>useState</code> 是我们要学习的第一个”Hook”,这个例子是简单的演示，如果不理解也不用担心。</p>
+<a id="more"></a>
+
+<p><strong>你将在下一章正式开始学习 Hook</strong>。这一章节，我们将会解释为什么会在 React 中加入 Hook，以及如何使用 Hook 写出更好的应用。</p>
+<p><strong><code>React 16.8.0 是第一个支持 Hook 的版本。升级时，请注意更新所有的 package，包括 ReactDOM 。 ReactNative 从 0.59 版本开始支持 Hook 。</code></strong></p>
+<h3 id="没有破坏性的改动"><a href="#没有破坏性的改动" class="headerlink" title="没有破坏性的改动"></a>没有破坏性的改动</h3><p>在我们继续之前，请记住 Hook 是：</p>
+<ul>
+<li><strong>完全可选的</strong>。你无须重写任何已有的代码就可以在一些组件中尝试 Hook 。但是如果你不想，你不必现在就去学习或使用 Hook。</li>
+<li><strong>100%向后兼容</strong>。Hook 不包含任何破坏性改动</li>
+<li><strong>现在可用</strong>。Hook 已发布于 v16.8.0</li>
+</ul>
+<p><strong>没有计划从 React 中移除 class</strong>。你可以在本页底部的章节读到更多关于 Hook 的渐进策略。</p>
+<p><strong>Hook 不会影响你对 React 概念的理解。</strong>恰恰相反，Hook 为已知的 React 概念提供了更直接的 API：props，state，context，refs 以及生命周期。稍后我们将看到，Hook 还提供了一种更强大的方式来组合他们。</p>
+<p><strong>如果你不想了解添加 Hook 的具体原因，可以直接跳到下一章节开始学习 Hook！</strong>当然你也可以继续阅读这一章节来了解原因，并且可以学习到如何不重写应用的情况下使用 Hook。</p>
+<h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><p>Hook 解决了我们五年来编写和维护成千上万的组件时遇到的各种各样看起来不相关的问题。无论你正在学习 React，或每天使用，或者更愿意尝试另一个和 React 有相似组件模型的框架，你都可能对这些问题似曾相识。</p>
+<h3 id="在组件之间复用状态逻辑很难"><a href="#在组件之间复用状态逻辑很难" class="headerlink" title="在组件之间复用状态逻辑很难"></a>在组件之间复用状态逻辑很难</h3><p>React 没有提供将可复用性行为”附加”到组件的途径（<strong>例如：把组件连接到 store</strong>）。如果你是用过 React 一段时间，你也许会熟悉一些解决此类问题的方案，比如 <code>render props</code>和<code>高阶组件</code>。但是这类方案需要重新组织你的组件结构，这可能会很麻烦，使你的代码难以理解。如果你在 React DevTools 中观察过 React 应用，你会发现由 providers，consumers，高阶组件，render props 等其他抽象层组成的组件会形成“嵌套地狱”。尽管我们可以在 DevTools 过滤掉它们，但这说明了一个更深层次的问题：<strong>React 需要为共享状态逻辑提供更好的原生途径</strong>。</p>
+<p>你可以使用 Hook 从组件中提取状态逻辑，使得这些逻辑可以单独测试并复用。<strong>Hook 使你在无需修改组件结构的情况下复用状态逻辑</strong>。这使得在组件间或社区内共享 Hook 变得很便捷。</p>
+<p>具体将在自定义 Hook 中对此展开更多的讨论。</p>
+<h3 id="复杂组件变得难以理解"><a href="#复杂组件变得难以理解" class="headerlink" title="复杂组件变得难以理解"></a>复杂组件变得难以理解</h3><p>我们经常维护一些组件，组件起初很简单，但是逐渐会被状态逻辑和副作用充斥。每个生命周期常常包含一些不相关的逻辑。例如，组件经常在 <code>componentDidMount</code> 和 <code>componentDidUpdate</code>中获取数据。但是，同一个<code>componentDidMount</code>中可能也包含很多其它的逻辑，如设置事件监听，而之后需在<code>componentWillUnmount</code>中清除。相互关联且需要对照修改的代码被进行了拆分，而完全不相关的代码却在同一个方法中组合在一起。如此很容易产生 bug ，并且导致逻辑不一致。</p>
+<p>在多数情况下，不可能将组件拆分为更小的粒度，因为状态逻辑无处不在。这也给测试带来了一定挑战。同时，这也是很多人将 React 与状态管理库结合使用的原因之一。但是，这往往会引入很多抽象概念，需要你在不同的文件之间来回切换，使得复用变得更加困难。</p>
+<p>为了解决这个问题，<strong>Hook 将组件中相互关联的部分拆分成更小的函数（比如设置订阅或请求数据）</strong>，而并非强制按照生命周期划分。你还可以使用 reducer 来管理组建的内部状态，使其更加可预测。</p>
+<p>我们将在使用<code>EffectHook</code>中对此展开更多的讨论</p>
+<h3 id="难以理解的-class"><a href="#难以理解的-class" class="headerlink" title="难以理解的 class"></a>难以理解的 class</h3><p>除了代码复用和代码管理会遇到困难外,我们还发现 class 是学习 React 的一大屏障。你必须去理解 JavaScript 中 this 的工作方式，这与其他语言存在巨大的差异。还不能忘记绑定事件处理器。没有稳定的语法提案，这些代码非常冗余。大家可以很好地理解 props，state 和自顶向下的数据流，但对 class 却一筹莫展。即便在有经验的 React 开发者之间，对于函数组件与 class 组件的差异也存在分歧，甚至还要区分两种组件的使用场景。</p>
+<p>另外，React 已经发布五年了，我们希望他能在下一个五年也与时俱进。就像 Svelte,Angular,Glimmer 等其它库展示的那样,组件预编译会带来巨大的潜力。尤其是在它不局限于模板的时候。最近，我们一直在使用 Prepack 来试验 component folding，也取得了初步成效。但是我们发现使用 class 组件会无意中鼓励开发者使用一些让优化措施无效的方案。class 也给目前的工具带来了一些问题。例如，class 不能含好的压缩，并且会使热重载出现不稳定的情况。因此，我们想提供一个使代码更易于优化的 API。</p>
+<p>为了解决这些问题，<strong>Hook 使你在非 class 的情况下可以使用更多的 React 特性</strong>从概念上来讲,React 组件一直更像是函数。而 Hook 则拥抱了函数,同时也没有牺牲 React 的精神原则。Hook 提供了问题的解决方案，无需学习复杂的函数式或响应式的编程技术。</p>
+<h3 id="监禁策略"><a href="#监禁策略" class="headerlink" title="监禁策略"></a>监禁策略</h3><p><strong><code>总结: 没有计划从 React 中移除 class</code></strong></p>
+<p>大部分 React 开发者会专注于开发产品,而没时间关注每一个新 API 的发布。Hook 还很新，也许有更多的示例和教程后，再考虑学习或使用它们也不迟。</p>
+<p>我们也明白向 React 添加新的原生概念的门槛非常高。我们为好奇的读者准备了详细的征求意见文档，在文档中用更多细节深入讨论了我们推进这件事的冬季，也在具体设计决策和相关先进技术上提供了额外的视角。</p>
+<p><strong>最重要的是，Hook 和现有代码可以同时工作，你可以渐进式地使用他们。</strong>不用急着迁移到 Hook。我们建议避免任何”大规模重写”,尤其是对于现有的、复杂的 class 组件。开始“用 Hook 的方式思考”前，需要做一些思维上的转变。按照我们的经验，最好现在新的不复杂的组件中尝试使用 Hook，并确保团队中的每一位成员都能适应。在你尝试使用 Hook 后，欢迎给我们提供反馈，无论好坏。</p>
+<p>我们准备让 Hook 覆盖所有 class 组件的使用场景，但是我们将继续为 class 组件提供支持。在 Facebook，我们有成千上万的组件用 class 书写，我们完全没有重写他们的计划。相反，我们开始在新的代码中同时使用 Hook 和 class 。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/11/2021-07-11-%E5%B0%86%E8%BF%9B%E9%85%92%E6%9D%AF%E8%8E%AB%E5%81%9C/" rel="prev" title="将进酒杯莫停">
+      <i class="fa fa-chevron-left"></i> 将进酒杯莫停
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/13/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-13-Hook-%E6%A6%82%E8%A7%88/" rel="next" title="Hook 概览">
+      Hook 概览 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOOK-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">HOOK 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B2%A1%E6%9C%89%E7%A0%B4%E5%9D%8F%E6%80%A7%E7%9A%84%E6%94%B9%E5%8A%A8"><span class="nav-number">1.1.</span> <span class="nav-text">没有破坏性的改动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%9C%BA"><span class="nav-number">1.2.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E5%A4%8D%E7%94%A8%E7%8A%B6%E6%80%81%E9%80%BB%E8%BE%91%E5%BE%88%E9%9A%BE"><span class="nav-number">1.3.</span> <span class="nav-text">在组件之间复用状态逻辑很难</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E7%BB%84%E4%BB%B6%E5%8F%98%E5%BE%97%E9%9A%BE%E4%BB%A5%E7%90%86%E8%A7%A3"><span class="nav-number">1.4.</span> <span class="nav-text">复杂组件变得难以理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%BE%E4%BB%A5%E7%90%86%E8%A7%A3%E7%9A%84-class"><span class="nav-number">1.5.</span> <span class="nav-text">难以理解的 class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E7%A6%81%E7%AD%96%E7%95%A5"><span class="nav-number">1.6.</span> <span class="nav-text">监禁策略</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Somebody</p>
+  <div class="site-description" itemprop="description">My vegetable has exploded!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Somebody</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Hook API 索引 Hook API 索引 基础 Hook useState 函数式更新 惰性初始 state 跳过 state 更新   useEffect 清除 effect effect 的执行时机 effect 的条件执行     useContext 把如下代码与 Context.Provider 放在一起     额外的 Hook useReducer 指定初始 state 惰性初">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hook API 索引">
+<meta property="og:url" content="http://example.com/2021/07/19/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-19-Hook-API-%E7%B4%A2%E5%BC%95/index.html">
+<meta property="og:site_name" content="某人写字的地方">
+<meta property="og:description" content="Hook API 索引 Hook API 索引 基础 Hook useState 函数式更新 惰性初始 state 跳过 state 更新   useEffect 清除 effect effect 的执行时机 effect 的条件执行     useContext 把如下代码与 Context.Provider 放在一起     额外的 Hook useReducer 指定初始 state 惰性初">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-19T05:05:41.000Z">
+<meta property="article:modified_time" content="2021-09-17T15:24:09.091Z">
+<meta property="article:author" content="Somebody">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/07/19/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-19-Hook-API-%E7%B4%A2%E5%BC%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hook API 索引 | 某人写字的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">某人写字的地方</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-sitemap fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/19/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-19-Hook-API-%E7%B4%A2%E5%BC%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hook API 索引
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-19 13:05:41" itemprop="dateCreated datePublished" datetime="2021-07-19T13:05:41+08:00">2021-07-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-17 23:24:09" itemprop="dateModified" datetime="2021-09-17T23:24:09+08:00">2021-09-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/Hooks/" itemprop="url" rel="index"><span itemprop="name">Hooks</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Hook-API-索引"><a href="#Hook-API-索引" class="headerlink" title="Hook API 索引"></a>Hook API 索引</h2><ul>
+<li><a href="#hook-api-%E7%B4%A2%E5%BC%95">Hook API 索引</a><ul>
+<li><a href="#%E5%9F%BA%E7%A1%80-hook">基础 Hook</a><ul>
+<li><a href="#usestate">useState</a><ul>
+<li><a href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E6%9B%B4%E6%96%B0">函数式更新</a></li>
+<li><a href="#%E6%83%B0%E6%80%A7%E5%88%9D%E5%A7%8B-state">惰性初始 state</a></li>
+<li><a href="#%E8%B7%B3%E8%BF%87-state-%E6%9B%B4%E6%96%B0">跳过 state 更新</a></li>
+</ul>
+</li>
+<li><a href="#useeffect">useEffect</a><ul>
+<li><a href="#%E6%B8%85%E9%99%A4-effect">清除 effect</a></li>
+<li><a href="#effect-%E7%9A%84%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA">effect 的执行时机</a></li>
+<li><a href="#effect-%E7%9A%84%E6%9D%A1%E4%BB%B6%E6%89%A7%E8%A1%8C">effect 的条件执行</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#usecontext">useContext</a><ul>
+<li><a href="#%E6%8A%8A%E5%A6%82%E4%B8%8B%E4%BB%A3%E7%A0%81%E4%B8%8E-contextprovider-%E6%94%BE%E5%9C%A8%E4%B8%80%E8%B5%B7">把如下代码与 Context.Provider 放在一起</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E9%A2%9D%E5%A4%96%E7%9A%84-hook">额外的 Hook</a><ul>
+<li><a href="#usereducer">useReducer</a><ul>
+<li><a href="#%E6%8C%87%E5%AE%9A%E5%88%9D%E5%A7%8B-state">指定初始 state</a></li>
+<li><a href="#%E6%83%B0%E6%80%A7%E5%88%9D%E5%A7%8B%E5%8C%96">惰性初始化</a></li>
+<li><a href="#%E8%B7%B3%E8%BF%87-dispatch">跳过 dispatch</a></li>
+</ul>
+</li>
+<li><a href="#usecallback">useCallback</a></li>
+<li><a href="#usememo">useMemo</a></li>
+<li><a href="#useref">useRef</a></li>
+<li><a href="#useimperativehandle">useImperativeHandle</a></li>
+<li><a href="#uselayouteffect">useLayoutEffect</a></li>
+<li><a href="#usedebugvalue">useDebugValue</a><ul>
+<li><a href="#%E5%BB%B6%E8%BF%9F%E6%A0%BC%E5%BC%8F%E5%8C%96-debug-%E5%80%BC">延迟格式化 debug 值</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><em>Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。</em></p>
+<p>本页面主要描述 React 中内置的 Hook API。</p>
+<p>如果你刚开始接触 Hook，那么可能需要先查阅 Hook 概览。你也可以在 <code>Hooks FAQ</code> 章节中获取有用的信息。</p>
+<a id="more"></a>
+
+<ul>
+<li>基础 Hook<ul>
+<li>useState</li>
+<li>useEffect</li>
+<li>useContext</li>
+</ul>
+</li>
+<li>额外的 Hook<ul>
+<li>useReducer</li>
+<li>useCallback</li>
+<li>useMemo</li>
+<li>useRef</li>
+<li>useImperativeHandle</li>
+<li>useLayoutEffect</li>
+<li>useDebugValue</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="基础-Hook"><a href="#基础-Hook" class="headerlink" title="基础 Hook"></a>基础 Hook</h3><h4 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [state, setState] = useState(initialState)</span><br></pre></td></tr></table></figure>
+<p>返回一个 state，以及更新 state 的函数。</p>
+<p>在初始渲染期间，返回的状态（state）与传入的第一个参数（initialState）值相同。</p>
+<p><code>setState</code>函数用于更新 state。它接收一个新的 state 值并将组件的一次重新渲染加入队列。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setState(newState)</span><br></pre></td></tr></table></figure>
+<p>在后续的重新渲染中，<code>useState</code> 返回的第一个值始终是更新后最新的 state。</p>
+<p><strong><code>注意： React 会确保 setState 函数的标识是稳定的，并且不会再组件重新渲染时发生变化。这就是为什么可以安全地从 useEffect 或 useCallback 的依赖列表中省略 setState。</code></strong></p>
+<h5 id="函数式更新"><a href="#函数式更新" class="headerlink" title="函数式更新"></a>函数式更新</h5><p>如果新的 state 需要通过使用先前的计算得出，那么可以将函数传递给 <code>setState</code>。该函数将接收先前的 state，并返回一个更新后的值。下面的计数器组件示例展示了 <code>setState</code> 的两种用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params">&#123; initialCount &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(initialCount)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">      Count: &#123;count&#125;</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount(initialCount)&#125;&gt;Reset<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount((prevCount) =&gt; prevCount - 1)&#125;&gt;-<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount((prevCount) =&gt; prevCount + 1)&#125;&gt;+<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“ + “ 和 “ - “ 按钮采用函数式形式，因为被更新地 state 需要基于之前的 state 。但是”重置”按钮则采用普通形式，因为它总是把 count 设置会初始值。</p>
+<p>如果你地更新函数返回值与当前 state 完全相同，则随后地重新渲染会被完全跳过。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">注意： 与 <span class="class"><span class="keyword">class</span> 组件中的 <span class="title">setState</span> 方法不同， <span class="title">useState</span> 不会自动合并更新对象。你可以用函数式的 <span class="title">setState</span> 结合展开运算符来达</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">const</span> [<span class="title">state</span>,<span class="title">setState</span>] </span>= useState(&#123;&#125;)</span><br><span class="line">setState(<span class="function"><span class="params">prevState</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">// 也可以使用 Object.assign</span></span><br><span class="line">  <span class="keyword">return</span> &#123;...prevState,...updateValues&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">useReducer 是另一种可选方案，它更适用于管理包含多个子值的 state 对象。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="惰性初始-state"><a href="#惰性初始-state" class="headerlink" title="惰性初始 state"></a>惰性初始 state</h5><p><code>initialState</code> 参数只在组件的初始渲染中起作用，后续渲染时会被忽略。如果初始 state 需要通过复杂的计算获得，则可以传入一个函数，在函数中计算并返回初始的 state ，此函数只在初始渲染时被调用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [state, setState] = useState(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> initialState = someExpensiveComputation(props)</span><br><span class="line">  <span class="keyword">return</span> initialState</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h5 id="跳过-state-更新"><a href="#跳过-state-更新" class="headerlink" title="跳过 state 更新"></a>跳过 state 更新</h5><p>调用 State Hook 的更新函数并传入当前的 state 时，React 将跳过自组建的渲染及 effect 的执行。（React 使用 Object.is 比较算法 来比较 state 。）</p>
+<p>需要注意的是，React 可能仍需要在跳过渲染前渲染该组件。不过由于 React 不会对组件树的 “深层” 节点进行不必要的渲染，所以大可不必担心。如果你在渲染期间执行了高开销的计算，则可以使用 <code>useMemo</code> 来进行优化。</p>
+<h4 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useEffect(didUpdate)</span><br></pre></td></tr></table></figure>
+<p>该 Hook 接受一个包含命令式、且可能有副作用代码的函数。</p>
+<p>在函数组件主体内（这里指在 React 渲染阶段）改变 DOM、添加订阅、设置定时器、记录日志以及执行其他包含副作用的操作都是不被允许的，因为这可能会产生莫名其妙的 bug 并破坏 UI 的一致性。</p>
+<p>使用 <code>useEffect</code> 完成副作用操作。赋值给 useEffect 的函数会在组件渲染到屏幕之后执行。你可以把 effect 看作从 React 的<strong>纯函数式世界通往命令式世界的逃生通道。</strong></p>
+<p><strong>默认情况下，effect 将在每轮渲染结束后执行，但你可以选择让它在只有某些值改变的时候才执行。</strong></p>
+<h5 id="清除-effect"><a href="#清除-effect" class="headerlink" title="清除 effect"></a>清除 effect</h5><p>通常，组件卸载时需要清除 effect 创建的诸如订阅或计时器 ID 等资源。 要实现这一点，<code>useEffect</code> 函数需要返回一个清除函数。以下就是一个创建订阅的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> subscription = props.source.subscribe()</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 清除订阅</span></span><br><span class="line">    subscription.unsubscribe()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>为防止内存泄漏，清楚函数会在组件卸载前执行。另外，如果组件多次渲染（通常如此），则 <strong>在执行下一个 effect 之前，上一个 effect 就已经被清除了。</strong>在上述示例中，意味着组件的每一次更新都会创建新的订阅。若想避免每次更新都出发 effect 的执行，请参阅下一小节。</p>
+<h5 id="effect-的执行时机"><a href="#effect-的执行时机" class="headerlink" title="effect 的执行时机"></a>effect 的执行时机</h5><p>与 <code>componentDidMount</code>、<code>componentDidUpdate</code> 不同的是，传给 useEffect 的函数会在浏览器完成布局与绘制之后，在一个延迟事件中被调用。这使得它适用于许多常见的的副作用场景，不如设置订阅和事件处理等情况，因为绝大多数操作不应阻塞浏览器对屏幕的更新。</p>
+<p>然而，并非所有 effect 都可以被延迟执行。例如，一个对用户可见的 DOM 变更就必须在浏览器执行下一次绘制前被同步执行，这样用户才不会感觉到视觉上的不一致。（概念上类似于被动监听事件和主动监听事件的区别。）React 为此提供了一个额外的 <code>useLayoutEffect</code> Hook 来处理这类 effect。它和 useEffect 的结构相同，区别只是调用的时机不同。</p>
+<p>虽然 <code>useEffect</code> 会在浏览器会滞后延迟执行，但会保证在任何新的渲染前执行。再开始新的更新前，react 总会先清除上一轮渲染的 effect。</p>
+<h5 id="effect-的条件执行"><a href="#effect-的条件执行" class="headerlink" title="effect 的条件执行"></a>effect 的条件执行</h5><p>默认情况下，effect 会在每轮组件渲染完成后执行。这样的话，一旦 effect 的依赖发生变化，它就会被重新创建。</p>
+<p>然而，在某些场景下这么做可能会矫枉过正。比如，在上一章节的订阅示例中，我们不需要在每次组件更新时都创建新的订阅，而是仅需要在 source prop 改变的时候重新创建。</p>
+<p>要实现这一点，可以给 useEffect 传递第二个参数，它是 effect 所依赖的值数组。更新后的示例如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> subscription = props.source.subscribe()</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    subscription.unsubscribe()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, [props.source])</span><br></pre></td></tr></table></figure>
+<p>此时，只有当 props.source 改变后才会重新创建订阅。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">注意：</span><br><span class="line">如果你要使用此优化方式，请确保数组中包含了 所有外部作用域中会发生变化且在 effect 中使用到的变量， 否则你的代码会引用到先前渲染中的旧变量。请参阅文档，了解更多关于如何处理函数以及数组频繁变化时的措施的内容。</span><br><span class="line"></span><br><span class="line">如果想只执行一次的 effect (仅在组件挂载和卸载时执行)，可以传递一个空数组（[]）作为第二个参数。这就告诉 React 你的 effect 不依赖于 props 或 state 中的任何值，所以他永远都不需要重复执行。这并不属于特殊情况————它依然遵循数组的工作方式。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">如果你传入了一个空数组（ [] ),effect 内部的 props 和 state 就会一直持有其初始值。尽管传入 [] 作为第二个参数有点类似于 componentDidMount 和 componentWillUnmount 的思维模式，但我们有更好的方法来避免与频繁的重复调用 effect 。除此之外，请记得 React 会等待浏览器完成画面渲染之后才会延迟调用 useEffect ，因此会使得处理额外操作很方便。</span><br><span class="line"></span><br><span class="line">我们推荐启用 eslint-plugin-react-hooks 中的 exhaustive-deps 规则。此规则会在添加错误依赖时发出警告并给出修复建议。</span><br></pre></td></tr></table></figure>
+<p>依赖项数组不会作为参数传给 effect 函数。虽然从概念上来说它表现为：所有 effect 函数中引用的值都应该出现在依赖项数组中。未来编译器会更加智能，届时自动创建数组将成为可能。</p>
+<h3 id="useContext"><a href="#useContext" class="headerlink" title="useContext"></a>useContext</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> value = useContext(MyContext)</span><br></pre></td></tr></table></figure>
+<p>接收一个 context 对象（React.createContext 的返回值）并返回该 context 的当前值。当前的 context 值由上层组件中距离当前组件最近的 <code>&lt;MyContext.Provideer&gt;</code> 的 value prop 决定。</p>
+<p>当组件上层最近的<code>&lt;MyContext.Provideer&gt;</code> 更新时，该 Hook 会触发重渲染，并使用最新传递给 <code>MyContext</code> provider 的 context value 值。即使祖先使用 <code>React.memo</code> 或 <code>shouldConponentUpdate</code>，也会在组件本身使用 <code>useContext</code> 时重新渲染。</p>
+<p>别忘记 <code>useContext</code> 的参数必须是 <em>context</em> 对象本身:</p>
+<ul>
+<li>正确：<code>useContext(MyContet）</code></li>
+<li>错误：<code>useContext(MyContet.Consumer）</code></li>
+<li>错误：<code>useContext(MyContet.Provider）</code></li>
+</ul>
+<p>调用了 <code>useContext</code>的组件总会在 context 值变化时重新渲染。如果重渲染组件的开销太大，你可以通过使用 <code>memoization</code> 来优化。</p>
+<p><strong><code>提示： 如果你在接触 Hook 前已经对 contextAPI 比较熟悉，那应该可以理解，useContext(MyContext) 相当于 class 组件中的 static contextType = MyContext 或者 &lt;MyContext.Consumer&gt;。 useContext(MyContext) 只是让你能够读取 context 的值已经订阅 context 的变化。你仍然需要在上层组件树中使用&lt;MyContext.Provide&gt; 来为下层组件提供 context 。</code></strong></p>
+<h4 id="把如下代码与-Context-Provider-放在一起"><a href="#把如下代码与-Context-Provider-放在一起" class="headerlink" title="把如下代码与 Context.Provider 放在一起"></a>把如下代码与 Context.Provider 放在一起</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> themes = &#123;</span><br><span class="line">  <span class="attr">light</span>:&#123;</span><br><span class="line">    <span class="attr">foreground</span>:<span class="string">&#x27;#000&#x27;</span>,</span><br><span class="line">    <span class="attr">background</span>:<span class="string">&#x27;#eee&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">dark</span>:&#123;</span><br><span class="line">    <span class="attr">foreground</span>:<span class="string">&#x27;#fff&#x27;</span>,</span><br><span class="line">    <span class="attr">background</span>:<span class="string">&#x27;#222&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ThemeContext = React.createContext(themes.light);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;ThemeContext.Provider value=&#123;themes.dark&#125;&gt;</span><br><span class="line">      &lt;Toolbar&gt;</span><br><span class="line">    &lt;/ThemeContext.Provider&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function Toobar(props)  &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;ThemedButton&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function ThemedButton()&#123;</span><br><span class="line">  const theme = useContext(ThemeContext)</span><br><span class="line"></span><br><span class="line">  return(</span><br><span class="line">    &lt;button style=&#123;&#123;background:theme.backgroudn,color:theme.foreground&#125;&#125;&gt;</span><br><span class="line">      I am styled by theme context!</span><br><span class="line">    &lt;/button&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对先前 <a target="_blank" rel="noopener" href="https://react.docschina.org/docs/context.html">Context 高级指引</a>中的示例使用 hook 进行了修改，你可以在链接中找到有关如何 Context 的更对信息。</p>
+<h2 id="额外的-Hook"><a href="#额外的-Hook" class="headerlink" title="额外的 Hook"></a>额外的 Hook</h2><p>已下介绍的 Hook ，有些上上一节中基础 Hook 的变体，有些则是仅在特殊情况下会用到。不用特意预先学习它们。<!--听你的--></p>
+<h3 id="useReducer"><a href="#useReducer" class="headerlink" title="useReducer"></a>useReducer</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [state, dispatch] = useReducer(reducer, initialArg, init)</span><br></pre></td></tr></table></figure>
+<p><code>useState</code> 的代替方案。它接收一个形如（state，action）=&gt; newState 的 reducer，并返回当前的 state 以及与其配套的 dispatch 方法。（如果你熟悉 Redux 的话，就已经知道它如何工作了。）</p>
+<p>在某些场景下，useReducer 会比 useState 更适用，例如 state 逻辑较复杂且包含多个子值，或者下一个 state 依赖于之前的 state 等。并且，使用 useReducer 还能给那些触发深更新的组件做性能优化，因为你可以向子组件传递 dispatch 而不是回调函数。</p>
+<p>以下是用 reducer 重写 useState 一节的计数器示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> initialState = &#123; <span class="attr">count</span>: <span class="number">0</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reducer</span>(<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;increment&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">count</span>: state.count + <span class="number">1</span> &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;decrement&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">count</span>: state.count - <span class="number">1</span> &#125;</span><br><span class="line">    <span class="attr">default</span>:</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [state, dispatch] = useReducer(reducer, initialState)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">      Count: &#123;state.count&#125;</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> dispatch(&#123; type: &#x27;increment&#x27; &#125;)&#125;&gt;-<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> dispatch(&#123; type: &#x27;decrement&#x27; &#125;)&#125;&gt;+<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><code>注意： React 会确保 dispatch 函数的标识是稳定的，并且不会在组件重新渲染时改变。这就是为什么可以安全地从 useEffect 或 useCallback 的依赖列表中省略 dispatch。</code></strong></p>
+<h4 id="指定初始-state"><a href="#指定初始-state" class="headerlink" title="指定初始 state"></a>指定初始 state</h4><p>有两种不同初始化 useReducer state 的方式，你可以根据使用场景选择其中的一种。将初始 state 作为第二个参数传入 useReducer 是最简单的方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [state, dispatch] = useReducer(reducer, &#123; <span class="attr">count</span>: initialCount &#125;)</span><br></pre></td></tr></table></figure>
+<p><strong><code>注意： React 不使用 state = initialState 这一由 Redux 推广开来的参数约定。有时候初始值依赖于 props，因此需要在调用 Hook 时指定。如果你特别喜欢上述的参数约定，可以通过调用 useReducer(reducer,undefined,reducer)来模拟 Redux 的行为，但我们不鼓励你这么做。</code></strong></p>
+<h4 id="惰性初始化"><a href="#惰性初始化" class="headerlink" title="惰性初始化"></a>惰性初始化</h4><p>你可以选择惰性地创建 state。为此，需要将 init 函数作为 useReducer 的第三个参数传入，这样初始 state 将被设置为 init(initialArg).</p>
+<p>这么做可以将用于计算 state 的逻辑提取到 reducer 外部，这也为将来对重置 state 的 action 做处理提供了便利：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params">initialCount</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123; <span class="attr">count</span>: initialCount &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reducer</span>(<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;reset&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> init(action.payload)</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;increment&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">count</span>: state.count + <span class="number">1</span> &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;decrement&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">count</span>: state.count - <span class="number">1</span> &#125;</span><br><span class="line">    <span class="attr">default</span>:</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [state, dispatch] = useReducer(reducer, initialCount, init)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">      Count: &#123;state.count&#125;</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> dispatch(&#123; type: &#x27;reset&#x27;, payload: initialCount &#125;)&#125;</span></span><br><span class="line"><span class="xml">      &gt;</span></span><br><span class="line"><span class="xml">        &#123;&#x27; &#x27;&#125;</span></span><br><span class="line"><span class="xml">        Reset&#123;&#x27; &#x27;&#125;</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> dispatch(&#123; type: &#x27;increment&#x27; &#125;)&#125;&gt; - <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> dispatch(&#123; type: &#x27;decrement&#x27; &#125;)&#125;&gt; + <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="跳过-dispatch"><a href="#跳过-dispatch" class="headerlink" title="跳过 dispatch"></a>跳过 dispatch</h4><p>如果 Reducer Hook 的返回值与当前 state 相同，React 将跳过子组件的渲染及副作用的执行。（React 使用 Object.is 比较算法来比较 state。）</p>
+<p>需要注意的时， React 可能仍需要在跳过渲染前再次渲染该组件。不过由于 React 不会对组件树的“深层”节点进行不必要的渲染，所以大可不必担心。如果你在渲染期间执行了高开销的计算，则可以使用 useMemo 来进行优化。</p>
+<h3 id="useCallback"><a href="#useCallback" class="headerlink" title="useCallback"></a>useCallback</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedCallback = useCallback(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  doSomething(a, b)</span><br><span class="line">&#125;, [a, b])</span><br></pre></td></tr></table></figure>
+<p>返回一个 memoized 回调函数。</p>
+<p>把内联回调函数及依赖项数组作为参数传入 <code>useCallback</code> ，它将返回改函数的 memoized 版本，该回调函数仅在某个依赖项改变时才会更新。当你把回调函数传递给经过优化的并使用引用相等性去避免非必要的渲染（例如 shouldComponentUpdate) 的子组件时，它将非常有用。</p>
+<p><code>useCallback(fn,deps)</code>相当于<code>useMemo(()=&gt;fn,deps)</code>。</p>
+<p><strong><code>注意：依赖项数组不会作为参数传给“创建”函数。虽然从概念上来说它表现为：所有“创建”函数中引用的值应该出现在依赖性数组中。未来编译器会更加智能，届时自动创建数组将成为可能。 我们推荐启用 elsint-plugin-react-hooks 中的 exhaustive-deps 规则。此规则会再添加错误依赖项时发出警告并给出修复建议。</code></strong></p>
+<h3 id="useMemo"><a href="#useMemo" class="headerlink" title="useMemo"></a>useMemo</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedValue = useMemo(<span class="function">() =&gt;</span> computeExpensiveValue(a, b), [a, b])</span><br></pre></td></tr></table></figure>
+<p>返回一个 memoized 值。</p>
+<p>把“创建”函数和依赖项作为参数传入 useMemo，它仅会在某个依赖项发生改变时才重新计算 memoized 的值。这种优化有助于避免在每次渲染时都进行高开销的计算。</p>
+<p>记住，传入 useMemo 的函数会在渲染期间执行。请不要在这个函数内部执行与渲染无关的操作，诸如副作用这类的操作属于 useEffect 的适用范畴，而不是 useMemo。</p>
+<p>如果没有提供依赖项数组， useMemo 在每次渲染时都会重新计算新的值。</p>
+<p><strong>你可以把 useMemo 作为性能优化的手段，但不要把它当成语义上的保证。</strong>将来，React 可能会选择“遗忘”以前的一些 memoized 值，并在下次渲染时重新计算它们，比如为离屏组件释放内存。先编写在没有 useMemo 的情况下也可以执行的代码————之后再你的代码中添加 useMemo，以达到性能优化的目的。</p>
+<p><strong><code>注意：依赖项数组不会作为参数传给“创建”函数。虽然从概念上来说它表现为：所有“创建”函数中引用的值应该出现在依赖性数组中。未来编译器会更加智能，届时自动创建数组将成为可能。 我们推荐启用 elsint-plugin-react-hooks 中的 exhaustive-deps 规则。此规则会再添加错误依赖项时发出警告并给出修复建议。</code></strong></p>
+<h3 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a>useRef</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> refContainer = useRef(initalValue)</span><br></pre></td></tr></table></figure>
+<p>useRef 返回一个可变的 ref 对象，其 <code>.current</code> 属性被初始化为传入的参数（initalValue）。返回的 ref 对象再组件的整个生命周期内保存不变。</p>
+<p>一个常见的用例便是命令式地访问子组件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">TextInputWithFocusButton</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> inputEl = useRef(<span class="literal">null</span>)</span><br><span class="line">  <span class="keyword">const</span> onButtonClick = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// current 指向已挂载到 DOM 上地文本输入元素</span></span><br><span class="line">    inputEl.current.focus()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">ref</span>=<span class="string">&#123;inputEl&#125;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;onButtonClick&#125;</span>&gt;</span>Focus the input<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本质上， useRef 就像是可以在其 .current 属性中保存一个可变值的“盒子”。</p>
+<p>你应该熟悉 ref 这一种访问 DOM 的主要形式。如果你将 ref 对象以 <code>&lt;div ref=&#123;myRef&#125;/&gt;</code> 形式传入组件，则无论改节点如何改变，React 都会将 ref 对象的 .current 属性设置为相应的 DOM 节点。</p>
+<p>然而，useRef() 比 ref 属性更有用。它可以方便的保存任何可变值，其类似于在 class 中使用实例字段的方式。</p>
+<p>这是因为它创建的是一个普通的 JavaScript 对象。而 useRef 和自建一个 {current:…} 对象的唯一区别是， useRef 会在每次渲染时返回同一个 ref 对象。</p>
+<p>请记住，当 ref 对象内容发生变化， useRef 并不会通知你。变更 .current 属性不会引发组件重新渲染。如果想要在 React 绑定或者解绑 DOM 节点的 ref 时运行某些代码，则需要使用回调 ref 来实现。</p>
+<h3 id="useImperativeHandle"><a href="#useImperativeHandle" class="headerlink" title="useImperativeHandle"></a>useImperativeHandle</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useImperativeHandle(ref, createhandle, [deps])</span><br></pre></td></tr></table></figure>
+<p><code>useImperativeHandle</code> 可以让你在使用 ref 时自定义暴露给父组件的实例值。在大多数情况下，应当避免使用 ref 这样的命令式代码。<code>useImperativeHandle</code> 应当与 <code>forwardRef</code> 一起使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FancyInput</span>(<span class="params">props,ref</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> inputRef = useRef();</span><br><span class="line">  useImperativehandle(ref,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="attr">focus</span>:<span class="function">()=&gt;</span>&#123;</span><br><span class="line">      inputRef.current.focus();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">ref</span>=<span class="string">&#123;inputRef&#125;</span> <span class="attr">...</span> /&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line">FancyInput = forwardRef(FancyInput)</span><br></pre></td></tr></table></figure>
+<p>在本例中，渲染<code>&lt;FancyInput ref=&#123;inputRef&#125; /&gt;</code>的父组件可以调用 <code>inputRef.current.focus()</code>。</p>
+<h3 id="useLayoutEffect"><a href="#useLayoutEffect" class="headerlink" title="useLayoutEffect"></a>useLayoutEffect</h3><p>其函数签名与 useEffect 相同，但它会在所有的 DOM 变更之后同步调用 effect。可以使用它来读取 DOM 布局并同步触发重渲染。在浏览器执行绘制之前，<code>useLayoutEffect</code>内部的更新计划将被同步刷新。</p>
+<p>尽可能使用标准的 useEffect 以避免阻塞视觉更新。</p>
+<p><strong><code>提示： 如果你正将代码从 class 组件迁移到使用 Hook 的函数组件，则需要注意 useLayoutEffect 与 componentDidMount 、componentDidUpdate 的调用阶段是一样的。但是我们推荐你 一开始先使用 useEffect ，只有当它出问题的时候再尝试使用 useLayoutEffect。 如果你使用服务器端渲染，请记住，无论 useLayoutEffect 还是 useEffect 都无法再 JavaScript 代码加载完成之前执行。这就是为什么再服务端渲染组件中引入 useLayoutEffect 代码时会触发 useEffect 告警。解决这个问题，需要将代码逻辑移至 useEffect 中（如果首次渲染不需要这段逻辑的情况下），或是将该组件延迟到客户端渲染完成后再显示（如果知道 useLayoutEffect 执行之前 HTML 都显示错乱的情况下）。 若要从服务端渲染的 HTML 中排除以来布局 effect 的组件，可以通过使用 showChild &amp;&amp; &lt;Child/&gt; 进行条件渲染，并使用 useEffect(()=&gt;&#123;setShowChild(true);&#125;,[]) 延迟展示组件。这样，在客户端渲染完成之前，UI 就不会像之前那样显示错乱了。</code></strong></p>
+<h3 id="useDebugValue"><a href="#useDebugValue" class="headerlink" title="useDebugValue"></a>useDebugValue</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useDebugValue(value)</span><br></pre></td></tr></table></figure>
+<p>useDebuValue 可用于在 React 开发者工具中显示自定义 hook 的标签。</p>
+<p>例如，’自定义 Hook ‘章节描述的名为 useFriendStatus 的自定义 Hook：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useFriendStatus</span>(<span class="params">friendID</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [isOnline, setIsOnline] = useState(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// 在开发者工具中的这个 Hook 旁边显示标签</span></span><br><span class="line">  <span class="comment">// e.g. &quot;FriendStatus:Online&quot;</span></span><br><span class="line">  useDebugValue(isOnline ? <span class="string">&#x27;Online&#x27;</span> : <span class="string">&#x27;Offline&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> isOnline</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><code>提示： 我们不推荐你向每个自定义 Hook 添加 debug 值。当它作为共享库的一部分时才最有价值。</code></strong></p>
+<h4 id="延迟格式化-debug-值"><a href="#延迟格式化-debug-值" class="headerlink" title="延迟格式化 debug 值"></a>延迟格式化 debug 值</h4><p>在某些情况下，格式化值的显示可能是一项开销很大的操作。除非需要检查 Hook ，否则没有必要这么做。</p>
+<p>因此 ，<code>useDebugValue</code> 接受一个格式化函数作为可选的第二个参数。该函数只有在 Hook 被检查时才会被调用。它接受 debug 值作为参数，并且会返回一个格式化的显示值。</p>
+<p>例如，一个返回 Date 值的自定义 Hook 可以通过格式化函数来避免不必要的 toDateString 函数调用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useDebugValue(data, <span class="function">(<span class="params">data</span>) =&gt;</span> data.toDateString())</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/15/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-15-%E8%87%AA%E5%AE%9A%E4%B9%89-Hook/" rel="prev" title="自定义 Hook">
+      <i class="fa fa-chevron-left"></i> 自定义 Hook
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/21/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-21-Hooks-FAQ/" rel="next" title="Hooks FAQ">
+      Hooks FAQ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hook-API-%E7%B4%A2%E5%BC%95"><span class="nav-number">1.</span> <span class="nav-text">Hook API 索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80-Hook"><span class="nav-number">1.1.</span> <span class="nav-text">基础 Hook</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#useState"><span class="nav-number">1.1.1.</span> <span class="nav-text">useState</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E6%9B%B4%E6%96%B0"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">函数式更新</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%83%B0%E6%80%A7%E5%88%9D%E5%A7%8B-state"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">惰性初始 state</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B7%B3%E8%BF%87-state-%E6%9B%B4%E6%96%B0"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">跳过 state 更新</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#useEffect"><span class="nav-number">1.1.2.</span> <span class="nav-text">useEffect</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B8%85%E9%99%A4-effect"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">清除 effect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#effect-%E7%9A%84%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">effect 的执行时机</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#effect-%E7%9A%84%E6%9D%A1%E4%BB%B6%E6%89%A7%E8%A1%8C"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">effect 的条件执行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useContext"><span class="nav-number">1.2.</span> <span class="nav-text">useContext</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%8A%E5%A6%82%E4%B8%8B%E4%BB%A3%E7%A0%81%E4%B8%8E-Context-Provider-%E6%94%BE%E5%9C%A8%E4%B8%80%E8%B5%B7"><span class="nav-number">1.2.1.</span> <span class="nav-text">把如下代码与 Context.Provider 放在一起</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%9D%E5%A4%96%E7%9A%84-Hook"><span class="nav-number">2.</span> <span class="nav-text">额外的 Hook</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#useReducer"><span class="nav-number">2.1.</span> <span class="nav-text">useReducer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%88%9D%E5%A7%8B-state"><span class="nav-number">2.1.1.</span> <span class="nav-text">指定初始 state</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%83%B0%E6%80%A7%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.1.2.</span> <span class="nav-text">惰性初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%B3%E8%BF%87-dispatch"><span class="nav-number">2.1.3.</span> <span class="nav-text">跳过 dispatch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useCallback"><span class="nav-number">2.2.</span> <span class="nav-text">useCallback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useMemo"><span class="nav-number">2.3.</span> <span class="nav-text">useMemo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useRef"><span class="nav-number">2.4.</span> <span class="nav-text">useRef</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useImperativeHandle"><span class="nav-number">2.5.</span> <span class="nav-text">useImperativeHandle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useLayoutEffect"><span class="nav-number">2.6.</span> <span class="nav-text">useLayoutEffect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useDebugValue"><span class="nav-number">2.7.</span> <span class="nav-text">useDebugValue</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BB%B6%E8%BF%9F%E6%A0%BC%E5%BC%8F%E5%8C%96-debug-%E5%80%BC"><span class="nav-number">2.7.1.</span> <span class="nav-text">延迟格式化 debug 值</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Somebody</p>
+  <div class="site-description" itemprop="description">My vegetable has exploded!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Somebody</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
