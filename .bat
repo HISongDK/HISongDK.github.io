@@ -33,7 +33,7 @@ echo 当前目录是：%cd%
 echo;
  
 echo 开始添加变更：git add .
-git add .
+git add . -f
 echo;
  
 echo 添加提交的commit信息: 更新于 %date:~0,13% %time:~0,5%
