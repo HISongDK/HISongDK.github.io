@@ -234,8 +234,395 @@ jsPromise.then(
 OK，现在我们来写点实际代码。假设我们想要：
 
 1. 显示一个加载指示图标
-2. 加载一篇小说的JSON，包含小说名和每一章内容的URL
+2. 加载一篇小说的 JSON，包含小说名和每一章内容的 URL
 3. 在页面中填上小说名
 4. 加载所有章节正文
 5. 在页面中添加章节正文
 6. 停止加载指示
+
+...这个过程中如果发生什么错误了要通知用户，并且把加载指示停掉，不然他就会不停转下去，令人眼晕，或者搞坏界面什么的。
+
+当然了，你不会用 JavaScript 去这么繁琐的显示一篇文章，直接输出 HTML 要快得多，不过这个流程是非常典型的 API 请求模式：获取多个数据，当他们全部完成之后在做一些事情。
+
+首先搞定从网络加载数据的步骤：
+
+## 将 Promise 用于 XMLHttpRequest
+
+只要能保持向后兼容，现有的 API 都会更新以支持 Promise，XMLHttpRequest 是重点考虑对象之一。不过现在我们先来写个 GET 请求：
+
+```js
+function get(url) {
+  // Return a new Promise.
+  return new Promise(function (resolve, reject) {
+    // Do the usual XHR Stuff
+    var req = new XMLHttpRequest()
+    req.open('GET', url)
+
+    req.onload = function () {
+      // This is called even on 404 etc 这里甚至会被404或其他状态调用
+      // so check the status code
+      if (req.status === 200) {
+        // Resolve the promise with the response text
+        resolve(req.response)
+      } else {
+        // Otherwise reject the promise with the status text
+        // which will hopefully be a meaningful error message
+        reject(req.statusText)
+      }
+    }
+
+    req.onerror = function () {
+      reject(Error('Network error'))
+    }
+
+    // Make the request
+    req.send()
+  })
+}
+```
+
+然后调用它：
+
+```js
+get('story.json').then(
+  function (response) {
+    console.log('Successful', response)
+  },
+  function (error) {
+    console.error('Failed', error)
+  },
+)
+```
+
+[点击这里查看代码运行页面](http://www.html5rocks.com/en/tutorials/es6/promises/story.json),打开控制台查看输出结果。现在我们可以直接发起 HTTP 请求，而不用手敲 XMLHttpRequest，这样感觉好多了，能少看一次这个狂驼峰命名的 XMLHttpRequest 我就多快乐一点。
+
+## 链式调用
+
+"then"的故事还没完，你可以把这些"then"串联起来修改结果或者添加进行更多的异步操作。
+
+### 值的处理
+
+你可以对结果做些修改然后返回一个新值：
+
+```js
+var promise = new Promise(function (resolve, reject) {
+  resolve(1)
+})
+
+promise
+  .then(function (val) {
+    console.log(val) // 1
+    return val + 2
+    // then 函数第一个回调函数参数的返回值作为下一个 then 函数第一个回调函数参数的参数
+    // 我才知道
+  })
+  .then(function (val) {
+    console.log(val) // 3
+  })
+```
+
+回到前面的代码：
+
+```js
+get('story.json').then(function (response) {
+  console.log('Success!', response)
+})
+```
+
+收到的响应是一个纯文本的 JSON，我们可以修改 get 函数，设置 [responseType](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#responseType)要求服务器以 jSON 格式提供响应，不过还是用 Promise 的方式来搞定吧：
+
+```js
+get('story.json')
+  .then(function (response) {
+    return JSON.parse(response)
+  })
+  .then(function (response) {
+    console.log('Yey JSON!', response)
+  })
+```
+
+既然`JSON.parse`只接收一个参数，并返回转换后的结果，我们还可以再精简一点：
+
+```js
+get('story.json')
+  .then(JSON.parse) // 秀儿
+  .then(function (response) {
+    console.log('Yey JSON!', response)
+  })
+```
+
+[点击这里查看代码运行页面](http://www.html5rocks.com/en/tutorials/es6/promises/story.json),打开控制台查看输出结果。事实上，我们可以把`getJSON`函数写的超级简单：
+
+```js
+function getJSON(url) {
+  return get(url).then(JSON.parse)
+}
+```
+
+`getJson`会返回一个获取 JSON 并加一解析的 Promise。
+
+### 队列的异步操作
+
+你也可以把 `then` 串联起来依次执行异步操作。
+
+当你从 `then` 的回调函数返回的时候，这里有点小魔法。<!--不是都说禁止在麻瓜面前使用魔法的么-->如果你返回一个值，他就会被传给下一个 `then` 的回调；而如果你返回一个'类 Promise'的对象，则下一个 `then` 就会等待这个 Promise 明确结束（成功/失败）才会执行。例如：
+
+```js
+getJSON('story.json')
+  .then(function (story) {
+    return getJSON(story.chaterUrls[0])
+  })
+  .then(function (chapter1) {
+    console.log('Got chapter 1!', chapter1)
+  })
+```
+
+这里我们发起一个对 story.json 的异步请求，返回给我们更多的 URL，然后我们会请求其中的第一个。Promise 开始首次显现出相较事件回调的优越性了。你甚至可以写一个抓取章节内容的独立函数：
+
+```js
+var storyPromise
+
+function getChapter(i) {
+  storyPromise = storyPromise || getJSON('story.json')
+
+  return storyPromise.then(function (story) {
+    return getJSON(story.chaterUrls[i])
+    // 哦豁完蛋 tabnine 都知道我要打什么，我反而没看懂
+    // 人工智能显得本人制杖啊
+  })
+}
+
+// and using is is simple
+getChapter(0)
+  .then(function (chapter) {
+    console.log(chapter)
+    return getChapter(1)
+  })
+  .then(function (chapter) {
+    console.log(chapter)
+  })
+```
+
+我们一开始并不加载 story.json,直到第一次 getChapter,而以后每次 getChapter 的时候都可以重用已完成的 story Promise,所以 story.json 只需要请求一次。Promise 好棒！
+
+## 错误处理
+
+前面已经看到，"then"接受两个参数，一个处理成功，一个处理失败（或者说确认和否定，按 Promise 术语）：
+
+```js
+get('story.json').then(
+  function (response) {
+    console.log('Successful!', response)
+  },
+  function (error) {
+    console.log('Failed!', error)
+  },
+)
+```
+
+你还可以使用 `catch`：
+
+```js
+get('story.json')
+  .then(function (response) {
+    console.log('Successful!', response)
+  })
+  .catch(function (error) {
+    console.log('Failed!', error)
+  })
+```
+
+这里的 `catch`并无任何特别之处，只是 `then(undefined, func)` 的语法糖衣，更直观一点而已。注意上面两段代码的行为不尽相同，后者相当于：
+
+```js
+get('story.json').then(function(response) {
+  console.log('Successful!', response)
+}).then(function(undefined, function (error) {
+  console.log('Failed!', error)
+})
+```
+
+**差异不大，但意义非凡。**Promise 被否定之后会跳转到之后第一个配置了否定回调的`then`(或 `catch` ，一样的)。对于 `then(func1,func2)` 来说，必会调用 func1 或 func2 之一，但绝不会两个都调用。而 `then(func1).catch(func2)` 这样，如果 func1 返回否定的话 func2 也会被调用，因为他们是链式调用中独立的两个步骤。看下面的代码：
+
+```js
+asyncThing1()
+  .then(function () {
+    return asyncThing2()
+  })
+  .then(function () {
+    return asyncThing3()
+  })
+  .catch(function (err) {
+    return asyncRecovery1()
+  })
+  .then(
+    function () {
+      return asyncThing4()
+    },
+    function (err) {
+      return asyncRecovery2()
+    },
+  )
+  .catch(function (err) {
+    console.log("Don't worry about it")
+  })
+  .then(function () {
+    console.log('ALL done!')
+  })
+```
+
+这段流程非常像 JavaScript 的 try/catch 组合，`try` 代码块发生的错误会径直跳转到 `catch` 代码块。这是上面那段代码的流程图（我最爱流程图了）：
+
+![Promise Flow](../../images/promise-flow.svg)
+
+绿线是确认的 Promises 流程，红线是否定的。
+
+### JavaScript 异常和 Promise
+
+Promise 的否定回调可以由 `Promise.reject()` 触发，也可以由构造器回调中抛出的错误触发：
+
+```js
+var jsonPromise = new Promise(function (resolve, reject) {
+  // JSON.parse throws an error if you feed it some invalid JSON,so this implicitly rejects:
+  resolve(JSON.parse("This ain't JSON"))
+})
+
+jsonPromise
+  .then(function (data) {
+    // This never happens:
+    console.log('It worded!', data)
+  })
+  .catch(function (err) {
+    // Instead, this happens:
+    console.log('It failed', err)
+  })
+```
+
+这意味着你可以把所有 Promise 相关的工作都放在构造函数的回调中进行，这样任何错误都能被捕捉到并且触发 Promise 否定。
+
+```js
+get('/')
+  .then(JSON.parse)
+  .then(function () {
+    // This never happens,'/' is an HTML page,not JSON
+    // so JSON.parse throws
+    console.log('It worded!', data)
+  })
+  .catch(function (err) {
+    // Instead, this happens:
+    console.log('It failed!', err)
+  })
+```
+
+### 实践错误处理
+
+回到我们的故事和章节，我们用 `catch` 来捕捉错误并显示给用户：
+
+```js
+getJSON('story.json')
+  .then(function (data) {
+    return getJSON(story.chapterUrl[0])
+  })
+  .then(function (chapter1) {
+    addHtmlToPage(chapter1.html)
+  })
+  .catch(function () {
+    addTextToPage('Failed to show chapter')
+  })
+  .then(function () {
+    document.querySelector('.spinner').style.display = 'none'
+  })
+```
+
+如果请求 `story.chapterUrl[0` 失败（http 500 或者用户掉线什么的）了，他会跳过之后所有针对成功的回调，包括 `getJSON` 中将响应解析为 JSON 的回调，和这里把第一张内容添加到页面里的回调。JavaScript 的执行会进行入 `catch` 回调，结果就是前面任何章节请求出错，页面上都会显示：“Failed to show chapter”。
+
+和 JavaScript 的 catch 一样，捕捉到错误之后，接下来的代码会继续执行，按计划把加载指示器给停掉。上面的代码就是下面这段的非阻塞异步版：
+
+```js
+try {
+  var story = getJSONSync('story.json')
+  var chapter1 = getJSONSync('story.chapterUrl[0]')
+  // 你这写个 Sync 具体咋封的，nodejs 好像好多这样的API
+  addHtmlToPage(chapter1.html)
+} catch (err) {
+  addTextToPage('Failed to show chapter')
+}
+
+document.getElementById('.spinner').style.display = 'none'
+
+// 给瞧介 给瞧介 这同步代码要简洁多少 昨天我改获取必应壁纸设置桌面的脚本 把 python 的用 nodejs 实现以下就觉得这请求的有点难受 这种果然要简洁的多啊
+```
+
+如果捕捉异常做记录输出，不打算在用户界面对错误进行反馈的话，只要抛出 Error 就行了，这一步可以放在 `getJSON` 中：
+
+```js
+function getJSON(url) {
+  return get(url)
+    .then(JSON.parse)
+    .catch(function (err) {
+      console.log('getJSON failed for', url, err)
+      throw err
+    })
+}
+```
+
+现在我们已经搞定第一章了，接下来搞定所有的。
+
+## 并行和串行————鱼与熊掌兼得
+
+异步的思维方式并不符合直觉<!--很难不赞同-->，如果你觉得起步困难，那就试试先写个同步的方法，就像这个：
+
+```js
+try {
+  var story = getJSONSync('story.json')
+  addHtmlToPage(story.json)
+  story.chapterUrls.forEach(function (chapterUrl) {
+    var chapter = getJSONSync(chapterUrl)
+    addHtmlToPage(chapter.html)
+  })
+
+  addTextToPage('ALL done')
+} catch (err) {
+  addTextToPage('Argh,broken:' + err.message)
+}
+document.querySelector('.spinner').style.display = 'none'
+```
+
+它执行起来完全正常！（[查看示例](http://www.html5rocks.com/en/tutorials/es6/promises/sync-example.html)不过它是同步的，在加载内容时会卡住整个浏览器。要让它异步工作的话，我们用 `then` 把它们一个接一个串起来：
+
+```js
+getJSON('story.json')
+  .then(function (story) {
+    addHtmlToPage(story.heading)
+    // TODO: for each url in story.chapterUrls,fetch & display
+  })
+  .then(function () {
+    // And we're all done!
+    addTextToPage('All done')
+  })
+  .catch(function (err) {
+    // Catch any error that happened along the way
+    addTextToPage('Argh,broken:' + err.message)
+  })
+  .then(function () {
+    // Always hide the spinner
+    document.querySelector('.spinner').style.display = 'none'
+  })
+```
+
+那么我们如何遍历章节的 URL 并且依次请求？这样是 **不行的**：
+
+```js
+story.chapterUrls.forEach(function (chapterUrl) {
+  // Fetch chapter
+  getJSON(chapterUrl).then(function (chapter) {
+    // and add it to the page
+    addHtmlToPage(chapter.html)
+  })
+})
+```
+
+ `forEach` 没有对异步操作的支持，所以我们的故事章节会按照他们加载完成的顺序显示<!-- 原来如此，你不说我们不知道为啥这样不行 -->，基本上《低俗小说》就是这么写出来的。<!-- 哈哈哈哈什么玩意，小说没看过，电影也忘完了，自然结构顺序更是记不清了，有点无法体会 -->我们不写低俗小说，所以得修正它：
+
+### 创建序列
+
