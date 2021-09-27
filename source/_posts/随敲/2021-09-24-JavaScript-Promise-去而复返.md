@@ -145,7 +145,7 @@ Promise.all([img1.ready(), img2.ready()]).then(
 上面这些库和 JavaScript 原生 Promise 都遵守一个通用的、标准化的规范：
 [Promise/A+](https://github.com/promises-aplus/promises-spec),jQuery 有一个类似的方法叫 [Deferreds](http://api.jquery.com/category/deferred-object/),但不兼容 Promise/A+规范，于是会[有一点小问题](https://thewayofcode.wordpress.com/tag/jquery-deferred-broken/)，使用需谨慎。jQuery 还有一个 [Promise 类型](http://api.jquery.com/Types/#Promise),但只是 Defereds 的缩减版，所以也会有同样的问题。
 
-尽管Promise的各路实现遵循同一规范，它们的API还是各不相同。JavaScript Promise的API比较接近RSVP.js，如下创建Promise：
+尽管 Promise 的各路实现遵循同一规范，它们的 API 还是各不相同。JavaScript Promise 的 API 比较接近 RSVP.js，如下创建 Promise：
 
 ```js
 var promise = new Promise(function(resolve,reject){
@@ -159,14 +159,83 @@ var promise = new Promise(function(resolve,reject){
 })
 ```
 
-Promise 的构造器接受一个函数作为参数，它会传递给这个回调函数两个变量 resolve 和 reject。在回调函数中做一些异步操作，成功之后调用resolve，否则调用reject。
+Promise 的构造器接受一个函数作为参数，它会传递给这个回调函数两个变量 resolve 和 reject。在回调函数中做一些异步操作，成功之后调用 resolve，否则调用 reject。
 
-调用 reject 的时候传递给它一个 Error 对象只是个惯例并非必需，这和经典的 JavaScript中的 throw一样。传递 Error 对象的好处是它包含了调用堆栈，在调试的时候会用点好处。
+调用 reject 的时候传递给它一个 Error 对象只是个惯例并非必需，这和经典的 JavaScript 中的 throw 一样。传递 Error 对象的好处是它包含了调用堆栈，在调试的时候会用点好处。
 
 现在来看看如何使用 Promise：
 
 ```js
-promise.then(function(result){
-  console.log(result) // 
-})
+promise.then(
+  function (result) {
+    console.log(result) // "Stuff worked!"
+  },
+  function (err) {
+    console.error(err) //Error: "It broke"
+  },
+)
 ```
+
+`then`接受两个参数，成功的时候调用一个，失败的时候调用另一个，两个都是可选的，所以你可以只处理成功的情况或者失败的情况。
+JavaScript Promise 最初以 "Futures" 的名称归为 DOM 规范，后来改名为"Promise",最终纳入 JavaScript 规范。将其加入 JavaScript 而非 DOM 的好处是方便非浏览器环境使用，如 Node.js（他们会不会在核心 API 中使用就是另外一回事了）。
+
+## 浏览器支持和 Polyfill
+
+目前的浏览器已经（部分）实现了 Promise。
+
+用 Chrome 的话，就像个 Chroman 一样装上 Canary 版，默认启用了 Promise 支持。如果是 Firefox 的拥趸，安装最新的 nightly build 也一样。
+
+不过这两个浏览器的实现都还不够完整彻底，你可以在 bugzilla 上跟踪 Firefox 的最新进展或者到 Chromium Dashboard 查看 Chrome 的实现情况。
+
+要在这两个浏览器上达到兼容标准 Promise，或者在其他浏览器以及 Node.js 中使用 Promise，可以看看这个 [polyfill](https://github.com/jakearchibald/ES6-Promises/blob/master/README.md)（gzip 之后 2k）
+
+## 与其他库的兼容性
+
+JavaScript Promise 的 API 会把任何包含有`then`方法的对象当作“类 Promise”（或者用术语来说就是 thenable。叹气）的对象，这些对象经过`Promise.cast()`处理之后就和原生的 JavaScript Promise 没有任何区别了。所以若果你使用的库返回一个 Q Promise，那没问题，无缝融入新的 JavaScript Promise。
+
+尽管，如前所述，jQuery 的 Deferred 对象有点...没什么用，不过幸好可以转换成标准 Promise，你最好一拿到对象就马上加以转换：
+
+```js
+var jsPromise = Promise.cast($.ajax('/whatever.json'))
+```
+
+这里 jQuery 的`$.ajax`返回一个 Deferred 对象，含有`then`方法，因此`Promise.cast`可以将其转换为 JavaScript Promise。不过有时候 Deferred 对象会给它的回调函数传递多个参数，例如：
+
+```js
+var jqDeferred = $.ajax('/whatever.json')
+
+jqDeferred.then(
+  function (response, statusText, xhrObj) {
+    // ...
+  },
+  function (xhrObj, textStatus, err) {
+    // ...
+  },
+)
+```
+
+除了第一个参数，其他都会被 JavaScript 忽略掉：
+
+```js
+jsPromise.then(
+  function (response) {
+    // ...
+  },
+  function (xhrObj) {
+    // ...
+  },
+)
+```
+
+......还好这通常就是你想要的了，至少你能够用这个方法实现想要的，另外还要注意，jQuery 也没有遵循给否定回调函数传递 Error 的惯例。
+
+## 复杂的异步代码变得更简单了
+
+OK，现在我们来写点实际代码。假设我们想要：
+
+1. 显示一个加载指示图标
+2. 加载一篇小说的JSON，包含小说名和每一章内容的URL
+3. 在页面中填上小说名
+4. 加载所有章节正文
+5. 在页面中添加章节正文
+6. 停止加载指示
