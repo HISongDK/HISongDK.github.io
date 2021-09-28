@@ -622,7 +622,106 @@ story.chapterUrls.forEach(function (chapterUrl) {
 })
 ```
 
- `forEach` 没有对异步操作的支持，所以我们的故事章节会按照他们加载完成的顺序显示<!-- 原来如此，你不说我们不知道为啥这样不行 -->，基本上《低俗小说》就是这么写出来的。<!-- 哈哈哈哈什么玩意，小说没看过，电影也忘完了，自然结构顺序更是记不清了，有点无法体会 -->我们不写低俗小说，所以得修正它：
+`forEach` 没有对异步操作的支持，所以我们的故事章节会按照他们加载完成的顺序显示<!-- 原来如此，你不说我们不知道为啥这样不行 -->，基本上《低俗小说》就是这么写出来的。<!-- 哈哈哈哈什么玩意，小说没看过，电影也忘完了，自然结构顺序更是记不清了，有点无法体会 -->我们不写低俗小说，所以得修正它：
 
 ### 创建序列
 
+我们要把章节 URL 数组转换成 Promise 的序列，还是用 `then` ：
+
+```js
+// Start off with a promise that always resolves
+var sequence = Promise.resolve()
+
+// Loop through our chapter chapterUrls
+story.chapterUrls.forEach(function (chapterUrl) {
+  // Add these actions to the end of the sequence
+  sequence = sequence
+    .then(function () {
+      return getJSON(chapterUrl)
+    })
+    .then(function (chapter) {
+      addHtmlToPage(chapter.html)
+    })
+})
+```
+
+这是我们第一次用到 `Promise.resolve` ,它会依据你传的任何值返回一个 Promise。如果你传给它一个类 Promise 对象（带有 `then` 方法），它会生成一个带有同样确认/否定回调的 Promise，基本上就是克隆。如果传给它任何别的值，如 `Promise.reject('Hello')` ,它会创建一个以这个值为完成结果的 promise，如果不传任何值，则以 undefined 为完成结果。
+
+还有一个对应的 `Promise.reject(val)` 会创建以你传入的参数（或 undefined）为否定结果的 Promise。
+
+我们可以使用 `array.prototype.reduce` 精简一下上面的代码：
+
+```js
+// Loop through our chapter urls
+story.chapterUrls.reduce(function(sequence,chapterUrl){
+  // Add these actions to the end of the sequence
+  return sequence.then(function (){
+    return getJSON(chapterUrl)
+  })then(function(chapter){
+    addHtmlToPage(chapter.html)
+  })
+},Promise.resolve())
+```
+
+她和前面的例子功能一样，但是不需要显式声明 `sequence` 变量。reduce 回调会以此应用在每个数组元素上，第一轮“sequence”是 `Promise.resolves()` ,之后的调用“sequence”就是上次函数执行的结果。`array.prototype.reduce` 非常适合用于把一组值归并处理为一个值，正是我们现在对 Promise 的用法。
+
+汇总下上面的代码：
+
+```js
+getJSON('story.json').then(function(story){
+  addHtmlToPage(story.heading)
+
+  reutrn story.chapterUrls.reduce((sequence,chapterUrl)=>{
+    // Once the last chapter's promise done ...
+    // 对啊 之前还没看懂怎么就保证顺序了，.then要前面返回的Promise执行完才执行
+    // 不过其实还是有点没看懂
+    return sequence.then(function (){
+      // ...fetch the next chapter
+      return getJSON(chapterUrl)
+      // 又有点明白了，您这个注释讲解是专业的嘿
+    }).then(function(chapter){
+      // and add it to the page
+      addTextToPage(chapter.html)
+    })
+  },Promise.resolve())
+}).then(function(){
+  // And we're all done
+  addTextToPage('ALL done')
+}).catch(function(error){
+  // Catch any error that happened along the way
+  addTextToPage('Argh,broken:' + err.message)
+}).then(function(){
+  // always hide the spinner
+  document.querySelector('.spinner').style.display = 'none'
+})
+```
+
+[运行实例看这里](http://www.html5rocks.com/en/tutorials/es6/promises/async-example.html),前面的同步代码改造成了完全异步的版本。我们还可以更进一步，现在页面的加载效果是这样：
+
+![图略](https://link)
+
+浏览器很擅长同时加载多个文件，我们这种一个接一个下载章节的方法非常不效率。我们希望同时下载所有章节，全部完成后一次搞定，正好就有这么个 API：
+
+```js
+Promise.all(arrayOfPromises).then(function(arrayOfResults){
+  // ...
+})
+```
+
+ `Promise.all` 接受一个Promise数组为参数，创建一个当所有Promise都完成之后就完成的Promise，它的完成结果就是一个数组，包含了所有先前传入的那些Promise的完成结果，顺序和它们传入的数组顺序一致。
+
+```js
+getJSON('story.json').then(function(story){
+  addHtmlToPage(story.heading)
+
+  // Take an array of promises and wait on them all
+  return Promise.all(
+    // Map our array of chapter urls to an array of chapter json promises
+    story.chapterUrls.map(getJSON)
+    // 我还能说什么，这代码写的太鬼了
+  )
+}).then(function(chapters){
+  // Now we have the chapters json in order! Loop through...
+  
+})
+```
