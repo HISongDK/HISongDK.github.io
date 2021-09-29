@@ -703,25 +703,123 @@ getJSON('story.json').then(function(story){
 浏览器很擅长同时加载多个文件，我们这种一个接一个下载章节的方法非常不效率。我们希望同时下载所有章节，全部完成后一次搞定，正好就有这么个 API：
 
 ```js
-Promise.all(arrayOfPromises).then(function(arrayOfResults){
+Promise.all(arrayOfPromises).then(function (arrayOfResults) {
   // ...
 })
 ```
 
- `Promise.all` 接受一个Promise数组为参数，创建一个当所有Promise都完成之后就完成的Promise，它的完成结果就是一个数组，包含了所有先前传入的那些Promise的完成结果，顺序和它们传入的数组顺序一致。
+`Promise.all` 接受一个 Promise 数组为参数，创建一个当所有 Promise 都完成之后就完成的 Promise，它的完成结果就是一个数组，包含了所有先前传入的那些 Promise 的完成结果，顺序和它们传入的数组顺序一致。
 
 ```js
-getJSON('story.json').then(function(story){
-  addHtmlToPage(story.heading)
+getJSON('story.json')
+  .then(function (story) {
+    addHtmlToPage(story.heading)
 
-  // Take an array of promises and wait on them all
-  return Promise.all(
-    // Map our array of chapter urls to an array of chapter json promises
-    story.chapterUrls.map(getJSON)
-    // 我还能说什么，这代码写的太鬼了
-  )
-}).then(function(chapters){
-  // Now we have the chapters json in order! Loop through...
-  
-})
+    // Take an array of promises and wait on them all
+    return Promise.all(
+      // Map our array of chapter urls to an array of chapter json promises
+      story.chapterUrls.map(getJSON),
+      // 我还能说什么，这代码写的太鬼了
+    )
+  })
+  .then(function (chapters) {
+    // Now we have the chapters json in order! Loop through...
+    chapters.forEach(function (chapter) {
+      // ... and add to the page
+      addHtmlToPage(chapter.html)
+    })
+
+    addTextToPage('ALL done')
+  })
+  .catch(function (error) {
+    // catch any error that happened so far
+
+    addTextToPage('Argh,broken:' + err.message)
+  })
+  .then(function () {
+    document.querySelector('.spinner').style.display = 'none'
+  })
+```
+
+根据连接状况，改进的代码会比顺序加载方式提速数秒，甚至代码行数也更少。章节加载完成的顺序不确定，但是它们显示在页面上的顺序准确无误。
+
+![图略](https://link)
+
+然而这样还是有提高空间。当第一章内容加载完毕我们可以立即填进页面，这样用户可以在其他内容尚未加载完成之前就开始阅读；当第三章到达的时候我们不动声色，第二章也到达之后我们再把第二章和第三章内容填入界面，以此类推。
+
+为了达到这样的效果，我们同时请求所有章节的内容，然后创建一个序列将其依次填入界面：
+
+```js
+getJSON('story.json')
+  .then(function (story) {
+    addHtmlToPage(story.heading)
+
+    // Map our array of chapter urls to an array of chapter json promises.
+    // This makes sure they all download parallel
+    return story.chapterUrls
+      .map(getJSON)
+      .reduce(function (sequence, chapterPromise) {
+        // Use reduce to chain the promises together
+        // adding content to the page for each chapter
+        return sequence
+          .then(function () {
+            // Wait for everything in the sequence so far,then wait for theis chapter to arrive
+            return chapterPromise
+          })
+          .then(function (chapter) {
+            addHtmlToPage(chapter.html)
+          })
+      }, Promise.resolve())
+  })
+  .then(function () {
+    addTextToPage('ALL done')
+  })
+  .catch(function (err) {
+    // Catch any error that happend along the way
+    addTextToPage('Argh,broken:' + err.message)
+  })
+  .then(function () {
+    document.querySelector('.spinner').style.display = 'none'
+  })
+// 虽说这代码逐渐就完全看不懂了
+```
+
+哈哈（[查看示例](http://www.html5rocks.com/en/tutorials/es6/promises/async-best-example.html)），鱼与熊掌兼得！加载所有内容的时间未变，但用户可以更早看到这一章。
+
+![图略](https://link)
+
+这个小例子中各章节加载差不多同时完成，逐章显示的策略在章节内容很多的时候优势会更加显著。
+
+上面的代码如果 [用 Node.js 风格的回调或者事件机制实现](https://gist.github.com/jakearchibald/0e652d95c07442f205ce)的话代码量大约要翻一倍，更重要的是可读性也不如此例。然而，Promise 的厉害不止于此，和其他 ES6 的新功能结合起来还能更高效......
+
+## 附赠章节：Promise 和 Generator
+
+接下来的内容涉及到一大堆 ES6 的新特性，不过对于现在应用 Promise 来说并非必须，把它看作接下来第二部豪华续集的预告片来看就好了。
+
+ES6 还给我们带来了 [Generator](http://wiki.ecmascript.org/doku.php?id=harmony:generators),允许函数在特定地方像 return 一样退出，但是稍后又能恢复到这个位置和状态上继续执行。
+
+```js
+function* addGenerator() {
+  var i = 0
+  while (true) {
+    i += yield i
+  }
+}
+```
+
+注意函数名前的星号，这表示这是一个 Generator。关键字 yield 标记了暂停/继续的位置，使用方法像这样：
+
+```js
+var adder = addGenerator()
+adder.next().value   // 0
+adder.next(5).value  // 5
+adder.next(5).value  // 10
+adder.next(5).value  // 15
+adder.next(50).value // 65
+```
+
+这对 Promise 有什么用呢？你可以用这种暂停/继续的机制写出来和同步代码看上去差不多(理解起来也一样简单)的代码。下面是一个辅助函数（helper function），我们在 `yeild` 位置等待Promise完成：
+
+```js
+funciton spawn()
 ```
