@@ -40,8 +40,8 @@ echo 添加提交的commit信息: 更新于 %date:~0,13% %time:~0,5%
 git commit -m "更新于 %date:~0,13% %time:~0,5%"
 echo;
  
-echo 提交到远程分支：git push origin gh-pages -f
-git push origin gh-pages -f
+echo 提交到远程分支：git push origin gh-pages
+git push origin gh-pages
 echo;
  
 echo 执行完毕！
