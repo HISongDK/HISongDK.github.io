@@ -7,7 +7,8 @@ date: 2021-09-24 14:38:13
 
 原文：[JavaScript Promises: an introduction](http://www.html5rocks.com/en/tutorials/es6/promises/)
 作者：[Jake Archibald](http://www.html5rocks.com/profiles/#jakearchibald)
-翻译：[Amio](./#)
+时间：Dec 16, 2013
+翻译：[Amio](./#未知了已经是)
 转自：[司徒](https://www.cnblogs.com/rubylouvre/p/3495286.html)
 
 女士们先生们，请准备好迎接 Web 开发历史上一个重大时刻......
@@ -17,6 +18,34 @@ date: 2021-09-24 14:38:13
 > JavaScript 有了原生的 Promise!
 
 [漫天的烟花绽放，人群沸腾了]
+<!-- more -->
+
+- [他们都在激动什么？](#他们都在激动什么)
+- [事件不是万金油](#事件不是万金油)
+- [相关术语](#相关术语)
+- [JavaScript 有了 Promise](#javascript-有了-promise)
+- [浏览器支持和 Polyfill](#浏览器支持和-polyfill)
+- [与其他库的兼容性](#与其他库的兼容性)
+- [复杂的异步代码变得更简单了](#复杂的异步代码变得更简单了)
+- [将 Promise 用于 XMLHttpRequest](#将-promise-用于-xmlhttprequest)
+- [链式调用](#链式调用)
+  - [值的处理](#值的处理)
+  - [队列的异步操作](#队列的异步操作)
+- [错误处理](#错误处理)
+  - [JavaScript 异常和 Promise](#javascript-异常和-promise)
+  - [实践错误处理](#实践错误处理)
+- [并行和串行————鱼与熊掌兼得](#并行和串行鱼与熊掌兼得)
+  - [创建序列](#创建序列)
+- [附赠章节：Promise 和 Generator](#附赠章节promise-和-generator)
+- [Promise API 参考](#promise-api-参考)
+  - [静态方法](#静态方法)
+    - [Promise.cast(promise)](#promisecastpromise)
+    - [Promise.cast(obj)](#promisecastobj)
+    - [Promise.resolve(thenable)](#promiseresolvethenable)
+    - [Promise.resolve(obj)](#promiseresolveobj)
+    - [Promise.reject(obj)](#promiserejectobj)
+    - [Promise.all(obj)](#promiseallobj)
+    - [Promise.race(array)](#promiseracearray)
 
 这时候你大概是这三种人之一：
 
@@ -811,15 +840,111 @@ function* addGenerator() {
 
 ```js
 var adder = addGenerator()
-adder.next().value   // 0
-adder.next(5).value  // 5
-adder.next(5).value  // 10
-adder.next(5).value  // 15
+adder.next().value // 0
+adder.next(5).value // 5
+adder.next(5).value // 10
+adder.next(5).value // 15
 adder.next(50).value // 65
 ```
 
-这对 Promise 有什么用呢？你可以用这种暂停/继续的机制写出来和同步代码看上去差不多(理解起来也一样简单)的代码。下面是一个辅助函数（helper function），我们在 `yeild` 位置等待Promise完成：
+这对 Promise 有什么用呢？你可以用这种暂停/继续的机制写出来和同步代码看上去差不多(理解起来也一样简单)的代码。下面是一个辅助函数（helper function），我们在 `yeild` 位置等待 Promise 完成：
 
 ```js
-funciton spawn()
+funciton spawn(generatorFunc){
+  function continuer(verb,arg){
+    var result;
+    try{
+      result = generator[verb](arg);
+    }catch(err){
+      return Promise.reject(err);
+    }
+    if(result.done){
+      return result.value
+    }else{
+      return Promise.cast(result.value).then(onFulfilled, onRejected);
+    }
+  }
+
+  var generator = generatorFunc()
+  var onFulfilled = continuer.bind(continuer,'next')
+  var onRejected = continuer.bind(continuer,'throw')
+  return onFulfilled()
+
+}
 ```
+
+<!-- 属实就完全看不懂了 -->
+
+这段代码[原样拷贝自 Q](https://github.com/kriskowal/q/blob/db9220d714b16b96a05e9a037fa44ce581715e41/q.js#L500)，只是改成 JavaScript Promise 的 API。把我们前面的最终方案和 ES6 最新特性结合在一起之后：
+
+```js
+spawn(function* () {
+  try {
+    // 'yield' effectively does an async wait
+    // returning the result of the promise
+    let story = yield getJSON('story.json')
+    addHtmlToPage(story.heading)
+
+    // Map our array of chapter urls to an array of chapter json promises.
+    // This makes sure they all download parallel.
+    let chapterPromises = story.chapterUrls.map(getJSON)
+
+    for (let chapterPromise of chapterPromises) {
+      // Wait for each chapter to be ready,then add it to the page
+      let chapter = yield chapterPromise
+      // 联系到 async await 有点明白了
+      addHtmlToPage(chapter.html)
+    }
+
+    addTextToPage('ALL done')
+  } catch (err) {
+    // try/catch just works ,rejected promises are thrown here
+    addTextToPage('Argh,broken:' + err.message)
+  }
+
+  document.getElementById('.spinner').style.display = 'none'
+})
+```
+
+功能完全一样，读起来要简单得多。这个例子目前可以在 Chrome Canary 中运行（[查看示例](http://www.html5rocks.com/en/tutorials/es6/promises/async-generators-example.html)）,不过你得先到 about:flags 中开启 **Enable experimental JavaScript**选项。
+
+这里用到了一堆 ES6 的新语法：Promise、Generator、let、for-of。当我们把 `yield` 应用在一个 Promise 上，spawn 辅助函数会等待 Promise 完成，然后才返回最终的值。如果 Promise 给出否定结果，spawn 中的 yield 则会抛出一个异常，我们可以用 try/catch 捕捉到。这样写异步代码超级简单！
+
+## Promise API 参考
+
+除非额外注明，最新版的 Chrome（Canary）和 Firefox（nightly）均支持下列所有方法。[这个 Polyfill](https://github.com/jakearchibald/ES6-Promises/blob/master/README.md)则在所有浏览器内实现同样的接口。
+
+### 静态方法
+
+#### Promise.cast(promise)
+
+返回一个 Promise（当且仅当 promise.constructor == Promise)
+备注：目前仅有 Chrome 实现
+
+#### Promise.cast(obj)
+
+创建一个以 obj 为成功结果的 Promise。
+备注：目前仅有 Chrome 实现
+
+#### Promise.resolve(thenable)
+
+从 thenable 对象创建一个新的 Promise。一个 thenable（类 Promise）对象是一个带有“then”方法的对象。如果你传入一个原生的 JavaScript Promise 对象，则会创建一个新的 Promise。此方法涵盖了 Promise.cast 的特性，但是不如 Promise.cast 更简单高效。
+
+#### Promise.resolve(obj)
+
+创建一个以 obj 为确认结果的 Promise。这种情况下等同于 Promise.cast(obj)
+
+#### Promise.reject(obj)
+
+创建一个以 obj 为否定结果的 Promise。为了一致性和调试便利（如堆栈追踪），obj 应该是一个 Error 实例对象。
+
+#### Promise.all(obj)
+
+创建一个 Promise，当且仅当传入数组中的所有 Promise 都确认之后才确认，如果遇到数组中的任何一个 Promise 以否定结束，则抛出否定结果。每个数组元素都会首先经过 Promise.cast,所以数组可以包含类Promise对象或者其他对象。确认结果是一个数组，包含传入数组中的每个 Promise 的确认结果（**且保持顺序**）；否定结果是传入数组中第一个遇到的否定结果。
+备注：目前仅有 Chrome 实现
+
+#### Promise.race(array)
+
+创建一个 Promises，当数组中的任意对象确认时将其结果作为确认结束，或者当数组中任意对象否定时将其结果作为否定结束。
+
+备注：我不大确定这个接口是否有用，我更倾向于一个 Promise.all的队里方法，仅当所有数组元素全部给出否定的时候才抛出否定结构。
