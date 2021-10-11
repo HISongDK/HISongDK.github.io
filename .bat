@@ -22,8 +22,11 @@ set /p declation=输入提交的commit信息:
 git commit -m "%declation%"
 echo;
  
-echo 源文件变更提交到远程分支：git push origin master
+echo 源文件变更提交Github：git push origin master
 git push origin master
+echo;
+
+echo 源文件变更提交Gitee：git push mirror master
 git push mirror master
 echo;
 
