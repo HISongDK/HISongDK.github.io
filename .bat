@@ -24,6 +24,7 @@ echo;
  
 echo 源文件变更提交到远程分支：git push origin master
 git push origin master
+git push mirror master
 echo;
 
 echo 提交博客静态文件
