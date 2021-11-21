@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在本章中，我们将着重介绍函数对象中的原型（prototype）属性。对于 JavaScript 的学习来说，理解原型的工作原理是非常重要的一环，毕竟，它的对象模型是完全基于圆形的。当然，圆形其实不难理解，只不过由于这是个全新的概念，我们接受起来需要一点时间而已。事实上这东西在 JavaScript 中几乎无所不在（闭包除外），只要我们“领悟”了其中原理，一切都会显得格外简单明了了。而且在之后的内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OOP | 原型">
+<meta property="og:url" content="http://example.com/2021/09/25/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-25-%E5%8E%9F%E5%9E%8B/index.html">
+<meta property="og:site_name" content="某人写字的地方">
+<meta property="og:description" content="在本章中，我们将着重介绍函数对象中的原型（prototype）属性。对于 JavaScript 的学习来说，理解原型的工作原理是非常重要的一环，毕竟，它的对象模型是完全基于圆形的。当然，圆形其实不难理解，只不过由于这是个全新的概念，我们接受起来需要一点时间而已。事实上这东西在 JavaScript 中几乎无所不在（闭包除外），只要我们“领悟”了其中原理，一切都会显得格外简单明了了。而且在之后的内容">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-25T04:37:34.000Z">
+<meta property="article:modified_time" content="2021-11-05T15:56:23.981Z">
+<meta property="article:author" content="Somebody">
+<meta property="article:tag" content="oop">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/09/25/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-25-%E5%8E%9F%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>OOP | 原型 | 某人写字的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">某人写字的地方</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-sitemap fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/25/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-25-%E5%8E%9F%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OOP | 原型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-25 12:37:34" itemprop="dateCreated datePublished" datetime="2021-09-25T12:37:34+08:00">2021-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/" itemprop="url" rel="index"><span itemprop="name">JavaScript面向对象编程指南</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在本章中，我们将着重介绍函数对象中的原型（prototype）属性。对于 JavaScript 的学习来说，理解原型的工作原理是非常重要的一环，毕竟，它的对象模型是完全基于圆形的。当然，圆形其实不难理解，只不过由于这是个全新的概念，我们接受起来需要一点时间而已。事实上这东西在 JavaScript 中几乎无所不在（闭包除外），只要我们“领悟”了其中原理，一切都会显得格外简单明了了。而且在之后的内容中，本书会围绕着原型展开大量的示例演示，一边巩固并加深对这一概念的熟悉程度。</p>
+<p>本章将要讨论以下话题。</p>
+<ul>
+<li>每个函授都有一个 prototype 属性，该属性所存储的就是原型对象。</li>
+<li>为原型对象添加属性。</li>
+<li>使用原型对象中的新增属性。</li>
+<li>区别对象自身属性与原型属性。</li>
+<li><code>__proto__</code>,用于保存各对象原型的神秘链接。</li>
+<li>介绍原型方法，例如 isPrototypeOf()、hasOwnProperty()、propertyIsEnumerable()。</li>
+<li>如何（利用原型）强化数组或字符串这样的内建对象。<a id="more"></a>
+
+</li>
+</ul>
+<h2 id="原型属性"><a href="#原型属性" class="headerlink" title="原型属性"></a>原型属性</h2><p>在 JavaScript 中，函数本身也是一个包含了方法和属性的对象。经过之前的学习，相信我们对它的一些方法（如 apply()和 call()）及属性（如 length 和 constructor）并不陌生。接下来，我们要介绍的是函数对象的另一个属性——prototype。</p>
+<p>众所周知，<!-- 其实我不是很知道 -->只要我们想下面这样简单地定义一个函数 foo(),就可以像访问其他对象一样访问该函数的属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a * b</span><br><span class="line">&#125;</span><br><span class="line">foo.length <span class="comment">// 2</span></span><br><span class="line">foo.constructor <span class="comment">// Function()</span></span><br></pre></td></tr></table></figure>
+<p>其实这些（在函数定义时被创建的）属性就包括了 prototype 属性，它的初始值是一个空对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> foo.prototype</span><br><span class="line"><span class="comment">// &#x27;object&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>当然我们也可以自己添加该属性，就像这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo.prototype = &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>我们也可以赋予这个空对象一些方法和属性，这并不会对 foo 函数本身造成什么影响，只是不能被用作构造器罢了。</p>
+<h2 id="利用原型添加方法和属性"><a href="#利用原型添加方法和属性" class="headerlink" title="利用原型添加方法和属性"></a>利用原型添加方法和属性</h2><p>在第 4 章中，我们已经学习了如何定义构造器函数，并用它来新建（构造）对象。这种做法的主要意图是通过 new 操作符调用函数，以达到访问对象 this 值的目的，然后，构造器就可以将它创建的新对象返回给我们。这样，我们就有了赋予新建对象一定功能（即为其添加属性和方法）的方法。</p>
+<p>下面，让我们通过一个具体的构造器函数 Gadget()，来看看它是如何在新建对象是添加属性和方法的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Gadget</span>(<span class="params">name, color</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name</span><br><span class="line">  <span class="built_in">this</span>.color = color</span><br><span class="line">  <span class="built_in">this</span>.whatAreYou = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;I am a &#x27;</span> + <span class="built_in">this</span>.color + <span class="string">&#x27; &#x27;</span> + <span class="built_in">this</span>.name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>添加属性和方法还有另一种方式，即通过构造器函数的 prototype 属性来增加该构造器所能提供的功能。现在就让我们来给上面的构造器增加两个属性（即 price 和 rating）和一个方法（即 个体 Info()）。由于 prototype 属性包含的是一个对象，所以我们可以这样：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Gadget.prototype.price = <span class="number">100</span></span><br><span class="line">Gadget.prototype.rating = <span class="number">3</span></span><br><span class="line">Gadget.prototype.getInfo = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;Rating: &#x27;</span> + <span class="built_in">this</span>.rating + <span class="string">&#x27;, price&#x27;</span> + <span class="built_in">this</span>.price</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果不想将他们逐一添加到原型对象中去,也可以另外定义一个对象，然后将其覆盖到之前的原型上：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Gadget.prototype = &#123;</span><br><span class="line">  <span class="attr">price</span>:<span class="number">100</span>,</span><br><span class="line">  <span class="attr">rating</span>:<span class="number">3</span>,</span><br><span class="line">  <span class="attr">getInfo</span>:<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    retrurn <span class="string">&#x27;rating: &#x27;</span> + <span class="built_in">this</span>.rating + <span class="string">&#x27;, price&#x27;</span> + <span class="built_in">this</span>.price</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用原型的方法和属性"><a href="#使用原型的方法和属性" class="headerlink" title="使用原型的方法和属性"></a>使用原型的方法和属性</h3><p>在向原型对象中添加完所有的方法和属性后，就可以直接用该构造器创建新对象了。例如，我们用 Gadget() 来创建一个 newtoy 对象，然后，就可以访问之前所定义的那些属性和方法了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> newtoy = <span class="keyword">new</span> Gadget(<span class="string">&#x27;webcam&#x27;</span>, <span class="string">&#x27;black&#x27;</span>)</span><br><span class="line"></span><br><span class="line">newtoy.name <span class="comment">// &quot;webcam&quot;</span></span><br><span class="line">newtoy.color <span class="comment">// &quot;black&quot;</span></span><br><span class="line">newtoy.whatAreYou <span class="comment">// &quot;I am a black webcam&quot;</span></span><br><span class="line"></span><br><span class="line">newtoy.price <span class="comment">// 100</span></span><br><span class="line">newtoy.rating <span class="comment">// 3</span></span><br><span class="line">newtoy.getInfo <span class="comment">// &quot;Rating: 3,price: 100&quot;</span></span><br></pre></td></tr></table></figure>
+<p>对于原型来说，最重要的是我们要理解它的“驻留（live)”概念。由于在 JavaScript 中，对象都是通过传引用的方式传递的，因此我们所创建的对象实例中并没有一份属于自己的原型副本。知道这意味着什么么？这就是说我们可以随时更改原型，并且与之相关的对象都会集成这一改变（甚至可能影响到修改以前就已经创建的对象）。</p>
+<p>下面继续之前的例子，让我们再向原型中添加一个新方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Gadget.prototype.get = <span class="function"><span class="keyword">function</span> (<span class="params">what</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">this</span>[what]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们就会看到，即便 newtoy 对象在 get() 方法定义之前就已经创建了，但我们依然可以砸该对象上访问原型对象新增的方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">newtoy.get(<span class="string">&#x27;price&#x27;</span>) <span class="comment">// 100</span></span><br><span class="line">newtoy.get(<span class="string">&#x27;color&#x27;</span>) <span class="comment">// &#x27;black&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="自身属性与原型属性"><a href="#自身属性与原型属性" class="headerlink" title="自身属性与原型属性"></a>自身属性与原型属性</h3><p>在之前关于 getInfo() 的那个实例中，我们是使用 this 指针来完成对象访问的，但其实直接引用 Gadget.prototype 也可以完成同样的操作；</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Gadget.prototype.getInfo = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="string">&#x27;Rating: &#x27;</span> + Gadget.prototype.rating + <span class="string">&#x27;, price: &#x27;</span> + Gadget.prototype.pirce</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这难道有什么不同么？要回答这个问题，就需要更深入的理解原型的工作原理。</p>
+<p>让我们再回到之前的那个 newtoy 对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> newtoy = <span class="keyword">new</span> Gadget(<span class="string">&#x27;webcam&#x27;</span>, <span class="string">&#x27;black&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>当我们访问 newtoy 某个属性，例如 newtoy.name 时，JavaScript 引擎会遍历该对象的所有属性，并查找一个叫做 name 的属性。如果找到就会立即返回其值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newtoy.name <span class="comment">// &#x27;webcam&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>那么如果访问 rating 属性又会发生什么呢？JavaScript 依然会查询 newtoy 对象的所有属性，但是这次它找不到一个叫 rating 的属性。接下来，脚本引擎就回去查询用于创建当前对象的构造器函数的原型（等价于我们直接访问 newtoy.constructor.prototype)<!--这有点给我看懵了，实例对象上本身是没有constructor属性的吧，所以实例访问这个 constructor 属性是通过 __proto__ 访问到原型对象 prototype 上的 constructor，而 constructor 又指向构造函数本身，那这里再通过 constructor 访问 prototype，是不是就等价于直接访问 newtoy.__proto__ -->。如果在原型中找到了该属性，就立即使用该属性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newtoy.rating <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<p>这种方式与直接访问原型属性是一样的。每个对象都有属于自己的构造器函数，其所引用的就是用于创建该对象的函数，所以我们可以像下面这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span>.constructor <span class="comment">// Gadget(neme,color)</span></span><br><span class="line"><span class="keyword">new</span>.constructor.prototype.rating <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<p>现在我们再来仔细想一想这个过程。每个对象都会有一个构造器，而原型本身也是一个对象，这意味着它也必定又有一个构造器，而这个构造器又会又自己的原型。换句话说，我们可以这样做：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">newtoy.constructor.prototype.constructor <span class="comment">// Gadget(neme,color)</span></span><br><span class="line">newtoy.constructor.prototype.constructor.prototype <span class="comment">// Object price = 100 rating = 3</span></span><br></pre></td></tr></table></figure>
+<p>这个结构可能会一直持续下去，并最终取决于原型链（prototype chain）的长度，但其实最后一环肯定是 Object 内建对象，因为它是最高级的父级对象。实际上，如果我们调用的是 newtoy.toString(),那么在 newtoy 对象和圆形中都不会找到 toString() 方法。最后我们调用的只能是 Object 对象的 toString() 方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newtoy.toString() <span class="comment">// [object Object]</span></span><br></pre></td></tr></table></figure>
+<h3 id="利用自身属性重写原型属性"><a href="#利用自身属性重写原型属性" class="headerlink" title="利用自身属性重写原型属性"></a>利用自身属性重写原型属性</h3><p>通过上面的讨论，我们知道如果在一个对象自身属性中没有找到指定属性，就可以去（如果存在的话）原型链中查找相关的属性。但是，如果遇上对象的自身属性与原型属性同名又该怎么办呢？答案是对象自身属性的优先级高于原型属性。</p>
+<p>让我们来看一个具体的示例，及同一个属性同时出现在对象的自身属性和原型属性中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Gadget</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line">Gadget.prototype.name = <span class="string">&#x27;foo&#x27;</span></span><br><span class="line"><span class="comment">// 然后我们新建一个对象，并访问该对象自身的 name 属性:</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> toy = <span class="keyword">new</span> Gadget(<span class="string">&#x27;camera&#x27;</span>)</span><br><span class="line">toy.name <span class="comment">// camera</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这时候如果我们删除这个属性，同名的原型属性就会‘浮出水面’：</span></span><br><span class="line"><span class="keyword">delete</span> toy.name</span><br><span class="line">toy.name <span class="comment">// foo</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 当然，我们随时都可以重建这个对象的自身属性</span></span><br><span class="line">toy.name = <span class="string">&#x27;camera&#x27;</span></span><br><span class="line">toy.name <span class="comment">// camera</span></span><br></pre></td></tr></table></figure>
+<h4 id="枚举属性"><a href="#枚举属性" class="headerlink" title="枚举属性"></a>枚举属性</h4><p>如果想获得某个对象所有属性的列表，我们可以使用<code>for-in</code>循环。在第 2 章中，我们已经知道了如何使用该循环便利数组中的所有元素：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> a) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a[i])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而数组本身就是对象，因此我们可以用同样的 for-in 循环来遍历对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123; <span class="attr">p1</span>: <span class="number">1</span>, <span class="attr">p2</span>: <span class="number">2</span> &#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> o) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i + <span class="string">&#x27;=&#x27;</span> + o[i])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>产生的结果如下：<br>p1 = 1<br>p2 = 2</p>
+<p>在这里有些细节需要留意。</p>
+<ul>
+<li>并不是所有的属性都会在 for-in 中显示。例如（数组）length 属性和 constructor 属性就不会显示。那些已经被显示的属性被称为可枚举的，我们可以通过各个对象所提供的 propertyIsEnumerabel()方法来判断其中有哪些可枚举的属性。</li>
+<li>原型链中的各个原型属性也会被显示出来，当然前提是他们是可枚举的。我们可以通过对象的 hasOwnProperty() 方法来判断一个属性是对象自身属性还是原型属性。</li>
+<li>对于所有的原型属性，propertyIsEnumberable()都会返回 false，包括那些在 for-in 中显示出来的属性。</li>
+</ul>
+<p>下面来看看这些方法具体是如何使用的。首先，我们来定义一个简化版的 Gadget():</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Gadget</span>(<span class="params">name, color</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name</span><br><span class="line">  <span class="built_in">this</span>.color = color</span><br><span class="line">  <span class="built_in">this</span>.someMethod = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Gadget.prototype.price = <span class="number">100</span></span><br><span class="line">Gadget.prototype.rating = <span class="number">3</span></span><br><span class="line"><span class="comment">// 然后新建一个对象：</span></span><br><span class="line"><span class="keyword">var</span> newtoy = <span class="keyword">new</span> Gadget(<span class="string">&#x27;webcam&#x27;</span>, <span class="string">&#x27;black&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 现在，如果对它执行 for-in 循环，就会列出该对象的所有属性，包括圆形中的属性：</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> newtoy) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(prop + <span class="string">&#x27;=&#x27;</span> + newtoy[prop])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其结果甚至包括该对象的方法（因为方法本质上也可以被视为是函数类型的属性）：</span></span><br><span class="line"><span class="comment">// name = webcam</span></span><br><span class="line"><span class="comment">// color = black</span></span><br><span class="line"><span class="comment">// someMethod = function() &#123; return 1;&#125;</span></span><br><span class="line"><span class="comment">// price = 100</span></span><br><span class="line"><span class="comment">// rating = 3</span></span><br></pre></td></tr></table></figure>
+<p>如果要对对象属性和原型属性做一下区分，就需要调用 hasOwnProperty() 方法，我们可以先来试一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">newtoy.hasOwnProperty(<span class="string">&#x27;name&#x27;</span>) <span class="comment">// true</span></span><br><span class="line">newtoy.hasOwnProperty(<span class="string">&#x27;price&#x27;</span>) <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<p>下面我们再循环一次，不过这次只显示对象的自身属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> newtoy) &#123;</span><br><span class="line">  <span class="keyword">if</span> (newtoy.hasOwnProperty(prop)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(prop + <span class="string">&#x27;: &#x27;</span> + newtoy[prop])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 结果为：</span></span><br><span class="line"><span class="comment">// name=webcam</span></span><br><span class="line"><span class="comment">// color=black</span></span><br><span class="line"><span class="comment">// someMethod=function() &#123; return 1;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>现在我们来试试 propertyIsEnumerable()，该方法会对所有的非内建对象属性返回 true:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">newtoy.propertyIsEnumerable(<span class="string">&#x27;name&#x27;</span>) <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 而对于内建属性和方法来说，它们大部分都是不可枚举的：</span></span><br><span class="line">newtoy.propertyIsEnumerable(<span class="string">&#x27;constructor&#x27;</span>) <span class="comment">// false</span></span><br><span class="line"><span class="comment">// 另外，任何来自原型链中的属性也是不可枚举的：</span></span><br><span class="line">newtoy.propertyIsEnumerable(<span class="string">&#x27;price&#x27;</span>) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>但需要注意的是，如果 propertyIsEnumerable() 的调用是来自原型链上的某个对象，那么该对象的属性是可枚举的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newtoy.constructor.prototype.propertyIsEnumberable(<span class="string">&#x27;price&#x27;</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h4 id="isPrototypeOf-方法"><a href="#isPrototypeOf-方法" class="headerlink" title="isPrototypeOf()方法"></a>isPrototypeOf()方法</h4><p>每个对象中都会有一个 isPrototypeOf() 方法，这个方法会告诉我们当前对象是否是另一个对象的原型。</p>
+<p>让我们先来定义一个简单的对象 monkey:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> monkey = &#123;</span><br><span class="line">  <span class="attr">hair</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">feeds</span>: <span class="string">&#x27;bananas&#x27;</span>,</span><br><span class="line">  <span class="attr">breathes</span>: <span class="string">&#x27;air&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们再创建一个叫做 Human 的构造器函数，并将其原型属性设置为指向 monkey:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Human</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Human.prototype = monkey</span><br></pre></td></tr></table></figure>
+<p>现在，如果我们新建一个叫做 George 的 Human 对象，并向它提问“monkey 是 George 的原型么？”,答案是 true。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> geroge = <span class="keyword">new</span> Human(<span class="string">&#x27;George&#x27;</span>)</span><br><span class="line">monkey.isPrototypeOf(geroge) <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 反过来就是  geroge instanceof monkey</span></span><br></pre></td></tr></table></figure>
+<h4 id="神秘的proto链接"><a href="#神秘的proto链接" class="headerlink" title="神秘的proto链接"></a>神秘的<strong>proto</strong>链接</h4><p>现在，我们已经了解了当我们访问一个在当前对象中不存在的属性时，相关的原型属性就会被纳入查询范围。</p>
+<p>下面再让我们回到那个用 monkey 做原型对象的 Human() 对象构造器。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> monkey = &#123;</span><br><span class="line">  <span class="attr">feeds</span>: <span class="string">&#x27;bananas&#x27;</span>,</span><br><span class="line">  <span class="attr">breathes</span>: <span class="string">&#x27;air&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Human</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">Human.prototype = monkey</span><br></pre></td></tr></table></figure>
+<p>这次我们来创建一个 developer 对象，并赋予它一些属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> developer = <span class="keyword">new</span> Human()</span><br><span class="line">developer.feeds = <span class="string">&#x27;pizza&#x27;</span></span><br><span class="line">developer.hacks = <span class="string">&#x27;JavaScript&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>接着，我们来访问一些属性，例如 developer 对象的 hacks 属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">developer.hacks</span><br><span class="line"><span class="comment">// &#x27;JavaScript&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>当然，feeds 也一样可以在该对象中找到：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">developer.feeds</span><br><span class="line"><span class="comment">// &#x27;pizzas&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>但 breathes 在 developer 自身的属性中是不存在的，所以就得去原型中查询，就好像其中有一个神秘的链接指向了相关的原型对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">develop.breathes <span class="comment">// &#x27;air&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>我们能自己从 developer 对象中获得相关的原型对象么？好吧，我们确实可以做到，只要将构造器作为一个中转站，执行类似 developer.constructor.prototype 这样的调用，确实可以得到 monkey 对象。但问题在于这种做法非常不可靠，因为构造器中有很多复杂的信息，而且随时都有可能被重写，甚至将他重写为非对象属性也不会影响原型链本身的功能。</p>
+<p>例如，我们将其 constructor 属性设置为一个字符串：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">developer.constructor = <span class="string">&#x27;junk&#x27;</span></span><br><span class="line"><span class="comment">// &#x27;junk&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这看起来似乎将原型搞得一团糟：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> developer.constructor.prototype</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>但事实并非如此，因为我们依然能访问 develop 的 breathes 属性，并返回“air”：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">developer.breathes</span><br><span class="line"><span class="comment">// &#x27;air&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这一切都表示了对象中确实存在一个指向相关原型链的链接，这个神秘的链接在 Firefox 中被叫做 <strong>proto</strong> (“proto”这个词的两边各有两条下划线)。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">developer.__proto__</span><br><span class="line"><span class="comment">// Object feeds=bananas breathes=air</span></span><br></pre></td></tr></table></figure>
+<p>当然，出于学习的目的来调用这种神秘的属性是无可厚非的，但如果是在实际的脚本编写中，这并不是一个好主意。因为该属性在 Internet Explorer 这样的浏览器中是不存在的，因此脚本就不能实现跨平台了。下面我们来看一个具体的示例。假设我们创建了一系列以 monkey 对象为原型的对象，而现在我们希望这些对象做一些共同的改变。在这种情况下，我们可以从改变 monkey 着手，并令其他对象实体来继承这一改变。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mokey.test = <span class="number">1</span></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line">developer.test</span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p>另外需要提示的是，<strong>proto</strong> 与 prototype 并不是等价的。<strong>proto</strong> 实际上是某个实体对象的属性，而 prototype 则是属于构造器函数的属性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> developer.__proto__</span><br><span class="line"><span class="comment">// &#x27;object&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> developer.prototype</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>千万要记住，<strong>proto</strong> 只能在学习或者调试的环境下使用。</p>
+<h2 id="扩展内建对象"><a href="#扩展内建对象" class="headerlink" title="扩展内建对象"></a>扩展内建对象</h2><p>在 JavaScript 中，内建对象的构造器函数（例如 Array、String、Object和Function）都是可以通过其原型来进行扩展的。这意味着我们可以做一些事情，例如只要往数组原型中添加新的方法，就可以使其在所有的数组可用。下面，我们就来试看。</p>
+<p>PHP 中有一个叫做 in_array() 的函数，主要用于查询数组中是否存在某个特定的值。JavaScript 中则没有一个叫做 inArray() 的方法，因此，下面我们通过 Array.prototype ，来实现一个。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.inArray = <span class="function"><span class="keyword">function</span>(<span class="params">needle</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="built_in">this</span>.length; i &lt; len; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>[i] == needle)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在所有数据对象都拥有了一个新方法，我们来测试一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;blue&#x27;</span>]</span><br><span class="line">a.inArray(<span class="string">&#x27;red&#x27;</span>) <span class="comment">// true</span></span><br><span class="line">a.inArray(<span class="string">&#x27;yellow&#x27;</span>) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>这很简单!我们可以再做一次。假设我们的应用程序需要一个反转字符串功能，并且也觉得 String 对象应该有一个 reverse() 方法，毕竟数组是有 reverse() 方法的。其实，在 String 的圆形中添加一个 reverse() 方法也是很容易，我们可以借助于 Array.prototype.reverse() 方法（这与第4章的某道练习题很相似）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>.prototype.reverse = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.reverse.apply(<span class="built_in">this</span>.split(<span class="string">&#x27;&#x27;</span>)).join(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">  <span class="comment">// 直接这么写也行啊</span></span><br><span class="line">  <span class="comment">// return this.split(&#x27;&#x27;).reverse().join(&#x27;&#x27;)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，我们实际上是先利用 split() 方法将目标字符串转化为数组，再调用该数组的 reverse() 方法产生一个反向数组。最后通过 join() 方法将结果数组转换为字符串。下面我们来测试一下这个新方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;Stoyan&#x27;</span>.reverse(); <span class="comment">//  &#x27;nayotS&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="关于扩展内建对象的讨论"><a href="#关于扩展内建对象的讨论" class="headerlink" title="关于扩展内建对象的讨论"></a>关于扩展内建对象的讨论</h3><p>由于通过原型来扩展内建对象是一种非常强大的技术，有了它我们几乎可以随心所欲地重塑 JavaScript 语言的能力。但也正是由于它有如此强大的威力，我们在选择使用这项能力时就必须慎之又慎。</p>
+<p>例如，有一个非常流行的 JavaScript 库叫做 Prototype，该库的作者就很新欢这种方法，以至于他直接用它作为库的名字。通过这个库，我们可以像使用 Ruby 语言一样使用 JavaScript 的方法。</p>
+<p>而另一个流行的 JavaScript 库 YUI （Yahoo！User Interface）库作者的观点则正想反。他们不希望以任何形式修改语言的内建对象。原因在于一旦人们已经掌握了 JavaScript 这门语言，总是希望无论在什么库环境下，语言都能以相同的方式工作，如果随意修改其核心对象，就有可能会使该库的用户因无法做出正确的预估而产生某些不必要的错误。</p>
+<p>事实上，随着 JavaScript 自身的变化以及浏览器新版本的不断出现，其支持的功能会越来越多，没准我们今天所缺失的，想通过原型来扩展的功能，明天就会出现在内建方法中。在这种情况下，我们设计的方法就没有了长期的需求性。然而，我们已经编写了大量的方法代码，那么这些方法是否与那些新增的内建方法实现存在着一些细微的不同呢？</p>
+<p>最后，我们可以在实现某个方法时先检测一下是否有现成的方法存在，例如在最近的示例中，代码应该这样写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="built_in">String</span>.prototype.reverse)&#123;</span><br><span class="line">  <span class="built_in">String</span>.prototype.reverse = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.reverse.apply(<span class="built_in">this</span>.split(<span class="string">&#x27;&#x27;</span>)).join(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>最佳实践：</strong>如果您想要通过原型为某一个对象添加一个新属性，务必先检查一下该属性是否已经存在。</p>
+<h3 id="一些原型陷阱"><a href="#一些原型陷阱" class="headerlink" title="一些原型陷阱"></a>一些原型陷阱</h3><p>在处理原型问题时，我们需要特别注意以下两种行为。</p>
+<ul>
+<li>当我们对原型对象执行完全替换时，肯能会触发原型链中某种异常（exception）。</li>
+<li>prototype.constructor 属性并不可靠。</li>
+</ul>
+<p>下面，我们来新建一个简单的构造器函数，并用它再创建两个对象；</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dog</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.tail = <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> benji = <span class="keyword">new</span> Dog()</span><br><span class="line"><span class="keyword">var</span> rusty = <span class="keyword">new</span> Dog()</span><br></pre></td></tr></table></figure>
+<p>即便在对象创建之后，我们也依为原型添加属性，并且在所有相关对象都可以随时访问这些新属性。现在，让我们放一个 say() 方法进去：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dog.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="string">&#x27;woof!&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，上面的两个对象都可以访问新方法了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">benji.say() <span class="comment">// &#x27;woof!&#x27;</span></span><br><span class="line">rusty.say() <span class="comment">// &#x27;woof!&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>如果我们总结一下这些对象的情况，就会发现到目前为止该构造器函数只是被用来新建对象，因此一切正常。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">benji.constructor <span class="comment">// Dog()</span></span><br><span class="line">rusty.constructor <span class="comment">// Dog()</span></span><br></pre></td></tr></table></figure>
+<p>但值得注意的是，如果我们这里访问的是该原型对象的构造器，返回的也是 Dog()。这就不太对了，因为这时候它的原型对象应该是一个由 Object() 创建的一般对象，并不拥有 Dog() 所构造的对象所拥有的属性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">benji.constructor.prototype.constructor </span><br><span class="line"><span class="comment">// Dog()</span></span><br><span class="line"><span class="keyword">typeof</span> benji.constructor.prototype.tail</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>现在，我们用一个自定义的新对象完全覆盖掉原有的原型对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dog.prototype = &#123; <span class="attr">paws</span>: <span class="number">4</span>, <span class="attr">hair</span>: <span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>事实证明，这确实会让原有对象不能访问原型的新增属性，但他们依然能够通过那个神秘链接与原有的对象保持联系。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> benji.paws</span><br><span class="line"><span class="comment">// undefined</span></span><br><span class="line">benji.say()</span><br><span class="line"><span class="comment">// &#x27;Woof!&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> benji.__proto__.say</span><br><span class="line"><span class="comment">// function</span></span><br><span class="line"><span class="keyword">typeof</span> benji.__proto__.paws</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>而我们之后创建的所有新对象使用的都是更新之后的 prototype 对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lucy = <span class="keyword">new</span> Dog()</span><br><span class="line"><span class="comment">// lucky.say()</span></span><br><span class="line"><span class="attr">TypeError</span>: lucy.say is not a <span class="function"><span class="keyword">function</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">lucy</span>.<span class="title">paws</span></span></span><br><span class="line"><span class="function">4</span></span><br></pre></td></tr></table></figure>
+<p>并且，其秘密链接 <strong>proto</strong> 也指向了新的 prototype 对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> lucy.__proto__.say</span><br><span class="line"><span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">typeof</span> lucy.__proto__.paws</span><br><span class="line"><span class="comment">// number</span></span><br></pre></td></tr></table></figure>
+<p>但这时候，新对象的 constructor 属性就不能保持正确了，原本应该是 Dog() 的引用却指向了 Object()。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lucy.constructor</span><br><span class="line"><span class="comment">// Object</span></span><br><span class="line">benji.constructor</span><br><span class="line"><span class="comment">// Dog()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这是因为 constructor 本来就是该对象原型上的属性，然后你把该对象的原型对象赋值为一个没有 constructor 属性的对象，就自然向原型链上层寻找，就找到了内建 Object 对象原型上指向它本身的 constructor 属性</span></span><br></pre></td></tr></table></figure>
+<p>而其中最令人困惑的部分则发生在我们查看其构造器的 prototype 属性时：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> lucy.constructor.prototype.paws</span><br><span class="line"><span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">typeof</span> benji.constructor.prototype.paws</span><br><span class="line"><span class="comment">// number</span></span><br></pre></td></tr></table></figure>
+<p>当然，我们可以通过下面两行代码来解决上述所有的异常行为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Dog.prototype = &#123; <span class="attr">paws</span>: <span class="number">4</span>, <span class="attr">hair</span>: <span class="literal">true</span> &#125;</span><br><span class="line">Dog.prototype.constructor = Dog</span><br></pre></td></tr></table></figure>
+<p><strong>最佳实践：</strong>当我们重写某对象的 prototype 时，重置相应的 constructor 属性是一个好习惯。</p>
+<h2 id="本章小结"><a href="#本章小结" class="headerlink" title="本章小结"></a>本章小结</h2><p>现在，让我们来总结一下本章所讨论的几个最重要的话题。</p>
+<ul>
+<li>在 JavaScript 中，所有函数都会拥有一个叫做 prototype 的属性，默认初始值为空对象</li>
+<li>我们可以在相关的原型对象中添加新的方法和属性，甚至可以自定义对象替换掉原有的原型对象</li>
+<li>当我恩通过某个构造器函数来新建对象（使用 new 操作符），这些对象就会自动拥有一个指向各自 prototype 的神秘链接，并且可以通过它来访问相关原型对象的属性。</li>
+<li>对象自身的属性优先级高于原型对象中的同名属性</li>
+<li>原型链的存在：如果我们在一个对象 foo 中访问一个并不存在的属性 bar,即当我们访问 foo.bar 时，JavaScript 引擎就会搜索该对象的原型的 bar 属性。如果依然没有找到 bar 属性，则会继续搜索其原型的原型，以此类推，直到 Object。</li>
+<li>我们可以对内建对象的构造器函数进行扩招，以便所有的对象都能访问我们添加的功能，如果将某个函数赋值给 Array.prototype.flip,所有的数组对象都能立即增添一个 flip() 方法，如 [1,2,3].flip()。另外，在添加相关的方法和属性之前，应该做一些对已有方法的检测工作，这将会大大增加脚本对于未来环境的适应能力。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/oop/" rel="tag"># oop</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/24/JavaScript-Promise-%E5%8E%BB%E8%80%8C%E5%A4%8D%E8%BF%94/" rel="prev" title="JavaScript Promise: 去而复返">
+      <i class="fa fa-chevron-left"></i> JavaScript Promise: 去而复返
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">原型属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%8E%9F%E5%9E%8B%E6%B7%BB%E5%8A%A0%E6%96%B9%E6%B3%95%E5%92%8C%E5%B1%9E%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">利用原型添加方法和属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8E%9F%E5%9E%8B%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E5%B1%9E%E6%80%A7"><span class="nav-number">2.1.</span> <span class="nav-text">使用原型的方法和属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E8%BA%AB%E5%B1%9E%E6%80%A7%E4%B8%8E%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7"><span class="nav-number">2.2.</span> <span class="nav-text">自身属性与原型属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E8%87%AA%E8%BA%AB%E5%B1%9E%E6%80%A7%E9%87%8D%E5%86%99%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text">利用自身属性重写原型属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E5%B1%9E%E6%80%A7"><span class="nav-number">2.3.1.</span> <span class="nav-text">枚举属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isPrototypeOf-%E6%96%B9%E6%B3%95"><span class="nav-number">2.3.2.</span> <span class="nav-text">isPrototypeOf()方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A5%9E%E7%A7%98%E7%9A%84proto%E9%93%BE%E6%8E%A5"><span class="nav-number">2.3.3.</span> <span class="nav-text">神秘的proto链接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%86%85%E5%BB%BA%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.</span> <span class="nav-text">扩展内建对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%89%A9%E5%B1%95%E5%86%85%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%A8%E8%AE%BA"><span class="nav-number">3.1.</span> <span class="nav-text">关于扩展内建对象的讨论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%8E%9F%E5%9E%8B%E9%99%B7%E9%98%B1"><span class="nav-number">3.2.</span> <span class="nav-text">一些原型陷阱</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">本章小结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Somebody</p>
+  <div class="site-description" itemprop="description">My vegetable has exploded!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Somebody</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

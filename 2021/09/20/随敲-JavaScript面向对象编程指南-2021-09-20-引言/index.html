@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="众所周知，时下所流行的这些 Web 应用，例如 Yahoo!Maps、Google Maps、Yahoo！Mail、My Yahoo！、Gmail、Digg 以及 YouTube 等都有一些明显的共同特征，即：它们都是 Web2.0 时代的应用程序，都有非常丰富的人性化交互界面，而这往往意味着大量的 JavaScript 应用。事实上，JavaScript 最初也只不过是一种内嵌于 HTM 语句中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OOP | 引言">
+<meta property="og:url" content="http://example.com/2021/09/20/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-20-%E5%BC%95%E8%A8%80/index.html">
+<meta property="og:site_name" content="某人写字的地方">
+<meta property="og:description" content="众所周知，时下所流行的这些 Web 应用，例如 Yahoo!Maps、Google Maps、Yahoo！Mail、My Yahoo！、Gmail、Digg 以及 YouTube 等都有一些明显的共同特征，即：它们都是 Web2.0 时代的应用程序，都有非常丰富的人性化交互界面，而这往往意味着大量的 JavaScript 应用。事实上，JavaScript 最初也只不过是一种内嵌于 HTM 语句中">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-20T06:37:03.000Z">
+<meta property="article:modified_time" content="2021-11-05T15:56:23.980Z">
+<meta property="article:author" content="Somebody">
+<meta property="article:tag" content="oop">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/09/20/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-20-%E5%BC%95%E8%A8%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>OOP | 引言 | 某人写字的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">某人写字的地方</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-sitemap fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-20-%E5%BC%95%E8%A8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OOP | 引言
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-20 14:37:03" itemprop="dateCreated datePublished" datetime="2021-09-20T14:37:03+08:00">2021-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/" itemprop="url" rel="index"><span itemprop="name">JavaScript面向对象编程指南</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>众所周知，时下所流行的这些 Web 应用，例如 Yahoo!Maps、Google Maps、Yahoo！Mail、My Yahoo！、Gmail、Digg 以及 YouTube 等都有一些明显的共同特征，即：它们都是 Web2.0 时代的应用程序，都有非常丰富的人性化交互界面，而这往往意味着大量的 JavaScript 应用。事实上，JavaScript 最初也只不过是一种内嵌于 HTM 语句中的单行式脚本语言。但如今已经今非昔比了，对于它今天所拥有的面向对象特性来说，无论是在可重用性方面，还是在可扩展性方面都已经足以支持我们去实现任何网站项目中的行为逻辑了。毕竟，对于今天的标准来说，任何一个符合规范的 Web 页面都应该包含以下三个要素：内容（HTML）、外观(CSS)、和行为（JavaScript）。</p>
+<p>通常来说，JavaScript 程序的运行必须要依赖于某个宿主环境。其中最常见的当然就是我们的 Web 浏览器了，但请注意，浏览器并不是 JavaScript 代码唯一的宿主环境。事实上，我们可以利用 JavaScript 来创建各种类型的插件工具、应用扩展以及其它形式的组件。种子，学习 JavaScript 语言是一件一举多得的事情，我们可以通过学习这种语言，来编写各种不同的应用程序。</p>
+<p>这本书将着重于介绍 JavaScript 语言本身，特别是其中的面向对象特性。我们会从零开始讲解这些内容，也就是说，读这本书无语具备任何的程序设计基础。另外，除了有一章内容是专门为 Web 浏览器环境而写的以外，本书其余部分介绍的都是 JavaScript 的一半特性，适用于任何支持该语言的执行环境。</p>
+<p>现在，让我们进入第一章的学习吧。首先，我们需要先来了解一下 JavaScript 背后的发展历史，而后我们才能逐步引入面向对象编程方面的基本概念。</p>
+<a id="more"></a>
+
+<h2 id="回顾历史"><a href="#回顾历史" class="headerlink" title="回顾历史"></a>回顾历史</h2><p>起初，Web 站点事实上只不过是一个静态的 HTML 文档集，这些文档之间仅依靠一些简单的超链接（hyperlinks）绑定在一起。但很快，随着 Web 业务的快速普及和增长，网站管理者越来越希望自己所创建的的 Web 页面能处理更多的事情。例如，他们希望网站具有更丰富的用户交互能力，以便能完成一些简单的任务（比如验证表单之类），加强与服务器端的信息交互。那时候，他们有两种选择：Java applets（后来被证明是白了）和 LiveScript。其中 LiveScript 就是 1995 年由 Netscape 公司开发的程序设计语言。Netscape2.0 之后，他正式被更名为 JavaScript。</p>
+<p>不久，这种对 We 吧页面中静态元素进行扩展的方式就在业界大放异彩，另其他的浏览器厂商也纷纷效仿，推出了自己的类似产品。例如，Microsoft 公司随后就发布了支持 JScript 的 Internet Exploreer（IE）3.0。该语言在 JavaScript 的基础上引入了一些 Id 独有的特性。最终，为了使语言的实现更趋向于标准化，一个叫做 ECMAScript（欧洲计算机制造商协会）的组织应运而生了。这才有了我们今天所看到的这份被叫做 ECMA-262 的标准文档。目前在业界广为流行的 JavaScript 也只是遵守该标准的一种实现而已。</p>
+<p>无论结果是好是坏，JavaScript 在随后爆发的第一次浏览器大战（大约是在 1996 年到 2001 年间）中的带了迅速的普及。那是正值互联网发展的第一波繁荣期，主要由 Netscape 和 Microsoft 这两大浏览器厂商在争夺市场份额。在此过程中，他们不断地往各自的浏览器中添加新的特性和各种版本的 JavaScript 实现。但它们彼此之间又缺乏共同遵守的规则，这给 JavaScript 的开发带来大量的负面影响，也给开发人员带来巨大的痛苦。因为在这种情况下，我们通常只能针对某一个具体的浏览器来编写脚本。如果我们把在这个浏览器上开发的脚本拿到其他浏览器上测试，就会发现它们完全不能工作。与此同时，由于浏览器厂商都在忙于继续增加新的浏览器特性，以至于根本没能及时更新相应的工具，这导致了开发工具的严重滞后。</p>
+<p>尽管浏览器厂商引入的不兼容性使 Web 开发人员感到难以忍受,但这还只是问题中的一个方面。而另一方面的问题则处在开发人员自己身上，他们在自己的 Web 页面中使用来太多的新特性,总是迫不及待的想引入浏览器提供的每一项新功能，以“加强”以及的页面。例如状态栏中的动画、闪烁的颜色、闪耀的文本、会摇晃的浏览器窗口、屏幕上的雪花效果、能跟踪对象的鼠标光标等，而这些往往是以牺牲实用性为代价的。这种滥用现象极大的损坏了 JavaScript 在业界的名声，以至于哪些“真正的程序员”（这里特指那些具有更成熟的编程语言背景的开发人员例如 Java 或 C/C++程序员）对 JavaScript 根本不屑一顾，或者仅仅把它当作一种用于前端设计的玩具。</p>
+<p>出于上述原因，JavaScript 语言在一些 Web 项目中遭到了强烈抵制。某些项目甚至完全拒绝在客户端上进行任何的程序设计，转而只信任他们自己可以掌握的服务器端。确实，在当时的情况下，也没有什么理由值得我们花费双倍的时间来为这些不同的浏览器设计项目，然后再花更多的时间去调试它们。</p>
+<h2 id="变革之风"><a href="#变革之风" class="headerlink" title="变革之风"></a>变革之风</h2><p>这种情况一直持续到第一次浏览器大战结束。但在随后的几年中，Web 开发领域在一系列的历史进程的推动下，终于发生了一些非常积极的变化。</p>
+<ul>
+<li>Microsoft 公司赢得了战争，但在之后的五年中（这或多或少算得上一个互联网时代了），他们停止了继续向 Internet Explorer 和 JScript 中添加新特性的动作，这给了其他浏览器充分的时间，使它们能够在功能上逐步完成对 IE 的追赶和超越。</li>
+<li>Web 标准在移动开发领域的重要性在开发人员和浏览器厂商那里得到一致的认可。这是很自然的，毕竟对于开发人员来说，谁也不想因为不同的浏览器而花费双倍（甚至更多）的开发时间，这促使各方都越来越倾向于遵守统一的开发标准。尽管目前，我们离建立一个完全统一的标准化环境还有很长的路要走，但目标已经很明确了，相信终会有实现的那一天的。</li>
+<li>开发人员和技术本身也日趋成熟了，更多的人开始将注意力转移到东西本身的可用性上，并以此为基础，逐步加强在技术和功能方面的开发力度。</li>
+</ul>
+<p>在这种健康的环境的影响下，开发人云开始谋求一种更好的新型开发模式，以取代这些现有的开发方式，而随着类似 Gmail 和 Goole Maps 这样的应用程序的相继出现，客户端的程序设计也开始逐渐变得丰富。显然如今的 JavaScript 已经成为一种成熟的、在某些方面独一无二的、具有强大原型体系的面向对象语言。关于这点，最好的例子莫过于是对 XMLHttpRequest 对象的重新发现和推广，该对象起初不过是一个 IE-only 特性，但如今已经得到绝大多数浏览器的支持。通过 XMLHttpRequest 对象，JavaScript 可以用 HTTP 请求的形式从服务器上获得所需的新鲜内容，实现了对页面的局部更新。这样一来，我们就不必每次都刷新整个页面了。随着 XMLHttpRequest 对象的广泛应用，一种类桌面式的 Web 应用程序模式诞生了，我们称之为 AJAX 的应用程序。</p>
+<h2 id="分析现状"><a href="#分析现状" class="headerlink" title="分析现状"></a>分析现状</h2><p>关于 JavaScript 语言，最有意思的是它必须要在一个宿主环境中运行。其中受欢迎的宿主环境当然就是浏览器了，但这并不是我们唯一的选择。JavaScript 完全可以运行在服务器端、桌面以及富媒体环境中。如今，我们可以使用 JavaScript 来实现以下功能：</p>
+<ul>
+<li>创建具有强大而丰富的 Web 应用程序（这种应用程序往往运行于 Web 浏览器中，例如 Gmail）。</li>
+<li>编写类似 ASP 这样的服务器端脚本，或者使用 Rhino（这是一种 Java 实现的 JavaScript 引擎）这样的框架进行编程。</li>
+<li>创建某些富媒体式的应用程序（如 Flash、Flex），这其中用到的 ActionScript 就是一种基于 ECMAScript 标准的脚本语言。</li>
+<li>编写 Windows 桌面自动化管理工具，我们可以使用 Windows 自带的脚本宿主环境。</li>
+<li>为一些桌面应用程序编写扩展或插件，例如 Firefox、Dreamweaver、Fiddler。</li>
+<li>创建一些桌面型 Web 应用程序，这些应用程序往往会使用离线数据库来存储信息，例如 Google Gears。</li>
+<li>创建 Yahoo!Widgets、Mac Dashboard 这样的小工具或某些桌面型 Adobe Air 应用程序</li>
+</ul>
+<p>当然，这里列出的也远远不是该语言应用的全部。JavaScript 应用的确发端于 Web 页面，但如今，几乎可以说他们已经无所不在了。</p>
+<h2 id="展望未来"><a href="#展望未来" class="headerlink" title="展望未来"></a>展望未来</h2><p>对于未来的情况，我们在这里只能做一些猜测。但几乎可以肯定地说，JavaScript 语言必将还会有他的一席之地。毕竟，在过去相当长的一段时间里，JavaScript 在被严重低估、始终未得到充分利用（或者被错误的滥用了）的情况下，依然几乎每天都能有很多新的、有趣的 JavaScript 应用被开发出来。尽管他们都是一些简单的、内嵌于 HTMb 标签中的（例如 onclick 事件）的单行式代码。而如今的开发人员所面对的商业开发往往要复杂得多，这需要良好的设计和规划，以及合适的应用扩展和程序库。JavaScript 必将在其中得到真正的用武之地，开发人员无疑会更加重视它独有的面向对象特性，以获取越来越多的便利。</p>
+<p>一旦 JavaScript 成为未来招聘中的“必须向”，您在这方面的知识储备就会成为能否成功应聘某些 Web 开发职位的决定性因素。例如，我们在面试时常会被问到这样的问题：“JavaScript 是一种面向对象语言么？如果是，您在 JavaScript 中是如何实现继承的呢？”读了这本书之后，您就会对这样的面试有充分的准备，并有可能凭借一些连面试官自己都不知道的知识来打动它们。</p>
+<h2 id="面向对象的程序设计"><a href="#面向对象的程序设计" class="headerlink" title="面向对象的程序设计"></a>面向对象的程序设计</h2><p>在我们深入学习 JavaScript 之前，首先要了解一些”面向对象”的具体含义，以及这种程序设计风格的主要特征。下面我们列举出了一系列在面向对象程序设计（OOP）中最常用到的概念：</p>
+<ul>
+<li>对象、方法、属性</li>
+<li>类</li>
+<li>封装</li>
+<li>聚合</li>
+<li>重用与继承</li>
+<li>多态</li>
+</ul>
+<p>现在，让我们来进行逐一阐述。</p>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>既然这种程序设计风格叫做面向对象，那么它的重点就在于对象。而所谓的对象，实质上是指“事物”（包含人和物）在设计语言中的表现形式。这里的“事物”可以是任何东西（如某个客观存在的对象，或者某些较为抽象的概念）。例如，对于毛这种常见对象来说，我们可以看到他们具有某些明显的特性（如颜色、名字、体型等），能执行某些动作（如喵喵叫、睡觉、躲起来、逃跑等）。在 OOP 语义中，这些对象特征就叫做属性，而那些动作就叫做方法。</p>
+<blockquote>
+<p>此外，我们还有一个口语方面的类比：</p>
+<ul>
+<li>对象往往是用名词来表示的（如 book、person）</li>
+<li>方法一般都是些动词（如 read、run）</li>
+<li>属性者则往往是一些形容词</li>
+</ul>
+</blockquote>
+<p>我们可以来试一下。例如，在”The black cat sleeps on my head”这个句子中，”the cat”（名词）就是一个对象，”black”(形容词）就是一个属性值,而”sleep”（动词）则代表一个动作，也就是 OOP 语义中的方法。甚至，为了进一步证明这种类比的合理性，我们也可以将句子中的”on my head”看作动作”sleep”的一个限定条件，因此，他也可以被当作传递给 sleep 方法的一个参数。</p>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><p>在现实生活中，相似的对象之间往往有一些共同的组成特征。例如蜂鸟和老鹰都具有鸟类的特征，因此它们可以被统称为鸟类。在 OOP 中，类实际上就是对象的设计蓝图或者制作配方。“对象”这个词，我们有时候也叫做“实例”,所以我们可以说老鹰是鸟类的一个实例。我们能基于相同的类创建出许多不同的对象。因为类更多的是一种模板，而对象就是在这种模板的基础上被创建出来了。</p>
+<p>但是我们要明白，JavaScript 与 C++或 Java 这种传统的面向对象语言不同，它实际上压根没有类。该语言的一切都是基于对象的，其依靠的是一套原型系统（这里的原型<strong>prototype</strong>实际上也是一种对象，我们稍后再详细讨论这个问题）。在传统的面向对象的语言中，我们一般会这样描述自己的做法：“我基于 Person 类创建了一个叫做 Bob 的新对象。”而在这种基于原型的面向对象语言中，我们则会这样描述：“我将现有的 Person 对象扩展成了一个叫做 Bob 的新对象。”</p>
+<h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><p>封装则是另一个 OOP 相关概念，它主要用于阐述对象中所包含（或封装）的内容，他们通常由两部分组成：</p>
+<ul>
+<li>相关的数据（用于存储属性）</li>
+<li>基于这些数据所能做的事（所能调用的方法）</li>
+</ul>
+<p>但除此之外，封装这个属于中还包含了一层隐藏信息的概念，这完全是另一方面的问题。因此，我们在理解这个概念时，必须要留意它在具体的 OOP 语境中的含义。</p>
+<p>以一个 MP3 播放器为例。如果假设这是一个对象，那么作为该对象的用户，我们无疑需要一些类似于按钮、显示器这样的工作接口。这些接口能够帮助我们使用该对象（如播放歌曲之类）。至于他们内部是如何工作的，我们并不清楚，而且多数情况下也不会在乎这些。换句话话，这些接口的实现对我们来说是不可见的。同样的，在 OOP 中也是如此。当我们在代码中调用一个对象的方法时，无论该对象是来自我们自己实现的还是第三方库，我们都不需要知道该方法是如何工作的。在编译型语言中，我们甚至都无法查看这些对象的工作代码。而由于 JavaScript 是一种解释型的语言，源代码是可以查看的。但至少在这个概念上他们是一致的，即我们只需要知道所操作对象的接口，而不必去关心它的具体实现。</p>
+<p>关于信息隐藏，还有另一方面内容，即方法与属性的可见性。在某些语言中，我们能通过 public、private、protected 这些关键字来限定方法和属性的可见性。这种限定分类定义了对象用户所能访问的层次。例如，private 方法只有其所在对象内部才有权访问，而 public 方法则是任何人都能访问的。在 JavaScript 中，尽管所有的属性和方法都是 public 的，但是我们将会看到，该语言还是提供了一些隐藏数据的方法，以保护程序的隐秘性。</p>
+<h3 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h3><p>所谓聚合，有时候也叫做组合，实际上是指我们将几个现有对象合并成一个新对象的国恒。总之，这个概念所强调的就是这种将多个对象合二为一的能力。通过聚合这种强有力的方法，我们可以将一个问题分解成多个更小的问题。这样一来，问题就会显得更易于管理（便于我们各个击破）。当一个问题域的复杂程度令我们难以接受时，我们就可以考虑把它分成若干个子问题区，并且有必要的话，这些子问题还可以分解成更小的分区。这样做有利于我们从几个不同的抽象层次来考虑这个问题。例如，个人电脑是一个非常复杂的对象，我们不可能知道它启动时所发生的全部事情。但如果我们将这个问题的抽象级别降低到一定程度，只关注它几个组件的初始化工作，例如监视器对象、鼠标对象、键盘对象等，我们就很容易深入了解这些子对象情况，然后再将这些部分的结果组合起来，之前那个复杂的问题就迎刃而解了。</p>
+<p>我们还可以找到其他类似情况，例如 Book 是由一个或多个 author 对象、publisher 对象、若干 chapter 以及一组 table 对象等合并（聚合）而成的对象。</p>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>通过继承这种方式，我们可以非常优雅的实现对现有代码的重用。例如，我们有一个叫做 Person 的一般性对象，其中包含一些姓名、出生日期之类的属性，以及一些功能性函数，如步行、谈话、吃饭、睡觉等。然后，当我们发现需要一个 Programmer 对象时，当然，这时候你可以再将 Person 中所有的属性和方法再重新实现一遍，但除此之外还有一种更聪明的方法，即我们可以让 Programmer 继承 Person，这样就省去了我们不少工作。因为 Programmer 对象现在只需要实现属于它自己的那部分特殊功能（例如“编写代码”），而其余部分只需要重用 Person 的实现即可。</p>
+<p>在传统的 OOP 环境中，继承通常指的是类与类之间的关系，但由于 JavaScript 中不存在类，因此继承只能发生在对象之间。</p>
+<p>当一个对象继承自另一个对象时，通常会向其中增加新的方法，以扩展被继承的老对象。我们通常将这一过程称之为“B”继承自“A”或“B”扩展自“A”。另外对于新对象来说，他也可以根据自己的需要，从继承来那组方法中选择几个来重新定义。这样做并不会改变对象的接口，因为方法的名字是相同的，只不过当我们调用新对象时，该方法的行为与之前不同了。我们把这种重定义继承方法的过程叫做复写。</p>
+<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>在之前的例子中，我们的 Programmer 对象继承了上一级对象 Person 的所有方法。这意味着这两个对象都实现了“talk”等方法。现在我们的代码中有一个叫 Bob 的变量，即便是在我们不知道它是一个 Person 对象还是一个 Programmer 对象的情况下，也依然可以直接调用该对象的“talk”方法，而不必担心这会影响代码的正常工作。类似这种不同对象通过相同的方法调用来实现各自行为的能力，我们就称之为多态。</p>
+<h2 id="OOP-概述"><a href="#OOP-概述" class="headerlink" title="OOP 概述"></a>OOP 概述</h2><p>如果您在面向对象程序设计方面是一个新手，或者您不能确定自己是否真的理解了上面的概念，请不必太担心。以后我们还会通过一些具体的代码来为您具体分析它们。尽管这些概念说起来好像很复杂、很高级，但一旦进入真正的实践，事情往往就简单得多。</p>
+<p>话虽如此，但还是让我们先再来复习一些这些概念吧。</p>
+<table>
+<thead>
+<tr>
+<th>特征描述</th>
+<th align="center">相应概念</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bob 是一个男人（后者是一个对象）</td>
+<td align="center">对象</td>
+</tr>
+<tr>
+<td>Bob 出生于 1980 年 6 月 1 日，男性，黑头发</td>
+<td align="center">属性</td>
+</tr>
+<tr>
+<td>Bob 能吃饭、睡觉、喝水、做梦，以及记录自己的年龄</td>
+<td align="center">方法</td>
+</tr>
+<tr>
+<td>Bob 是 Programmer 类的一个实例</td>
+<td align="center">传统 OOP 中的类</td>
+</tr>
+<tr>
+<td>Bob 是一个由 Programmer 对象扩展而来的新对象</td>
+<td align="center">基于原型 OOP 的原型对象</td>
+</tr>
+<tr>
+<td>Bob 对象中包含了数据（例如出生日期） 和基于这些数据的方法（例如记录年龄）</td>
+<td align="center">封装</td>
+</tr>
+<tr>
+<td>我们并不需要知道其记录年龄的方法是如何实现的。对象通常都可以拥有一些私有数据，<br/>例如对闰年二月的天数，我们就不知道，而且也不会想知道</td>
+<td align="center">信息隐藏</td>
+</tr>
+<tr>
+<td>Bob 只是整个 Web 开发团队对象的一部分，此外还包含了一个 Designer 对象 Jill，以及一 ProjectManager 对象 Jack</td>
+<td align="center">聚合、组合</td>
+</tr>
+<tr>
+<td>Designer、ProjectManager、Progammer 都是分别扩展自 Person 对象的新对象</td>
+<td align="center">继承</td>
+</tr>
+<tr>
+<td>我们可以随时调用 Bob、Jill、Jack 这三个对象各自的 talk 方法，他们都可以正常工作，<br/>尽管这些方法会产生不同的结果（如 Bob 可能谈的更多的是代码的性能，Jill 则更倾向于谈代码的优雅性，而 Jack 强调的是最后期限）。总之，每个对象都可以重新自定义他们继承的方法 talk</td>
+<td align="center">多态、方法复写</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/oop/" rel="tag"># oop</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/13/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-13-TS%E5%B7%A5%E7%A8%8B-%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9/" rel="prev" title="TS进阶-编译选项">
+      <i class="fa fa-chevron-left"></i> TS进阶-编译选项
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/24/JavaScript-Promise-%E5%8E%BB%E8%80%8C%E5%A4%8D%E8%BF%94/" rel="next" title="JavaScript Promise: 去而复返">
+      JavaScript Promise: 去而复返 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE%E5%8E%86%E5%8F%B2"><span class="nav-number">1.</span> <span class="nav-text">回顾历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%9D%A9%E4%B9%8B%E9%A3%8E"><span class="nav-number">2.</span> <span class="nav-text">变革之风</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E7%8E%B0%E7%8A%B6"><span class="nav-number">3.</span> <span class="nav-text">分析现状</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%95%E6%9C%9B%E6%9C%AA%E6%9D%A5"><span class="nav-number">4.</span> <span class="nav-text">展望未来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">面向对象的程序设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1"><span class="nav-number">5.1.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB"><span class="nav-number">5.2.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85"><span class="nav-number">5.3.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E5%90%88"><span class="nav-number">5.4.</span> <span class="nav-text">聚合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-number">5.5.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%80%81"><span class="nav-number">5.6.</span> <span class="nav-text">多态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OOP-%E6%A6%82%E8%BF%B0"><span class="nav-number">6.</span> <span class="nav-text">OOP 概述</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Somebody</p>
+  <div class="site-description" itemprop="description">My vegetable has exploded!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Somebody</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

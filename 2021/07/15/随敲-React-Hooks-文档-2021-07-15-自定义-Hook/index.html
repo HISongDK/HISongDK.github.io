@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="自定义 Hook 自定义 Hook 提取自定义 Hook 使用自定义 Hook 提示：在多个 Hook 之间传递信息 useYourImagination()      Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。 通过自定义 Hook，可以将组件逻辑提取到可重用的函数中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义 Hook">
+<meta property="og:url" content="http://example.com/2021/07/15/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-15-%E8%87%AA%E5%AE%9A%E4%B9%89-Hook/index.html">
+<meta property="og:site_name" content="某人写字的地方">
+<meta property="og:description" content="自定义 Hook 自定义 Hook 提取自定义 Hook 使用自定义 Hook 提示：在多个 Hook 之间传递信息 useYourImagination()      Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。 通过自定义 Hook，可以将组件逻辑提取到可重用的函数中。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-15T15:05:23.000Z">
+<meta property="article:modified_time" content="2021-11-05T15:56:23.985Z">
+<meta property="article:author" content="Somebody">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/07/15/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-15-%E8%87%AA%E5%AE%9A%E4%B9%89-Hook/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>自定义 Hook | 某人写字的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">某人写字的地方</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-sitemap fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/15/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-15-%E8%87%AA%E5%AE%9A%E4%B9%89-Hook/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          自定义 Hook
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-15 23:05:23" itemprop="dateCreated datePublished" datetime="2021-07-15T23:05:23+08:00">2021-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/Hooks/" itemprop="url" rel="index"><span itemprop="name">Hooks</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="自定义-Hook"><a href="#自定义-Hook" class="headerlink" title="自定义 Hook"></a>自定义 Hook</h2><ul>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89-hook">自定义 Hook</a><ul>
+<li><a href="#%E6%8F%90%E5%8F%96%E8%87%AA%E5%AE%9A%E4%B9%89-hook">提取自定义 Hook</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89-hook">使用自定义 Hook</a></li>
+<li><a href="#%E6%8F%90%E7%A4%BA%E5%9C%A8%E5%A4%9A%E4%B8%AA-hook-%E4%B9%8B%E9%97%B4%E4%BC%A0%E9%80%92%E4%BF%A1%E6%81%AF">提示：在多个 Hook 之间传递信息</a><ul>
+<li><a href="#useyourimagination">useYourImagination()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><em>Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。</em></p>
+<p>通过自定义 Hook，可以将组件逻辑提取到可重用的函数中。</p>
+<a id="more"></a>
+
+<p>在我们学习使用 Effect Hook 时，我们已经见过这个聊天程序中的组件，该组件用于显示好友的在线状态：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FriendStatus</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [isOnline, setIsOnline] = useState(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">handleStatusChange</span>(<span class="params">status</span>) </span>&#123;</span><br><span class="line">      setIsOnline(stateus.isOnline)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange)</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isOnline === <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;loading ...&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> isOnline ? <span class="string">&#x27;online&#x27;</span> : <span class="string">&#x27;offline&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在我们假设聊天应用中有一个联系人列表，当用户在线时需要把名字设置为绿色。我们可以把上面类似的逻辑复制并粘贴到 FriendListItem 组件中，但这并不是理想的解决方案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FriendListItem</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [isOnline, setIsOnline] = useState(<span class="literal">null</span>)</span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">handleStatusChange</span>(<span class="params">status</span>) </span>&#123;</span><br><span class="line">      setIsOnline(status.isOnline)</span><br><span class="line">    &#125;</span><br><span class="line">    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange)</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">color:</span> <span class="attr">isOnline</span> ? &#x27;<span class="attr">green</span>&#x27; <span class="attr">:</span> &#x27;<span class="attr">black</span>&#x27; &#125;&#125;&gt;</span>&#123;props.friend.name&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相反，我们希望在 FriendStatus 和 FriendListItem 之间共享逻辑。目前为止，在 React 中有两种流行的方式来共享组件之间的状态逻辑：<code>render props</code>和<code>高阶组件</code>,现在让我们来看看 Hook 是如何让你不增加组件的情况下解决相同的问题。</p>
+<h3 id="提取自定义-Hook"><a href="#提取自定义-Hook" class="headerlink" title="提取自定义 Hook"></a>提取自定义 Hook</h3><p>当我们想在两个函数之间共享逻辑时，我们会把它提取到第三个函数中。而组件和 Hook 都是函数，所以也同样适用这种方式。</p>
+<p><strong>自定义 Hook 是一个函数，其名称以<code>use</code>开头，函数内部可以调用其他的 Hook。</strong>例如，下面<code>useFriendStatus</code>是我们第一个自定义的 Hook：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useFriendStatus</span>(<span class="params">friendID</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [isOnline, setIsOnline] = useState(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">handleStatusChange</span>(<span class="params">status</span>) </span>&#123;</span><br><span class="line">      setIsOnline(status.isOnline)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ChatAPI.subscribeToFriendStatus(friendID, handleStatusChange)</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      ChatAPI.unsubscribeFromFriendStatus(friendID, handleStatusChange)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> isOnline</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处并未包含任何新的内容————逻辑从上述组件中拷贝来的。与组件中一致，请确保只在自定义 Hook 的顶层无条件地调运其他 Hook。</p>
+<p>与 React 组件不同的是，自定义 Hook 不需要具有特殊的标识。我们可以决定它的参数是什么，以及它应该返回什么（如果需要的话）。换句话说，它就像一个正常地函数。但是它的名字应该始终以<code>use</code>开头，这样可以一眼看出其符合 Hook 的规则。</p>
+<p>此处<code>useFriendStatus</code>的 Hook 目的是订阅某个好友的在线状态。<strong>这就是我们需要将<code>friendID</code>作为参数，并返回这位好友的在线状态的原因。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useFriendStatus</span>(<span class="params">friendID</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [isOnline, setIsOnline] = useState(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> isOnline</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在让我们看看应该如何使用自定义 Hook 。</p>
+<hr>
+<h3 id="使用自定义-Hook"><a href="#使用自定义-Hook" class="headerlink" title="使用自定义 Hook"></a>使用自定义 Hook</h3><p>我们一开始的目标是 FriendStatus 和 FriendListItem 组件中去除重复的逻辑，即这两个组件都想知道好友是否在线。</p>
+<p>现在我们已经把这个逻辑提取到 useFriendStatus 的自定义 Hook 中，然后就可以使用它了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FriendStatus</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> isOnline = useFriendStatus(props.friend.id)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isOnline === <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Loading...&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> isOnline ? <span class="string">&#x27;Online&#x27;</span> : <span class="string">&#x27;Offline&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//-----------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FriendListItem</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> isOnline = useFriendStatus(props.friend.id)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">color:</span> <span class="attr">isOnline</span> ? &#x27;<span class="attr">green</span>&#x27; <span class="attr">:</span> &#x27;<span class="attr">black</span>&#x27; &#125;&#125;&gt;</span>&#123;props.friend.name&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>这段代码等价于原来的示例代码吗？</strong>等价，它的工作方式完全一样。如果你仔细观察，你会发现我们没有对其行为做任何改变，我们只是将两个函数之间一些共同的代码提取到单独的函数中。<strong>自定义 Hook 是一种遵循 Hook 设计的约定，而不是 React 的特性。</strong></p>
+<p><strong>自定义 Hook 必须以 “use” 开头么？</strong>必须如此，这个约定非常重要。不遵循的话，由于无法判断某个函数是否包含对其内部 Hook 的调用，React 将无法自动检查你的 Hook 是否违反了 Hook 的规则。</p>
+<p><strong>在两个组件中使用相同的 Hook 会共享 state 吗？</strong>不会。自定义 Hook 是一种重用 <em>状态逻辑</em> 的机制（例如设置为订阅并存储当前值），所以每次使用自定义 Hook 时，其中的所有 state 和副作用都是完全隔离的。</p>
+<p><strong>自定义 Hook 如何获取独立的 state？</strong>每次调用 Hook，它都会获取独立的 state。由于我们直接调用了 useFriendStatus，从 React 的角度来看 useState 和 useEffect。正如我们在之前章节了解到的一样，我们可以在一个组件中多次调用 useState 和 useEffect ，它们是完全独立的。</p>
+<h3 id="提示：在多个-Hook-之间传递信息"><a href="#提示：在多个-Hook-之间传递信息" class="headerlink" title="提示：在多个 Hook 之间传递信息"></a>提示：在多个 Hook 之间传递信息</h3><p>由于 Hook 本身就是函数，因此我们可以在他们之间传递信息。</p>
+<p>我们将使用聊天程序中的另一个组件来说明这一点。这是一个聊天消息接收者的选择器，它会显示当前选定的好友是否在线：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> friendList = [</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&quot;Phoebe&quot;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">name</span>: <span class="string">&quot;Rachel&quot;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="number">3</span>, <span class="attr">name</span>: <span class="string">&quot;Ross&quot;</span> &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ChatRecipientPicker</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [recipientID,setRecipientID]=useState(<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">const</span> isRecipientOnline = useFriendStatus(recipientID)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">Circle</span> <span class="attr">color</span>=<span class="string">&#123;isRecipientOnline</span> ? &#x27;<span class="attr">green</span>&#x27; <span class="attr">:</span> &#x27;<span class="attr">red</span>&#x27;&#125;/&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">select</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">value</span>=<span class="string">&#123;recipientID&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        <span class="attr">onChange</span>=<span class="string">&#123;e</span> =&gt;</span> setRecipientID(Number(e.target.value))&#125;</span></span><br><span class="line"><span class="xml">      &gt;</span></span><br><span class="line"><span class="xml">        &#123;friendList.map(friend=&gt;(</span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;<span class="name">option</span> <span class="attr">key</span>=<span class="string">&#123;friend.id&#125;</span> <span class="attr">value</span>=<span class="string">&#123;friend.id&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">            &#123;friend.name&#125;</span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;/<span class="name">option</span>&gt;</span></span></span><br><span class="line"><span class="xml">        ))&#125;</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">Circle</span>&gt;</span></span></span><br><span class="line"><span class="xml">  )</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>我们当前选择的好友 ID 保存在 recipientID 状态变量中，并在用户从 <code>&lt;select&gt;</code> 中选择其他好友时更新这个 state 。</p>
+<p>由于 <code>useState</code> 为我们提供了 <code>recipientID</code> 状态变量的最新值，因此我们可以将它作为参数传递给自定义的 <code>useFriendStatus</code> Hook：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [recipientID, setRecipientID] = useState(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> isRecipientOnline = useFriendStatus(recipientId)</span><br></pre></td></tr></table></figure>
+<p>如此可以让我们知道 <em>当前选中</em> 的好友是否在线。当我们选择不同的好友并更新 <code>recipientID</code> 状态变量时，<code>useFriendStatus</code> Hook 将会取消订阅之前选中的好友，并订阅新选中的好友状态。</p>
+<hr>
+<h4 id="useYourImagination"><a href="#useYourImagination" class="headerlink" title="useYourImagination()"></a>useYourImagination()</h4><p>自定义 Hook 解决了以前在 React 组件中无法灵活共享逻辑的问题。你可以创建涵盖各种场景自定义 Hook ，如表单处理、动画、订阅声明、计时器，甚至可能还有其他我们没想到的场景。更重要的是，创建自定义 Hook 就像使用 React 内置的功能一样简单。</p>
+<p>尽量避免过早地增加抽象逻辑。既然函数组件能够做的更多，哪么代码库中函数组件的代码行数可能会剧增。这属于正常现象————不必立即将它们拆分为 Hook 。但我们仍鼓励你能通过自定义 Hook 寻找可能，以达到简化代码逻辑，解决组件杂乱无章地目的。</p>
+<p>例如，有个复杂的组件，其中包含了大量以特殊的方式来管理地内部状态。<code>useState</code> 并不会使得集中更新逻辑变得容易，因此你可能更愿意使用 <code>redux</code>中的 <code>reducer</code> 来编写。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">todosReducer</span>(<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;add&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> [</span><br><span class="line">        ...state,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">text</span>: action.text,</span><br><span class="line">          <span class="attr">completed</span>: <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      ]</span><br><span class="line">    <span class="comment">// ... other actions ...</span></span><br><span class="line">    <span class="attr">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Reducers</code> 非常便于单独测试，且易于扩展，以表达复杂的更新逻辑。如有必要，您可以将它们分成更小的 <code>reducer</code> 。但是你可能还享受着 React 内部 state 带来的好处，或者可能根本不想安装其他库。</p>
+<p>那么，为什么我们不编写一个 <code>useReducer</code> 的 Hook，使用 <code>reducer</code> 的方式来管理组件的内部 <code>state</code> 呢？其简化版本可能如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useReducer</span>(<span class="params">reducer，initalState</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [state,setState] = useState(initialState);</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span>(<span class="params">action</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> nextState = reducer(state,action)</span><br><span class="line">    setState(nextState)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> [state,dispatch]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在组件中使用它，让 reducer 驱动它管理 state：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Todos</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [todos, dispatch] = useReducer(todosRedcer, [])</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleAddClick</span>(<span class="params">text</span>) </span>&#123;</span><br><span class="line">    dispatch(&#123; <span class="attr">type</span>: <span class="string">&#x27;add&#x27;</span>, text &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在复杂的组件中使用 <code>reducer</code> 管理内部 state 的需求很常见，我们已经将 <code>useReducer</code> 的 Hook 内置到 React 中。你可以在 Hook API 索引中找到它使用，搭配其他内置的 Hook 一起使用。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/14/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-14-Hook-%E8%A7%84%E5%88%99/" rel="prev" title="Hook 规则">
+      <i class="fa fa-chevron-left"></i> Hook 规则
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/19/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-2021-07-19-Hook-API-%E7%B4%A2%E5%BC%95/" rel="next" title="Hook API 索引">
+      Hook API 索引 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-Hook"><span class="nav-number">1.</span> <span class="nav-text">自定义 Hook</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E8%87%AA%E5%AE%9A%E4%B9%89-Hook"><span class="nav-number">1.1.</span> <span class="nav-text">提取自定义 Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89-Hook"><span class="nav-number">1.2.</span> <span class="nav-text">使用自定义 Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%EF%BC%9A%E5%9C%A8%E5%A4%9A%E4%B8%AA-Hook-%E4%B9%8B%E9%97%B4%E4%BC%A0%E9%80%92%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.</span> <span class="nav-text">提示：在多个 Hook 之间传递信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#useYourImagination"><span class="nav-number">1.3.1.</span> <span class="nav-text">useYourImagination()</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Somebody</p>
+  <div class="site-description" itemprop="description">My vegetable has exploded!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Somebody</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
