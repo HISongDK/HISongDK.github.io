@@ -1,6 +1,6 @@
 ---
 title: {{ title }}
 date: {{ date }}
-tags: 
-categories: 
+tags: NodeJS
+categories: [随敲, NodeJS]
 ---
