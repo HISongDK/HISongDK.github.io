@@ -15,6 +15,8 @@ date: 2022-01-23 23:08:30
 
 在这篇文章中，我们绘制了 Node.js 历史的大图，以透视事物。
 
+<!-- more -->
+
 ## 一点历史
 
 JavaScript 是一门编程语言，由 Netscape 创建，作为脚本工具用于在其浏览器 `Netscape Navigator` 中操作网页。
