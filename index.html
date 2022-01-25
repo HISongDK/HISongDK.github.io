@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 6.0.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -157,7 +157,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BB%8E-Node-js-%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -171,7 +171,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BB%8E-Node-js-%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA/" class="post-title-link" itemprop="url">NodeJS | 如何从 Node.js 程序退出</a>
+            <a href="/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/" class="post-title-link" itemprop="url">NodeJS | 如何使用 Node.js REPL</a>
         </h2>
 
         <div class="post-meta">
@@ -180,8 +180,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-01-25 00:05:18" itemprop="dateCreated datePublished" datetime="2022-01-25T00:05:18+08:00">2022-01-25</time>
+              <time title="创建时间：2022-01-25 22:57:50 / 修改时间：23:41:23" itemprop="dateCreated datePublished" datetime="2022-01-25T22:57:50+08:00">2022-01-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -208,7 +209,209 @@
     <div class="post-body" itemprop="articleBody">
 
       
+          <p><code>node</code> 命令是用来运行 Node.js 脚本的命令：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node script.js</span><br></pre></td></tr></table></figure>
+
+<p>如果省略文件名，则在 REPL 模式中使用它：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：REPL 也被称为运行评估打印循环，是一种编程语言环境(主要是控制台窗口),它使用单个表达式作为用户输入，并在执行后将结果返回到控制台。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BB%8E-Node-js-%E8%AF%BB%E5%8F%96%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
           
+            <a href="/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BB%8E-Node-js-%E8%AF%BB%E5%8F%96%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="post-title-link" itemprop="url">NodeJS | 如何从 Node.js 读取环境变量</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-25 22:49:24 / 修改时间：22:56:41" itemprop="dateCreated datePublished" datetime="2022-01-25T22:49:24+08:00">2022-01-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Node.js 的 <code>process</code> 核心模块提供了 <code>env</code> 属性，该属性承载了在启动进程时设置的所有环境变量。</p>
+<p>这是访问 NODE_ENV 环境变量的示例，该环境变量默认情况下被设置为 <code>development</code> 。</p>
+<blockquote>
+<p>注意 <code>process</code> 不需要 “require”,它是自动可用的</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.env.NODE_ENV <span class="comment">// &#x27;development&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在脚本运行之前将其设置为 “production”,则可告诉 Node.js 这是生产环境。</p>
+<p>可以用相同的方式访问设置的任何自定义的环境变量</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BB%8E-Node-js-%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BB%8E-Node-js-%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA/" class="post-title-link" itemprop="url">NodeJS | 如何从 Node.js 程序退出</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-25 00:05:18 / 修改时间：22:43:31" itemprop="dateCreated datePublished" datetime="2022-01-25T00:05:18+08:00">2022-01-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>有很多种方法可以终止 Node.js 应用程序。</p>
+<p>当在控制台中运行的时候,可以使用 <code>ctrl-C</code> 将其关闭，但是这里要讨论的是以编程的方式退出。</p>
+<p><code>process</code> 核心模块提供了一种便利的方法，可以以编程的方式推出 Node.js 程序：</p>
+<p><code>process.exit()</code> 。</p>
+<p>当 Node.js 运行此行程序时，进程会被立即强制终止。</p>
+<p>这意味着任何待处理的回调、仍在发送中的任何网络请求、任何文件系统访问、或正在写入 <code>stdout</code> 或 <code>stderr</code> 的进程，所有这些都会被立即非正常的终止。</p>
+<p>可以传入一个整数，向操作系统发送退出码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.exit(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，退出码为 <code>0</code> ，表示成功。不同的退出码具有不同的含义，可以在系统中用于程序和其他程序的通信。</p>
+<p>有关退出码的信息，详见 <a target="_blank" rel="noopener" href="http://nodejs.cn/api/process.html#process_exit_codes">http://nodejs.cn/api/process.html#process_exit_codes</a></p>
+<p>也可以设置 <code>process.exitCode</code> 属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.exitCode = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>当程序结束时，Node.js 会返回该退出码。</p>
+<p>当进程完成所有处理后，程序会正常地退出。</p>
+<p>使用 Node.js 启动服务器，例如 HTTP 服务器：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  res.send(<span class="string">&#x27;你好&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>,<span class="function">()=&gt;</span><span class="built_in">console</span>.log(<span class="string">&#x27;服务器已就绪&#x27;</span>);)</span><br></pre></td></tr></table></figure>
+
+<p>这个程序永远不会结束。如果调用 <code>process.exit()</code> ,则任何当前等待中或运行中的请求都会被中止。这不太友好。</p>
+<p>在这种情况这，需要向该命令发送 SIGTERM 信号，并使用进程的信号处理程序进行处理：</p>
+<blockquote>
+<p>注意：<code>process</code> 不需要”require”,它是自动可用的。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.send(<span class="string">&#x27;你好&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = app.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;服务器已就绪&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">process.on(<span class="string">&#x27;SIGTERM&#x27;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">  server.close(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;进程已终止);</span></span><br><span class="line"><span class="string">  &#125;)</span></span><br><span class="line"><span class="string">&#125;)</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>什么是信号？信号是一个 POSIX 内部通信系统：发送通知给进程，以告知其发生的事件。</p>
+</blockquote>
+<p><code>SIGKILL</code> 是告诉进程立即终止的信号，理想情况下，其行为类似于 <code>process.exit()</code>。</p>
+<p><code>SIGTERM</code> 是告诉进程要正常终止的信号。它是从进程管理者（如 <code>upstart</code> 或 <code>supervisord</code> ）等发出的信号。</p>
+<p>可以从程序内部另一个函数中发送此信号：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.kill(process.pid, <span class="string">&#x27;SIGTERM&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>或是从另一个正在运行的 Node.js 程序、或从系统中运行的其他任何的应用程序（能知道要终止进程的 PID）</p>
+
       
     </div>
 
@@ -1722,191 +1925,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/02/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-02-TS%E8%BF%9B%E9%98%B6-%E7%B1%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/02/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-02-TS%E8%BF%9B%E9%98%B6-%E7%B1%BB/" class="post-title-link" itemprop="url">TS进阶-类</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-02 23:26:01" itemprop="dateCreated datePublished" datetime="2021-09-02T23:26:01+08:00">2021-09-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>传统的方法中，JavaScript 通过构造函数实现类的概念，通过原型链实现继承。而在 ES6 中，我们终于迎来了 class。</p>
-<p>TypeScript 除了实现了所有 ES6 中类的功能外，还添加了一些新的用法。</p>
-<p>这一节主要介绍类的用法，下一节再介绍如何定义类的类型。</p>
-<h2 id="类的概念"><a href="#类的概念" class="headerlink" title="类的概念"></a>类的概念</h2><p>虽然 JavaScript 中有类的概念，但是可能大多数 JavaScript 程序员并不是非常熟悉类，这里对类相关的概念做一个简单的介绍。</p>
-<ul>
-<li>类（Class）：定义了一件事物的抽象特定，包含了它的属性和方法</li>
-<li>对象（Object）：类的实例，通过 new 生成</li>
-<li>面向对象（OOP）的三大特性：封装、继承、多态</li>
-<li>封装（Encapsulation）：将对数据的操作细节隐藏起来，只暴露对外的接口。外界调用端不需要（也不可能）知道细节，就能通过对外提供的接口来访问该对象，同时也保证了外界无法任意更改对象内部的数据</li>
-<li>继承（Inheritance）：子类继承父类，子类除了拥有父类的所有特性外，还有一些更具体地特性</li>
-<li>多态（Polymorphism）：由继承而产生了相关的不同的类，对同一个方法可以有不同的响应。比如 Cat 和 Dog 都继承自 Animal，但是分别实现了自己的 eat 方法。此时针对某一个实例，我们无需了解它是 Cat 还是 Dog，就可以直接调用 eat 方法，程序会自动判断出来应该如何执行 eat</li>
-<li>存取器（getter &amp; setter）：用以改变属性的读取和赋值行为</li>
-<li>修饰符（Modifiers）：修饰符是一些关键字，用于限定成员或类型的性质。比如 public 表示公有属性或方法</li>
-<li>抽象类（Abstract Class）：抽象类是供其他类继承的基类，抽象类不允许被实例化。抽象类中的抽象方法必须在子类中被实现</li>
-<li>接口（Interface）：不同类之间共有的属性或方法，可以抽象成一个接口。接口可以被类实现（implements）。一个类只能继承自另一个类，但是可以实现多个接口</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/02/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-02-TS%E8%BF%9B%E9%98%B6-%E7%B1%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/30/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-30-TS%E8%BF%9B%E9%98%B6-%E6%9E%9A%E4%B8%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/30/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-30-TS%E8%BF%9B%E9%98%B6-%E6%9E%9A%E4%B8%BE/" class="post-title-link" itemprop="url">TS进阶-枚举</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-08-30 12:53:47" itemprop="dateCreated datePublished" datetime="2021-08-30T12:53:47+08:00">2021-08-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>枚举（Enum）类型用于取值被限定再一定范围的场景，比如一周只能有七天，颜色限定为红绿蓝等。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/30/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-30-TS%E8%BF%9B%E9%98%B6-%E6%9E%9A%E4%B8%BE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1976,7 +1994,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">85</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
