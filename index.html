@@ -157,6 +157,400 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/NodeJS-npm-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/30/NodeJS-npm-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">NodeJS | npm 包管理器简介</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-30 14:00:03 / 修改时间：20:40:56" itemprop="dateCreated datePublished" datetime="2022-01-30T14:00:03+08:00">2022-01-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="npm-简介"><a href="#npm-简介" class="headerlink" title="npm 简介"></a>npm 简介</h2><p><code>npm</code> 是 Node.js 标准的软件包管理器。</p>
+<p>在 2017 年 1 月时，npm 仓库就已有超过 350000 个软件包，<strong>这使其成为世界上最大的单一语言代码库，并且可以确定几乎有可用于一切的软件包</strong>。</p>
+<p>它起初是作为下载和管理 Node.js 包依赖的方式。但其现在也已成为前端 JavaScript 中使用的工具。</p>
+<p><code>npm</code> 有很多功能。</p>
+<blockquote>
+<p>Yarn 是 npm 的一个替代选择。</p>
+</blockquote>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p><code>npm</code> 可以管理项目依赖的下载。</p>
+<h2 id="安装所有依赖"><a href="#安装所有依赖" class="headerlink" title="安装所有依赖"></a>安装所有依赖</h2><p>如果项目有 <code>package.json</code> 文件，则通过运行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>它会在 <code>node_modules</code> 文件夹（如果尚不存在则会创建）中安装项目所需的所有东西。</p>
+<h2 id="安装单个软件包"><a href="#安装单个软件包" class="headerlink" title="安装单个软件包"></a>安装单个软件包</h2><p>也可以通过运行以下命令安装特定的软件包：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install &lt;package-name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通常在此命令中看到更多标志：</p>
+<ul>
+<li>  –save 安装并添加条目到 package.json 文件的 dependencies</li>
+<li>  –save-dev 安装并添加条目到 package.json 文件的 devDependencies.</li>
+</ul>
+<p>区别主要是，<code>devDependencies</code> 通常是开发的工具（例如测试的库）,而 <code>dependencies</code> 则是与生产环境中的应用程序相关。</p>
+<h2 id="更新软件包"><a href="#更新软件包" class="headerlink" title="更新软件包"></a>更新软件包</h2><p>通过运行以下命令，更新也变得很容易：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm updata</span><br></pre></td></tr></table></figure>
+
+<p>npm 会检查所有软件包是否有满足版本限制的更新版本。</p>
+<p>也可以指定单个软件包进行更新：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm update &lt;package-name&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><p>除了简单的下载外，<code>npm</code> 还可以版本控制，因此可以指定软件包的任何特定版本，或者要求高于或者低于所需版本。</p>
+<p>很多时候，一个库仅与另一个库的主版本兼容。</p>
+<p>或者，一个库的最新版本中有一个缺陷（仍未修复）引起了问题。</p>
+<p>指定库的显式版本还有助于每个人都使用相同的软件包版本，以便整个团队运行相同的版本，直至 <code>package.json</code> 文件被更新。</p>
+<p>在所有这些情况中，版本控制都有很大的帮助， <code>npm</code> 遵循语义版本控制标准。</p>
+<h2 id="运行任务"><a href="#运行任务" class="headerlink" title="运行任务"></a>运行任务</h2><p>package.json 文件支持一种用于指定命令行任务（可通过使用以下方式运行）的格式：</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run &lt;task-name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;start-dev&quot;</span>: <span class="string">&quot;node lib/server-development&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;start&quot;</span>: <span class="string">&quot;node lib/server-production&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用此特性运行 Webpack 是很常见的：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">&quot;scripts&quot;</span>:&#123;</span><br><span class="line">  <span class="attr">&quot;watch&quot;</span>:<span class="string">&quot;webpack --watch --progress --colors --config webpack.conf.js&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;dev&quot;</span>:<span class="string">&quot;webpack --progress --colors --config webpack.conf.js&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;prod&quot;</span>:<span class="string">&quot;NODE_ENV=production webpack -p --config webpack.conf.js&quot;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因此可以运行如下，而不是输入那些容易忘记或输入错误的长命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm run watch</span><br><span class="line">npm run dev</span><br><span class="line">npm run prod</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/NodeJS-%E4%BD%BF%E7%94%A8-exports-%E4%BB%8E-Node-js-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%85%AC%E5%BC%80%E5%8A%9F%E8%83%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/30/NodeJS-%E4%BD%BF%E7%94%A8-exports-%E4%BB%8E-Node-js-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%85%AC%E5%BC%80%E5%8A%9F%E8%83%BD/" class="post-title-link" itemprop="url">NodeJS | 使用 exports 从 Node.js 文件中公开功能</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-30 13:27:22 / 修改时间：13:44:38" itemprop="dateCreated datePublished" datetime="2022-01-30T13:27:22+08:00">2022-01-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Node.js 具有内置的模块系统。</p>
+<p>Node.js 可以导入其他 Node.js 文件公开的功能。</p>
+<p>当想要导入某些东西时，使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> library = <span class="built_in">require</span>(<span class="string">&#x27;./library&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>可以导入存在于当前文件夹中的 <code>library.js</code> 文件中的公开功能。</p>
+<p>在此文件中，必须先公开功能，然后其他文件才能导入。</p>
+<p>默认情况下，文件中任何定义的其他对象或变量都是私有的，不会公开给外界。</p>
+<p>这就是 <a target="_blank" rel="noopener" href="http://nodejs.cn/api/modules.html"><code>module</code> 系统</a>提供的 <code>module.exports</code> API 可以做的事。</p>
+<p>当将对象或函数赋值给 exports 属性时，这就是要被公开的内容，因此可以将其导入应用程序的其他部分或者其他应用程序中。</p>
+<p>可以通过两种方式进行操作。</p>
+<p>第一种方式是将对象赋值给 <code>module.exports</code> (这是模块系统提供的对象),这会使文件只导出该对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> car = &#123;</span><br><span class="line">    <span class="attr">brand</span>: <span class="string">&#x27;Ford&#x27;</span>,</span><br><span class="line">    <span class="attr">model</span>: <span class="string">&#x27;Fiesta&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = car</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在另一个文件中</span></span><br><span class="line"><span class="keyword">const</span> car = <span class="built_in">require</span>(<span class="string">&#x27;./car&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>第二种方式是将要导出的对象添加为 exports 的属性。这种方式可以到处多个对象、函数或数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> car = &#123;</span><br><span class="line">    <span class="attr">brand</span>: <span class="string">&#x27;Ford&#x27;</span>,</span><br><span class="line">    <span class="attr">model</span>: <span class="string">&#x27;Fiesta&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.car = car</span><br></pre></td></tr></table></figure>
+
+<p>或直接</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exports</span>.car = &#123;</span><br><span class="line">    <span class="attr">brand</span>: <span class="string">&#x27;Ford&#x27;</span>,</span><br><span class="line">    <span class="attr">model</span>: <span class="string">&#x27;Fiesta&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在另一个文件中，则通过引用导入的属性来使用它：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> items = <span class="built_in">require</span>(<span class="string">&#x27;./items&#x27;</span>)</span><br><span class="line">items.car</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> car = <span class="built_in">require</span>(<span class="string">&#x27;./items&#x27;</span>).car</span><br></pre></td></tr></table></figure>
+
+<p><code>module.exports</code> 和 <code>exports</code> 之间用什么区别？</p>
+<p><strong>前者公开了它指向的对象。后者公开了它指向的对象的属性</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/NodeJS-%E5%9C%A8-Node-js-%E4%B8%AD%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E8%BE%93%E5%85%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/30/NodeJS-%E5%9C%A8-Node-js-%E4%B8%AD%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E8%BE%93%E5%85%A5/" class="post-title-link" itemprop="url">NodeJS | 在 Node.js 中从命令行接收输入</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-30 12:45:47 / 修改时间：13:25:49" itemprop="dateCreated datePublished" datetime="2022-01-30T12:45:47+08:00">2022-01-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>如何使 Node.js CLI 程序具有交互性？</p>
+<p>从版本 7 开始，Node.js 提供了 <a target="_blank" rel="noopener" href="http://nodejs.cn/api/readline.html"><code>readline</code>模块</a>来执行以下操作：每次一行地从可读流(例如 process.stdin 流，在 Node.js 执行期间该流就是终端输入)获取输入。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> readline = <span class="built_in">require</span>(readline).createInterface(&#123;</span><br><span class="line">    <span class="attr">input</span>: process.stdin, <span class="comment">// 不是说执行的时候就是么，怎么还需要手动传参</span></span><br><span class="line">    <span class="attr">output</span>: process.stdout, <span class="comment">// 才发现，是说的 node执行时 process.stdin 是命令行输入，readline 的获取来源需要指定</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">readline.question(<span class="string">``</span>, <span class="function">(<span class="params">name</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`你好 <span class="subst">$&#123;name&#125;</span>~`</span>)</span><br><span class="line">    readline.close()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这段代码会询问用户名，当输入了文本并且用户按下回车键时，则会发送问候语。</p>
+<p><code>question()</code> 会向控制台显示第一个参数（即问题），并等待用户输入。当按下回车键时它会调用回调函数。</p>
+<p>在此回调函数中，关闭里 readline 接口。</p>
+<p><code>readline</code> 还提供了其他几个方法，详见上面的文档链接。</p>
+<p>如果需要密码，则最好不要回显密码，而是显示 <code>*</code> 符号。</p>
+<p>最简单的方式是使用 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/readline-sync"><code>readline-sync</code> 软件包</a>,其在 API 方面非常类似。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SBoudrias/Inquirer.js">Inquirer.js</a>则提供了更完整、更抽象的解决方案。</p>
+<p>可以使用 <code>npm install inquirer</code> 进行安装，然后复用上面的代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> inquirer = <span class="built_in">require</span>(<span class="string">&#x27;inquirer&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> question = [&#123; <span class="attr">type</span>: <span class="string">&#x27;input&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;name&#x27;</span>, <span class="attr">message</span>: <span class="string">&#x27;你叫什么名字?&#x27;</span> &#125;]</span><br><span class="line"></span><br><span class="line">inquirer.prompt(question).then(<span class="function">(<span class="params">answers</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`你好 <span class="subst">$&#123;answer[<span class="string">&#x27;name&#x27;</span>]&#125;</span>!`</span>) <span class="comment">// 只打印不符合 prompt 确认框操作啊</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Inquirer.js 可以执行许多操作，例如询问多项选择、展示单选按钮、确认等。</p>
+<p>所有的可选方案都值得了解，尤其是 Node.js 提供的内置方案，但是如果打算将 CLI 提升到更高的水平，则 Inquirer.js 是更优的选择。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/27/NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E8%BE%93%E5%87%BA%E5%88%B0%E5%91%BD%E4%BB%A4%E8%A1%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/27/NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E8%BE%93%E5%87%BA%E5%88%B0%E5%91%BD%E4%BB%A4%E8%A1%8C/" class="post-title-link" itemprop="url">NodeJS | 使用 Node.js 输出到命令行</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-27 13:03:29" itemprop="dateCreated datePublished" datetime="2022-01-27T13:03:29+08:00">2022-01-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-30 12:35:09" itemprop="dateModified" datetime="2022-01-30T12:35:09+08:00">2022-01-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="使用控制台模块的基本输出"><a href="#使用控制台模块的基本输出" class="headerlink" title="使用控制台模块的基本输出"></a>使用控制台模块的基本输出</h2><p>Node.js 提供了 <code>console</code> 模块，该模块提供了大量非常有用的与命令行交互的方法。</p>
+<p>它基本与浏览器中的 <code>console</code> 对象相同。</p>
+<p>最基础、最常用的方法是 <code>console.log()</code> ,该方法会打印传入控制台的字符串。</p>
+<p>如果传入对象，则它会呈现为字符串。</p>
+<p>可以传入多个变量到 <code>console.log</code> ,例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> x = <span class="string">&#x27;x&#x27;</span></span><br><span class="line"><span class="keyword">const</span> y = <span class="string">&#x27;y&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(x, y)</span><br></pre></td></tr></table></figure>
+
+<p>Node.js 会全部打印出来。</p>
+<p>也可以通过传入变量和格式说明符来格式化用语。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/27/NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E8%BE%93%E5%87%BA%E5%88%B0%E5%91%BD%E4%BB%A4%E8%A1%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/26/NodeJS-Node-js-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -180,10 +574,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-26 23:52:46 / 修改时间：23:56:18" itemprop="dateCreated datePublished" datetime="2022-01-26T23:52:46+08:00">2022-01-26</time>
+              <time title="创建时间：2022-01-26 23:52:46" itemprop="dateCreated datePublished" datetime="2022-01-26T23:52:46+08:00">2022-01-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-29 23:50:23" itemprop="dateModified" datetime="2022-01-29T23:50:23+08:00">2022-01-29</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -219,6 +619,20 @@
 <p>或</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node app.js name=joe</span><br></pre></td></tr></table></figure>
 
+<p>这会改变在 Node.js 代码中获取参数值的方式。</p>
+<p>获取参数值的方法是使用 Node.js 中内置的 <code>process</code> 对象。</p>
+<p>他公开了 <code>argv</code> 属性，该属性是一个包含了所有命令行调用参数的数组。</p>
+<p>第一个参数是 <code>node</code> 命令的完整路径。</p>
+<p>第二个参数是正被执行的文件的完整路径。</p>
+<p>所有其他参数从第三个位置开始。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/26/NodeJS-Node-js-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1574,351 +1988,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-13-TS%E5%B7%A5%E7%A8%8B-%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/13/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-13-TS%E5%B7%A5%E7%A8%8B-%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9/" class="post-title-link" itemprop="url">TS进阶-编译选项</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-13 12:48:50" itemprop="dateCreated datePublished" datetime="2021-09-13T12:48:50+08:00">2021-09-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>TypeScript 提供了非常多的编译选项，但是官方文档对每一项的解释很抽象，这一张会详细介绍每一项的作用，并给出示例。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/13/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-13-TS%E5%B7%A5%E7%A8%8B-%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-12-TS%E5%B7%A5%E7%A8%8B-%E4%BB%A3%E7%A0%81%E6%A3%80%E6%9F%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/12/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-12-TS%E5%B7%A5%E7%A8%8B-%E4%BB%A3%E7%A0%81%E6%A3%80%E6%9F%A5/" class="post-title-link" itemprop="url">TS工程-代码检查</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-12 16:35:17" itemprop="dateCreated datePublished" datetime="2021-09-12T16:35:17+08:00">2021-09-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>2019 年 1 月，TypeScript 官方决定全面采用 ESLint 作为代码检查的工具，并创建了一个新项目 typescript-eslint，提供了 TypeScript 文件的解析器@typescript-eslint/parser 和相关的配置选项@typescript-eslint/eslint-plugin 等。而之前的两个 lint 解决方案都将弃用：</p>
-<ul>
-<li>typescript-eslint-parser 已停止维护</li>
-<li>TSLint 将提供迁移工具，并在 typescript-eslint 的功能足够完整之后停止维护 TSLint(Once we consider ESLint feature-complete w.r.t TSLint,we will deprecate TSLint and help users migrate to ESLint)</li>
-</ul>
-<p>综上所述，目前以及将来的 TypeScript 的代码检查方案就是 typescript-eslint。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/12/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-12-TS%E5%B7%A5%E7%A8%8B-%E4%BB%A3%E7%A0%81%E6%A3%80%E6%9F%A5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/11/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-11-TS%E8%BF%9B%E9%98%B6-%E5%A3%B0%E6%98%8E%E5%90%88%E5%B9%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/11/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-11-TS%E8%BF%9B%E9%98%B6-%E5%A3%B0%E6%98%8E%E5%90%88%E5%B9%B6/" class="post-title-link" itemprop="url">TS进阶-声明合并</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-11 23:46:17" itemprop="dateCreated datePublished" datetime="2021-09-11T23:46:17+08:00">2021-09-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>如果定义了两个相同名字的函数、接口或类，那么他们会合并成一个类型：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/11/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-11-TS%E8%BF%9B%E9%98%B6-%E5%A3%B0%E6%98%8E%E5%90%88%E5%B9%B6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/07/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-07-TS%E8%BF%9B%E9%98%B6-%E6%B3%9B%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/07/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-07-TS%E8%BF%9B%E9%98%B6-%E6%B3%9B%E5%9E%8B/" class="post-title-link" itemprop="url">TS进阶-泛型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-07 22:34:30" itemprop="dateCreated datePublished" datetime="2021-09-07T22:34:30+08:00">2021-09-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>泛型（Generics）是指在定义函数、接口或类的时候，不预先制定具体的类型，而在使用的时候再指定类型的一种特性。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/07/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-07-TS%E8%BF%9B%E9%98%B6-%E6%B3%9B%E5%9E%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1988,7 +2057,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
