@@ -159,3 +159,22 @@ console.log(chalk.yellow('你好'))
 与尝试记住转义码相比，使用 `chalk.yellow` 方便得多，并且代码更具可读性。
 
 更多用法示例，详见上面的项目链接。
+
+## 创建进度条
+
+`Progress` 是一个很棒的应用包，可在控制台创建进度条。使用 `npm install progress` 进行安装。
+
+以下代码会创建一个 10 步的进度条，没 100 毫秒完成一步。当进度条结束时则会清除定时器：
+
+```js
+const progressBar = require('progress')
+
+const bar = new ProgressBar(':bar', { total: 10 })
+const timer = serInterval(() => {
+    bar.tick()
+
+    if (bar.complete) {
+        clearInterval(tiemr)
+    }
+})
+```
