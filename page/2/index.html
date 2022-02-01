@@ -157,6 +157,275 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/25/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-25-%E5%8E%9F%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/25/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-25-%E5%8E%9F%E5%9E%8B/" class="post-title-link" itemprop="url">OOP | 原型</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-25 12:37:34" itemprop="dateCreated datePublished" datetime="2021-09-25T12:37:34+08:00">2021-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/" itemprop="url" rel="index"><span itemprop="name">JavaScript面向对象编程指南</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在本章中，我们将着重介绍函数对象中的原型（prototype）属性。对于 JavaScript 的学习来说，理解原型的工作原理是非常重要的一环，毕竟，它的对象模型是完全基于圆形的。当然，圆形其实不难理解，只不过由于这是个全新的概念，我们接受起来需要一点时间而已。事实上这东西在 JavaScript 中几乎无所不在（闭包除外），只要我们“领悟”了其中原理，一切都会显得格外简单明了了。而且在之后的内容中，本书会围绕着原型展开大量的示例演示，一边巩固并加深对这一概念的熟悉程度。</p>
+<p>本章将要讨论以下话题。</p>
+<ul>
+<li>每个函授都有一个 prototype 属性，该属性所存储的就是原型对象。</li>
+<li>为原型对象添加属性。</li>
+<li>使用原型对象中的新增属性。</li>
+<li>区别对象自身属性与原型属性。</li>
+<li><code>__proto__</code>,用于保存各对象原型的神秘链接。</li>
+<li>介绍原型方法，例如 isPrototypeOf()、hasOwnProperty()、propertyIsEnumerable()。</li>
+<li>如何（利用原型）强化数组或字符串这样的内建对象。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/25/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-25-%E5%8E%9F%E5%9E%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/24/JavaScript-Promise-%E5%8E%BB%E8%80%8C%E5%A4%8D%E8%BF%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/24/JavaScript-Promise-%E5%8E%BB%E8%80%8C%E5%A4%8D%E8%BF%94/" class="post-title-link" itemprop="url">JavaScript Promise: 去而复返</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-24 14:38:13" itemprop="dateCreated datePublished" datetime="2021-09-24T14:38:13+08:00">2021-09-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>原文：<a target="_blank" rel="noopener" href="http://www.html5rocks.com/en/tutorials/es6/promises/">JavaScript Promises: an introduction</a><br>作者：<a target="_blank" rel="noopener" href="http://www.html5rocks.com/profiles/#jakearchibald">Jake Archibald</a><br>时间：Dec 16, 2013<br>翻译：<a href="./#%E6%9C%AA%E7%9F%A5%E4%BA%86%E5%B7%B2%E7%BB%8F%E6%98%AF">Amio</a><br>转自：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/rubylouvre/p/3495286.html">司徒</a></p>
+<p>女士们先生们，请准备好迎接 Web 开发历史上一个重大时刻……</p>
+<p>[鼓声响起]</p>
+<blockquote>
+<p>JavaScript 有了原生的 Promise!</p>
+</blockquote>
+<p>[漫天的烟花绽放，人群沸腾了]</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/24/JavaScript-Promise-%E5%8E%BB%E8%80%8C%E5%A4%8D%E8%BF%94/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-20-%E5%BC%95%E8%A8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/20/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-20-%E5%BC%95%E8%A8%80/" class="post-title-link" itemprop="url">OOP | 引言</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-20 14:37:03" itemprop="dateCreated datePublished" datetime="2021-09-20T14:37:03+08:00">2021-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/" itemprop="url" rel="index"><span itemprop="name">JavaScript面向对象编程指南</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>众所周知，时下所流行的这些 Web 应用，例如 Yahoo!Maps、Google Maps、Yahoo！Mail、My Yahoo！、Gmail、Digg 以及 YouTube 等都有一些明显的共同特征，即：它们都是 Web2.0 时代的应用程序，都有非常丰富的人性化交互界面，而这往往意味着大量的 JavaScript 应用。事实上，JavaScript 最初也只不过是一种内嵌于 HTM 语句中的单行式脚本语言。但如今已经今非昔比了，对于它今天所拥有的面向对象特性来说，无论是在可重用性方面，还是在可扩展性方面都已经足以支持我们去实现任何网站项目中的行为逻辑了。毕竟，对于今天的标准来说，任何一个符合规范的 Web 页面都应该包含以下三个要素：内容（HTML）、外观(CSS)、和行为（JavaScript）。</p>
+<p>通常来说，JavaScript 程序的运行必须要依赖于某个宿主环境。其中最常见的当然就是我们的 Web 浏览器了，但请注意，浏览器并不是 JavaScript 代码唯一的宿主环境。事实上，我们可以利用 JavaScript 来创建各种类型的插件工具、应用扩展以及其它形式的组件。种子，学习 JavaScript 语言是一件一举多得的事情，我们可以通过学习这种语言，来编写各种不同的应用程序。</p>
+<p>这本书将着重于介绍 JavaScript 语言本身，特别是其中的面向对象特性。我们会从零开始讲解这些内容，也就是说，读这本书无语具备任何的程序设计基础。另外，除了有一章内容是专门为 Web 浏览器环境而写的以外，本书其余部分介绍的都是 JavaScript 的一半特性，适用于任何支持该语言的执行环境。</p>
+<p>现在，让我们进入第一章的学习吧。首先，我们需要先来了解一下 JavaScript 背后的发展历史，而后我们才能逐步引入面向对象编程方面的基本概念。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/20/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-20-%E5%BC%95%E8%A8%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-09-13-TS%E5%B7%A5%E7%A8%8B-%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1604,265 +1873,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/08/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-08-TS%E5%9F%BA%E7%A1%80-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%B1%BB%E5%9E%8B%E2%80%94%E2%80%94%E6%8E%A5%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/08/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-08-TS%E5%9F%BA%E7%A1%80-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%B1%BB%E5%9E%8B%E2%80%94%E2%80%94%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">TS基础-对象的类型——接口</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-08-08 22:30:02" itemprop="dateCreated datePublished" datetime="2021-08-08T22:30:02+08:00">2021-08-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在 TypeScript 中，我们使用接口（Interfaces）来定义对象的类型。</p>
-<h2 id="什么是接口"><a href="#什么是接口" class="headerlink" title="什么是接口"></a>什么是接口</h2><p>在面向对象语言中，接口（Interfaces）是一个很重要的概念，它是对行为的抽象，而具体如何行动需要由（classes）去实现（implement）。</p>
-<p>TypeScript 中的接口是一个非常灵活的概念，除了可用于 <strong>对类的一部分进行抽象</strong> 以外，也常用于对 【对象的形状(Shape)】进行描述。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/08/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-08-TS%E5%9F%BA%E7%A1%80-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%B1%BB%E5%9E%8B%E2%80%94%E2%80%94%E6%8E%A5%E5%8F%A3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/08/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-08-TS%E5%9F%BA%E7%A1%80-%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/08/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-08-TS%E5%9F%BA%E7%A1%80-%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">TS基础-联合类型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-08-08 22:14:49" itemprop="dateCreated datePublished" datetime="2021-08-08T22:14:49+08:00">2021-08-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>联合类型（Union Types) 表示取值可以为多种类型中的一种。</p>
-<h2 id="简单的例子"><a href="#简单的例子" class="headerlink" title="简单的例子"></a>简单的例子</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myFavoriteNumber: <span class="built_in">string</span> | <span class="built_in">number</span></span><br><span class="line">myFavoriteNumber = <span class="string">&#x27;seven&#x27;</span></span><br><span class="line">muFavoriteNumber = <span class="number">7</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myFavoriteNumber: <span class="built_in">string</span> | <span class="built_in">number</span></span><br><span class="line">myFavoriteNumber = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// index.ts(2.1): erroe TS2322: Type &#x27;boolean&#x27; is not assignable to type &#x27;string | number&#x27;.</span></span><br><span class="line"><span class="comment">// Type &#x27;boolean&#x27; is not assignable to type &#x27;number&#x27;.</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/08/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-08-TS%E5%9F%BA%E7%A1%80-%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/07/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-07-TS%E5%9F%BA%E7%A1%80-%E7%B1%BB%E5%9E%8B%E6%8E%A8%E8%AE%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/07/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-07-TS%E5%9F%BA%E7%A1%80-%E7%B1%BB%E5%9E%8B%E6%8E%A8%E8%AE%BA/" class="post-title-link" itemprop="url">TS基础-类型推论</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-08-07 23:43:45" itemprop="dateCreated datePublished" datetime="2021-08-07T23:43:45+08:00">2021-08-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>如果没有明确指定类型，那么 TypeScript 会依照类型推论（TypeInference）的规则推断出一个类型。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/07/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-07-TS%E5%9F%BA%E7%A1%80-%E7%B1%BB%E5%9E%8B%E6%8E%A8%E8%AE%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1932,7 +1942,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

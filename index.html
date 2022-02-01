@@ -157,6 +157,290 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/31/NodeJS-package-json-%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/31/NodeJS-package-json-%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">NodeJS | package.json 指南</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-31 22:01:51" itemprop="dateCreated datePublished" datetime="2022-01-31T22:01:51+08:00">2022-01-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-01 22:56:03" itemprop="dateModified" datetime="2022-02-01T22:56:03+08:00">2022-02-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>目录：</p>
+<ul>
+<li><a href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84">文件结构</a></li>
+<li><a href="#%E5%B1%9E%E6%80%A7%E5%88%86%E7%B1%BB">属性分类</a></li>
+<li><a href="#%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%89%88%E6%9C%AC">软件包版本</a></li>
+</ul>
+<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><p>这是一个示例的 package.json 文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>他是空的！对于应用程序，<code>package.json</code> 文件中的内容没有固定的要求。唯一的要求是必须遵守 JSON 格式，否则，尝试以编程的方式访问其属性的应用程序则无法读取它。</p>
+<p>如果要构建要在 <code>npm</code> 上分发的 Node.js 软件包，则必须具有一组可帮助其他人使用它的属性。稍后会详细介绍。</p>
+<p>这是另一个 package.json:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;nodejs_cn&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它定义了 <code>name</code> 属性，用于告知应用程序或软件包的名称。</p>
+<p>这是一个更复杂的示例，该实例是从 Vue.js 应用程序示例中提取的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;name&quot;</span>:<span class="string">&quot;test-project&quot;</span>,</span><br></pre></td></tr></table></figure>
+
+<h2 id="属性分类"><a href="#属性分类" class="headerlink" title="属性分类"></a>属性分类</h2><h2 id="软件包版本"><a href="#软件包版本" class="headerlink" title="软件包版本"></a>软件包版本</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/31/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E6%88%96%E6%89%A7%E8%A1%8C-npm-%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/31/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E6%88%96%E6%89%A7%E8%A1%8C-npm-%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85/" class="post-title-link" itemprop="url">NodeJS | 如何使用或执行 npm 安装的软件包</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-31 08:39:20 / 修改时间：22:00:54" itemprop="dateCreated datePublished" datetime="2022-01-31T08:39:20+08:00">2022-01-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>当使用 <code>npm</code> 将软件包安装到 <code>node_modules</code> 文件夹中或全局安装时，如何在 Node.js 代码中使用它？</p>
+<p>假设使用以下命令安装了流行的 JavaScript 使用工具库 <code>lodash</code> ：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install lodash</span><br></pre></td></tr></table></figure>
+
+<p>这会把软件包安装到本地 <code>node_modules</code> 文件夹中。</p>
+<p>若要在代码中使用它，则只需要使用 <code>require</code> 将其导入到程序中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">&#x27;lodash&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果软件包时可执行文件，该怎么办？</p>
+<p>在这种情况下，它会把可执行文件放到 <code>node_modules/.bin/</code> 文件夹下。</p>
+<p>验证这一点的简单示例是 <code>cowsay</code> 。</p>
+<p>cowsay 软件包提供了一个命令行程序，可以执行该程序以使母牛说些话（以及其它动物也可以说话）。</p>
+<p>当使用 <code>npm install cowsay</code> 安装软件包时，它会在 node_modules 文件夹中安装自身以及一些依赖包：</p>
+<blockquote>
+<p>图略</p>
+</blockquote>
+<p>有一个隐藏的 .bin 文件夹，其中包含指向 cowsay 二进制文件的符号链接：</p>
+<blockquote>
+<p>图略</p>
+</blockquote>
+<p>如何执行这些文件？</p>
+<p>可以输入 <code>./node_modules/.bin/cowsay</code> 来运行它，但是最新版本的 npm （自 5.2 起）中包含的 npx 是更好的选择。只需运行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx cowsay</span><br></pre></td></tr></table></figure>
+
+<p>则 npx 会找到程序包的位置。</p>
+<blockquote>
+<p>图略</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/31/NodeJS-npm-%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%AE%89%E8%A3%85%E5%88%B0%E5%93%AA%E9%87%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/31/NodeJS-npm-%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%AE%89%E8%A3%85%E5%88%B0%E5%93%AA%E9%87%8C/" class="post-title-link" itemprop="url">NodeJS | npm 软件包安装到哪里</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-31 08:17:58 / 修改时间：08:37:35" itemprop="dateCreated datePublished" datetime="2022-01-31T08:17:58+08:00">2022-01-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>当使用 <code>npm</code> 安装软件包时，可以执行两种安装类型：</p>
+<ul>
+<li>  本地安装</li>
+<li>  全局安装</li>
+</ul>
+<p>默认情况下，当输入 <code>npm install</code> 命令时，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install lodash</span><br></pre></td></tr></table></figure>
+
+<p>软件版会被安装到当前文件树中的 <code>node_modules</code> 子文件夹下。</p>
+<p>在这种情况下，<code>npm</code> 还会在当前文件夹中存在的 <code>package.json</code> 文件的 <code>dependencies</code> 属性中添加 <code>lodash</code> 条目。</p>
+<p>使用 <code>-g</code> 标志可以执行全局安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g lodash</span><br></pre></td></tr></table></figure>
+
+<p>在这种情况下，<code>npm</code> 不会将软件包安装到本地文件夹下，而是使用全局的位置。</p>
+<p>全局的位置到底在哪里？</p>
+<p><code>npm root -g</code> 命令会告知其在计算机上的确切位置。</p>
+<p>在 macOS 或 Linux 上，此位置可能是 <code>/urs/local/lib/node-modules</code> 。在 Windows 上，可能是 <code>C:\Users\You\AppData\Roaming\npm\node-modules</code> 。</p>
+<p>但是如果使用 <code>nvm</code> 管理 Node.js 版本，则该位置会有所不同。</p>
+<p>例如，使用 <code>nvm</code> ,则软件包的位置可能为 <code>/Users/joe/.nvm/versions/node/v8.9.0/lib/node-modules</code> 。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/NodeJS-npm-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1719,275 +2003,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/25/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-25-%E5%8E%9F%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/25/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-25-%E5%8E%9F%E5%9E%8B/" class="post-title-link" itemprop="url">OOP | 原型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-25 12:37:34" itemprop="dateCreated datePublished" datetime="2021-09-25T12:37:34+08:00">2021-09-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/" itemprop="url" rel="index"><span itemprop="name">JavaScript面向对象编程指南</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在本章中，我们将着重介绍函数对象中的原型（prototype）属性。对于 JavaScript 的学习来说，理解原型的工作原理是非常重要的一环，毕竟，它的对象模型是完全基于圆形的。当然，圆形其实不难理解，只不过由于这是个全新的概念，我们接受起来需要一点时间而已。事实上这东西在 JavaScript 中几乎无所不在（闭包除外），只要我们“领悟”了其中原理，一切都会显得格外简单明了了。而且在之后的内容中，本书会围绕着原型展开大量的示例演示，一边巩固并加深对这一概念的熟悉程度。</p>
-<p>本章将要讨论以下话题。</p>
-<ul>
-<li>每个函授都有一个 prototype 属性，该属性所存储的就是原型对象。</li>
-<li>为原型对象添加属性。</li>
-<li>使用原型对象中的新增属性。</li>
-<li>区别对象自身属性与原型属性。</li>
-<li><code>__proto__</code>,用于保存各对象原型的神秘链接。</li>
-<li>介绍原型方法，例如 isPrototypeOf()、hasOwnProperty()、propertyIsEnumerable()。</li>
-<li>如何（利用原型）强化数组或字符串这样的内建对象。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/25/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-25-%E5%8E%9F%E5%9E%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/24/JavaScript-Promise-%E5%8E%BB%E8%80%8C%E5%A4%8D%E8%BF%94/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/24/JavaScript-Promise-%E5%8E%BB%E8%80%8C%E5%A4%8D%E8%BF%94/" class="post-title-link" itemprop="url">JavaScript Promise: 去而复返</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-24 14:38:13" itemprop="dateCreated datePublished" datetime="2021-09-24T14:38:13+08:00">2021-09-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>原文：<a target="_blank" rel="noopener" href="http://www.html5rocks.com/en/tutorials/es6/promises/">JavaScript Promises: an introduction</a><br>作者：<a target="_blank" rel="noopener" href="http://www.html5rocks.com/profiles/#jakearchibald">Jake Archibald</a><br>时间：Dec 16, 2013<br>翻译：<a href="./#%E6%9C%AA%E7%9F%A5%E4%BA%86%E5%B7%B2%E7%BB%8F%E6%98%AF">Amio</a><br>转自：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/rubylouvre/p/3495286.html">司徒</a></p>
-<p>女士们先生们，请准备好迎接 Web 开发历史上一个重大时刻……</p>
-<p>[鼓声响起]</p>
-<blockquote>
-<p>JavaScript 有了原生的 Promise!</p>
-</blockquote>
-<p>[漫天的烟花绽放，人群沸腾了]</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/24/JavaScript-Promise-%E5%8E%BB%E8%80%8C%E5%A4%8D%E8%BF%94/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-20-%E5%BC%95%E8%A8%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/20/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-20-%E5%BC%95%E8%A8%80/" class="post-title-link" itemprop="url">OOP | 引言</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-20 14:37:03" itemprop="dateCreated datePublished" datetime="2021-09-20T14:37:03+08:00">2021-09-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/" itemprop="url" rel="index"><span itemprop="name">JavaScript面向对象编程指南</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>众所周知，时下所流行的这些 Web 应用，例如 Yahoo!Maps、Google Maps、Yahoo！Mail、My Yahoo！、Gmail、Digg 以及 YouTube 等都有一些明显的共同特征，即：它们都是 Web2.0 时代的应用程序，都有非常丰富的人性化交互界面，而这往往意味着大量的 JavaScript 应用。事实上，JavaScript 最初也只不过是一种内嵌于 HTM 语句中的单行式脚本语言。但如今已经今非昔比了，对于它今天所拥有的面向对象特性来说，无论是在可重用性方面，还是在可扩展性方面都已经足以支持我们去实现任何网站项目中的行为逻辑了。毕竟，对于今天的标准来说，任何一个符合规范的 Web 页面都应该包含以下三个要素：内容（HTML）、外观(CSS)、和行为（JavaScript）。</p>
-<p>通常来说，JavaScript 程序的运行必须要依赖于某个宿主环境。其中最常见的当然就是我们的 Web 浏览器了，但请注意，浏览器并不是 JavaScript 代码唯一的宿主环境。事实上，我们可以利用 JavaScript 来创建各种类型的插件工具、应用扩展以及其它形式的组件。种子，学习 JavaScript 语言是一件一举多得的事情，我们可以通过学习这种语言，来编写各种不同的应用程序。</p>
-<p>这本书将着重于介绍 JavaScript 语言本身，特别是其中的面向对象特性。我们会从零开始讲解这些内容，也就是说，读这本书无语具备任何的程序设计基础。另外，除了有一章内容是专门为 Web 浏览器环境而写的以外，本书其余部分介绍的都是 JavaScript 的一半特性，适用于任何支持该语言的执行环境。</p>
-<p>现在，让我们进入第一章的学习吧。首先，我们需要先来了解一下 JavaScript 背后的发展历史，而后我们才能逐步引入面向对象编程方面的基本概念。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/20/%E9%9A%8F%E6%95%B2-JavaScript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97-2021-09-20-%E5%BC%95%E8%A8%80/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2057,7 +2072,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
