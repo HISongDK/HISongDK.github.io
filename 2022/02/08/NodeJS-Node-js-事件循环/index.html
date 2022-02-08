@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="介绍事件循环是了解 Node.js 最重要的方面之一。 为什么这么重要？因为它阐明了 Node.js 如何做到异步并具有非阻塞的 I&#x2F;O,所以它基本阐明了 Node.js 的“杀手级应用”，正是这一点使他成功了。 Node.js JavaScript 代码运行在单个线程上，每次只处理一件事。 这个限制实际上非常用用，因为它大大简化了编程方式，而不必担心并发问题。 只需要注意如何编写代码，并避免任何">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NodeJS | Node.js 事件循环">
+<meta property="og:url" content="http://example.com/2022/02/08/NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/index.html">
+<meta property="og:site_name" content="某人写字的地方">
+<meta property="og:description" content="介绍事件循环是了解 Node.js 最重要的方面之一。 为什么这么重要？因为它阐明了 Node.js 如何做到异步并具有非阻塞的 I&#x2F;O,所以它基本阐明了 Node.js 的“杀手级应用”，正是这一点使他成功了。 Node.js JavaScript 代码运行在单个线程上，每次只处理一件事。 这个限制实际上非常用用，因为它大大简化了编程方式，而不必担心并发问题。 只需要注意如何编写代码，并避免任何">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://website2.nodejs.cn/static/270ebeb6dbfa7d613152b71257c72a9e/c83ae/call-stack-first-example.png">
+<meta property="og:image" content="http://website2.nodejs.cn/static/ca404c319c6fc595497d5dc097d469ff/fc1a1/execution-order-first-example.png">
+<meta property="og:image" content="http://website2.nodejs.cn/static/be55515b9343074d00b43de88c495331/966a0/call-stack-second-example.png">
+<meta property="og:image" content="http://website2.nodejs.cn/static/585ff3207d814911a7e44d55fbde483b/f96db/execution-order-second-example.png">
+<meta property="article:published_time" content="2022-02-08T03:17:09.000Z">
+<meta property="article:modified_time" content="2022-02-08T15:15:53.555Z">
+<meta property="article:author" content="Somebody">
+<meta property="article:tag" content="NodeJS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://website2.nodejs.cn/static/270ebeb6dbfa7d613152b71257c72a9e/c83ae/call-stack-first-example.png">
+
+<link rel="canonical" href="http://example.com/2022/02/08/NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NodeJS | Node.js 事件循环 | 某人写字的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">某人写字的地方</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-sitemap fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/08/NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NodeJS | Node.js 事件循环
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-08 11:17:09 / 修改时间：23:15:53" itemprop="dateCreated datePublished" datetime="2022-02-08T11:17:09+08:00">2022-02-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>事件循环是了解 Node.js 最重要的方面之一。</p>
+<p>为什么这么重要？因为它阐明了 Node.js 如何做到异步并具有非阻塞的 I/O,所以它基本阐明了 Node.js 的“杀手级应用”，正是这一点使他成功了。</p>
+<p>Node.js JavaScript 代码运行在单个线程上，每次只处理一件事。</p>
+<p>这个限制实际上非常用用，因为它大大简化了编程方式，而不必担心并发问题。</p>
+<p>只需要注意如何编写代码，并避免任何可能阻塞线程的事情，例如同步的网络调用或无限的循环。</p>
+<p>通常，在大多数浏览器中，每个选项卡都有一个事件循环，以使每个进程隔离开，并避免使用无限的循环或繁重的处理来阻止整个页面。</p>
+<p>该环境管理多个并发的事件循环，例如 处理 API 调用。Web 工作进程也运行在自己的事件循环中。</p>
+<p>主要需要关心代码在单个事件循环上运行，并且在编写代码时牢记这一点，以避免阻塞它。</p>
+<span id="more"></span>
+
+<h2 id="阻塞事件循环"><a href="#阻塞事件循环" class="headerlink" title="阻塞事件循环"></a>阻塞事件循环</h2><p>任何花费太长时间才能将控制权返回给事件循环的 JavaScript 代码，都会阻塞页面中任何 JavaScript 代码的运行，甚至阻塞 UI 线程，并且用户无法单击浏览、滚动页面等。</p>
+<p>JavaScript 中几乎所有的 I/O 基元都是非阻塞的。网络请求、文件系统操作等。被阻塞是个异常，这就是 JavaScript 如此之多基于回调（最近越来越多基于 promise 和 async/await）的原因。</p>
+<h2 id="调用堆栈"><a href="#调用堆栈" class="headerlink" title="调用堆栈"></a>调用堆栈</h2><p>调用堆栈是一个 LIFO 队列（后进先出）</p>
+<p>事件循环不断地检查调用堆栈，已查看是否需要运行任何函数。</p>
+<p>当执行时，它会将找到的所有函数添加到调用堆栈中，并按照顺寻执行每个函数。</p>
+<p>你知道在调试器或浏览器控制台中可能熟悉的错误堆栈跟踪么？浏览器在调用堆栈中查找函数名称，以告知你是哪个函数发起了当前的调用。</p>
+<h2 id="一个简单的事件循环阐释"><a href="#一个简单的事件循环阐释" class="headerlink" title="一个简单的事件循环阐释"></a>一个简单的事件循环阐释</h2><p>举个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bar = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;bar&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> baz = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;baz&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> foo = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;foo&#x27;</span>)</span><br><span class="line">    bar()</span><br><span class="line">    baz()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
+
+<p>此代码会如预期地打印：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foo</span><br><span class="line">bar</span><br><span class="line">baz</span><br></pre></td></tr></table></figure>
+
+<p>当运行此代码时，会首先调用 <code>foo()</code> 。在 <code>foo()</code> 内部，会首先调用 <code>bar()</code> ,然后调用 <code>baz()</code>。</p>
+<p>此时调用堆栈如下所示：</p>
+<p><img src="http://website2.nodejs.cn/static/270ebeb6dbfa7d613152b71257c72a9e/c83ae/call-stack-first-example.png" alt="示例调用堆栈"></p>
+<p>每次迭代中的事件循环都会查看调用堆栈中是否有东西，并执行它直到调用堆栈为空：<br><img src="http://website2.nodejs.cn/static/ca404c319c6fc595497d5dc097d469ff/fc1a1/execution-order-first-example.png" alt="示例"></p>
+<h2 id="如对函数执行"><a href="#如对函数执行" class="headerlink" title="如对函数执行"></a>如对函数执行</h2><p>上面的示例看起来很正常，没有什么特别的：JavaScript 查找要执行的东西，并按顺序执行它们。</p>
+<p><code>让我们看看如何将函数推迟直到堆栈被清空</code>。<!-- 异步，重头戏啊 --></p>
+<p><code>setTimeout(()=&gt;&#123;&#125;,0)</code> 的用例是<code>调用一个函数，但是是在代码中的其他函数已被执行之后</code>。</p>
+<p>举个例子:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bar = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;bar&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> baz = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;baz&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> foo = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;foo&#x27;</span>)</span><br><span class="line">    <span class="built_in">setTimeout</span>(bar, <span class="number">0</span>)</span><br><span class="line">    baz()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
+
+<p>该代码会打印：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foo</span><br><span class="line">baz</span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
+
+<p>当运行此代码时，会首先调用 foo()。在 foo() 内部会调用 setTimeout,并将 bar 函数作为参数传入，指定延迟时间为 0。然后调用 baz()。</p>
+<p>此时调用堆栈如下所示：</p>
+<p><img src="http://website2.nodejs.cn/static/be55515b9343074d00b43de88c495331/966a0/call-stack-second-example.png" alt="异步堆栈调用示例"></p>
+<p>这是程序中所有函数的执行顺序：</p>
+<p><img src="http://website2.nodejs.cn/static/585ff3207d814911a7e44d55fbde483b/f96db/execution-order-second-example.png" alt="异步函数执行顺序图示"></p>
+<p>为什么会这样呢？</p>
+<h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><p>当调用 setTimeout() 时，浏览器或 Node.js 会启动定时器。当定时器到期时，回调函数会被放入<code>消息队列</code>中.</p>
+<p>在消息队列中，用户触发的事件（如单击或键盘事件、或获取响应）也会在此排队，然后代码才有机会对其作出反应。类似 <code>onload</code> 这样的 DOM 事件也是如此。</p>
+<p>时间循环会赋予调用堆栈较高的优先级，它首先处理在调用堆栈找到的所有东西，一旦调用堆栈中没有任何东西，便开始处理消息队列中的东西。</p>
+<p>我们不必等待诸如 setTimeout、fetch、或其他的函数完成它们的工作，因为它们时浏览器提供的，并且位于它们自身的线程中。例如，如果将 setTimeout 的超时时间设置为 2 秒，但不必等待 2 秒，等待发生在其他地方。</p>
+<h2 id="ES6-作业队列"><a href="#ES6-作业队列" class="headerlink" title="ES6 作业队列"></a>ES6 作业队列</h2><p>ECMAScript 2015 引入了作业队列的概念，Promise 使用了该队列（也在 ES6 中引入）。这种方式会尽快的执行异步函数的结构，而不是放在调用堆栈的末尾。</p>
+<p>在当前函数结束之前 resolve 的 Promise 会在当前函数之后被立即执行。</p>
+<p>有个游乐场中的过山车的比喻很好： 消息队列将你排在队列的后面（在所有其他人的后面），你不得不等待你的回合，而工作队列则是快速通道票，这样你就可以在完成行一次乘车后立即乘坐另一辆车。</p>
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bar = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;bar&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> baz = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;baz&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> foo = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;foo&#x27;</span>)</span><br><span class="line">    <span class="built_in">setTimeout</span>(bar, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">        resolve(<span class="string">&#x27;应该在 baz 之后、bar之前&#x27;</span>)</span><br><span class="line">    &#125;).then(<span class="function">(<span class="params">resolve</span>) =&gt;</span> <span class="built_in">console</span>.log(resolve))</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 如上所属</span></span><br><span class="line"><span class="comment">     * 据我所知</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 消息队列对应我所听说的宏任务</span></span><br><span class="line"><span class="comment">     * 作业队列对应我所听说的微任务</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;baz&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这回打印：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">foo</span><br><span class="line">baz</span><br><span class="line">应该在 baz 之后、bar之前</span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
+
+<p>这是 Promise（已经基于 promise 构建的 async/await）与通过 <code>setTimeout()</code> 或其他平台 API 的普通的旧异步函数之间的巨大区别。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NodeJS/" rel="tag"># NodeJS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/05/NodeJS-%E5%AE%89%E8%A3%85-npm-%E5%8C%85%E7%9A%84%E6%97%A7%E7%89%88%E6%9C%AC/" rel="prev" title="NodeJS | 安装 npm 包的旧版本">
+      <i class="fa fa-chevron-left"></i> NodeJS | 安装 npm 包的旧版本
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.</span> <span class="nav-text">阻塞事件循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E5%A0%86%E6%A0%88"><span class="nav-number">3.</span> <span class="nav-text">调用堆栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E9%98%90%E9%87%8A"><span class="nav-number">4.</span> <span class="nav-text">一个简单的事件循环阐释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E5%AF%B9%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C"><span class="nav-number">5.</span> <span class="nav-text">如对函数执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">6.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6-%E4%BD%9C%E4%B8%9A%E9%98%9F%E5%88%97"><span class="nav-number">7.</span> <span class="nav-text">ES6 作业队列</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Somebody</p>
+  <div class="site-description" itemprop="description">My vegetable has exploded!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">97</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Somebody</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
