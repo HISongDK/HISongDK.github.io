@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="node 命令是用来运行 Node.js 脚本的命令： 1node script.js  如果省略文件名，则在 REPL 模式中使用它： 1node   注意：REPL 也被称为运行评估打印循环，是一种编程语言环境(主要是控制台窗口),它使用单个表达式作为用户输入，并在执行后将结果返回到控制台。">
+  <meta name="description" content="编程语言中的异步性计算机在设计上是异步的。 异步意味着事情可以独立于主程序流发生。 在当前的用户计算机中，每个程序都运行于特定的时间段，然后停止执行，以让另一个程序继续执行。这件事运行得如此之快，以至于无法察觉。我们以为计算机可以同时运行许多程序，但这是一种错觉。（在多处理器计算机上除外） 程序在内部会使用中断，一种被发送到处理器以获取系统关注的信号。 这里不会深入探讨这个问题，只要记住，程序是异">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NodeJS | 如何使用 Node.js REPL">
-<meta property="og:url" content="http://example.com/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/index.html">
+<meta property="og:title" content="NodeJS | JavaScript 异步编程与回调">
+<meta property="og:url" content="http://example.com/2022/02/12/NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/index.html">
 <meta property="og:site_name" content="某人写字的地方">
-<meta property="og:description" content="node 命令是用来运行 Node.js 脚本的命令： 1node script.js  如果省略文件名，则在 REPL 模式中使用它： 1node   注意：REPL 也被称为运行评估打印循环，是一种编程语言环境(主要是控制台窗口),它使用单个表达式作为用户输入，并在执行后将结果返回到控制台。">
+<meta property="og:description" content="编程语言中的异步性计算机在设计上是异步的。 异步意味着事情可以独立于主程序流发生。 在当前的用户计算机中，每个程序都运行于特定的时间段，然后停止执行，以让另一个程序继续执行。这件事运行得如此之快，以至于无法察觉。我们以为计算机可以同时运行许多程序，但这是一种错觉。（在多处理器计算机上除外） 程序在内部会使用中断，一种被发送到处理器以获取系统关注的信号。 这里不会深入探讨这个问题，只要记住，程序是异">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-25T14:57:50.000Z">
-<meta property="article:modified_time" content="2022-01-25T15:41:23.226Z">
+<meta property="article:published_time" content="2022-02-12T15:43:46.000Z">
+<meta property="article:modified_time" content="2022-02-13T16:04:59.996Z">
 <meta property="article:author" content="Somebody">
 <meta property="article:tag" content="NodeJS">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/">
+<link rel="canonical" href="http://example.com/2022/02/12/NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>NodeJS | 如何使用 Node.js REPL | 某人写字的地方</title>
+  <title>NodeJS | JavaScript 异步编程与回调 | 某人写字的地方</title>
   
 
 
@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/12/NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,7 +174,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          NodeJS | 如何使用 Node.js REPL
+          NodeJS | JavaScript 异步编程与回调
         </h1>
 
         <div class="post-meta">
@@ -183,10 +183,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-25 22:57:50 / 修改时间：23:41:23" itemprop="dateCreated datePublished" datetime="2022-01-25T22:57:50+08:00">2022-01-25</time>
+              <time title="创建时间：2022-02-12 23:43:46" itemprop="dateCreated datePublished" datetime="2022-02-12T23:43:46+08:00">2022-02-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-14 00:04:59" itemprop="dateModified" datetime="2022-02-14T00:04:59+08:00">2022-02-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -212,60 +218,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><code>node</code> 命令是用来运行 Node.js 脚本的命令：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node script.js</span><br></pre></td></tr></table></figure>
-
-<p>如果省略文件名，则在 REPL 模式中使用它：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：REPL 也被称为运行评估打印循环，是一种编程语言环境(主要是控制台窗口),它使用单个表达式作为用户输入，并在执行后将结果返回到控制台。</p>
-</blockquote>
+        <h2 id="编程语言中的异步性"><a href="#编程语言中的异步性" class="headerlink" title="编程语言中的异步性"></a>编程语言中的异步性</h2><p>计算机在设计上是异步的。</p>
+<p>异步意味着事情可以独立于主程序流发生。</p>
+<p>在当前的用户计算机中，每个程序都运行于特定的时间段，然后停止执行，以让另一个程序继续执行。这件事运行得如此之快，以至于无法察觉。我们以为计算机可以同时运行许多程序，但这是一种错觉。（在多处理器计算机上除外）</p>
+<p>程序在内部会使用中断，一种被发送到处理器以获取系统关注的信号。</p>
+<p>这里不会深入探讨这个问题，只要记住，<strong>程序是异步的且会暂停执行知道需要关注</strong>，这使得计算机可以同时执行其他操作。当程序正在等待来自网络的响应时，则它无法在请求完成之前停止处理器。</p>
+<p>通常，编程语言是同步的，有些会在语言或库中提供管理异步性的方法。默认情况下，C、Java、C#、PHP、Go、Ruby、Swift 和 Python 都是同步的。其中一些语言通过使用线程来处理异步操作（衍生新的线程）。</p>
 <span id="more"></span>
 
-<p>如果在终端尝试，则会出现如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; node</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>JavaScript 默认情况下是同步的，并且是单线程。<strong>这意味着代码无法创建新的线程并且不能并行执行。</strong></p>
+<p>代码行是依次执行的，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="number">2</span></span><br><span class="line"><span class="keyword">const</span> c = a * b</span><br><span class="line"><span class="built_in">console</span>.log(c)</span><br><span class="line">doSomething()</span><br></pre></td></tr></table></figure>
 
-<p>该命令会保持空闲状态，并等待输入内容。</p>
-<blockquote>
-<p>提示：如果不确定如何打开终端，则百度”如何打开终端”</p>
-</blockquote>
-<p>确切的说，REPL 正在等待输入一些 JavaScript 代码。</p>
-<p>从简单开始，输入：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">console</span>.log(<span class="string">&#x27;测试&#x27;</span>)</span><br><span class="line">测试</span><br><span class="line"><span class="literal">undefined</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-
-<p>第一个值 <code>测试</code> 是告诉控制台要打印的输出，然后得到 <code>undefined</code> ,它是运行 <code>console.log()</code> 的返回值。</p>
-<p>现在可以输入一行新的 JavaScript。</p>
-<h2 id="使用-tab-键自动补全"><a href="#使用-tab-键自动补全" class="headerlink" title="使用 tab 键自动补全"></a>使用 tab 键自动补全</h2><p>REPL 酷的是它是交互式的。</p>
-<p>在编写代码时，如果按下 <code>tab</code> 键，则 REPL 会尝试自动补全所写的内容，以匹配已定义或预定义的变量。</p>
-<h2 id="探索-JavaScript-对象"><a href="#探索-JavaScript-对象" class="headerlink" title="探索 JavaScript 对象"></a>探索 JavaScript 对象</h2><p>尝试输入 JavaScript 类的名称，例如 <code>number</code> ，添加一个点号并按下 <code>tab</code> 。</p>
-<p>REPL 或打印出可以在该类上访问的所有属性和方法：</p>
-<blockquote>
-<p>图略</p>
-</blockquote>
-<h2 id="探索全局对象"><a href="#探索全局对象" class="headerlink" title="探索全局对象"></a>探索全局对象</h2><p>通过输入 <code>global.</code> 并按下 <code>tab</code> ,可以检查可以访问的全局变量：</p>
-<blockquote>
-<p>图略</p>
-</blockquote>
-<h2 id="特殊变量"><a href="#特殊变量" class="headerlink" title="_ 特殊变量"></a>_ 特殊变量</h2><p>如果在某些代码之后输入 <code>_</code> ,则会打印最后一次操作结果。</p>
-<h2 id="点命令"><a href="#点命令" class="headerlink" title="点命令"></a>点命令</h2><p>REPL 有一些特殊的命令，所有这些命令都已 <code>.</code> 开头。他们是：</p>
-<ul>
-<li>  <code>.help</code>: 显示点命令的帮助</li>
-<li>  <code>.editor</code>: 启用编辑器模式，可以轻松地编写多行 javascript 代码。当处于此模式时，按下 ctrl-D 可以运行编写的代码。</li>
-<li>  <code>.break</code>: 当输入多行的表达式时，输入 <code>.break</code> 命令可以终止进一步的输入。相当于按下 ctrl-C。</li>
-<li>  <code>.clear</code>: 将 REPL 上下文重置为空对象，并清除当前正在输入的任何多行的表达式。</li>
-<li>  <code>.load</code>: 加载 JavaScript 文件（相当于当前工作目录）。</li>
-<li>  <code>.save</code>: 将在 REPL 会话中输入的所有内容保存到文件（需指定文件名）。</li>
-<li>  <code>.exit</code>: 退出 REPL （相当于按两下 ctrl-C）</li>
-</ul>
-<p>如果 REPL 能判断出是否正在输入多行的语句，则无需调用 <code>.editor</code> 。</p>
-<p>例如，如果开始输入这样的迭代：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].forEach(<span class="function"><span class="params">num</span> =&gt;</span>&#123;</span><br></pre></td></tr></table></figure>
-
-<p>然后按下 <code>enter</code> 键,则 REPL 会跳到新的一行以 3 个点号开头，这表示现在可以继续在该块上工作。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">... <span class="built_in">console</span>.log(num)</span><br><span class="line">... &#125;)</span><br></pre></td></tr></table></figure>
-
-<p>如果行尾输入 <code>.break</code> ,则多行模式会停止并且该语句不会被执行。</p>
+<p>但是 JavaScript 诞生于浏览器内部，一开始的主要工作是响应用户的操作，例如 <code>onClick</code> 、<code>onMouseOver</code> 、<code>onChange</code> 、<code>onSubmit</code> 等。使用同步的编程模型该如何做到这一点？</p>
+<p>答案就在于它的环境。浏览器通过提供一组可以处理这种功能的 API 来提供了一种实现方式。<!-- 没太懂啊 --></p>
+<p>更近点，Node.js 引入了非阻塞的 I/O 环境，以将该概念扩展到文件访问、网络调用等。</p>
 
     </div>
 
@@ -284,13 +251,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BB%8E-Node-js-%E8%AF%BB%E5%8F%96%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" rel="prev" title="NodeJS | 如何从 Node.js 读取环境变量">
-      <i class="fa fa-chevron-left"></i> NodeJS | 如何从 Node.js 读取环境变量
+    <a href="/2022/02/09/NodeJS-%E6%8E%A2%E7%B4%A2-JavaScript-%E5%AE%9A%E6%97%B6%E5%99%A8/" rel="prev" title="NodeJS | 探索 JavaScript 定时器">
+      <i class="fa fa-chevron-left"></i> NodeJS | 探索 JavaScript 定时器
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/01/26/NodeJS-Node-js-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0/" rel="next" title="NodeJS | Node.js 从命令行接收参数">
-      NodeJS | Node.js 从命令行接收参数 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -349,7 +313,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-tab-%E9%94%AE%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%A8"><span class="nav-number">1.</span> <span class="nav-text">使用 tab 键自动补全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2-JavaScript-%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">探索 JavaScript 对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.</span> <span class="nav-text">探索全局对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">_ 特殊变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%B9%E5%91%BD%E4%BB%A4"><span class="nav-number">5.</span> <span class="nav-text">点命令</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%BC%82%E6%AD%A5%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">编程语言中的异步性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript"><span class="nav-number">2.</span> <span class="nav-text">JavaScript</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
