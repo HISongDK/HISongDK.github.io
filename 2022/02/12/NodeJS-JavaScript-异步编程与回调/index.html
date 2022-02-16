@@ -28,7 +28,7 @@
 <meta property="og:description" content="编程语言中的异步性计算机在设计上是异步的。 异步意味着事情可以独立于主程序流发生。 在当前的用户计算机中，每个程序都运行于特定的时间段，然后停止执行，以让另一个程序继续执行。这件事运行得如此之快，以至于无法察觉。我们以为计算机可以同时运行许多程序，但这是一种错觉。（在多处理器计算机上除外） 程序在内部会使用中断，一种被发送到处理器以获取系统关注的信号。 这里不会深入探讨这个问题，只要记住，程序是异">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-12T15:43:46.000Z">
-<meta property="article:modified_time" content="2022-02-13T16:04:59.996Z">
+<meta property="article:modified_time" content="2022-02-16T15:16:34.020Z">
 <meta property="article:author" content="Somebody">
 <meta property="article:tag" content="NodeJS">
 <meta name="twitter:card" content="summary">
@@ -191,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-14 00:04:59" itemprop="dateModified" datetime="2022-02-14T00:04:59+08:00">2022-02-14</time>
+                <time title="修改时间：2022-02-16 23:16:34" itemprop="dateModified" datetime="2022-02-16T23:16:34+08:00">2022-02-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -233,6 +233,32 @@
 <p>但是 JavaScript 诞生于浏览器内部，一开始的主要工作是响应用户的操作，例如 <code>onClick</code> 、<code>onMouseOver</code> 、<code>onChange</code> 、<code>onSubmit</code> 等。使用同步的编程模型该如何做到这一点？</p>
 <p>答案就在于它的环境。浏览器通过提供一组可以处理这种功能的 API 来提供了一种实现方式。<!-- 没太懂啊 --></p>
 <p>更近点，Node.js 引入了非阻塞的 I/O 环境，以将该概念扩展到文件访问、网络调用等。</p>
+<h2 id="回调"><a href="#回调" class="headerlink" title="回调"></a>回调</h2><p>你不知道用户何时点击按钮。因此，为点击事件定义了一个事件处理程序。该事件处理程序会接受一个函数，该函数会在该事件触发时被调用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&#x27;button&#x27;</span>).addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 被点击</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这就是所谓的回调。</p>
+<p>回调是一个简单的函数，会作为值传给另一个函数，并且仅在事件发生时才执行。之所以这样做，是因为 JavaScript 具有顶级的函数，这些函数可以被分配给变量并传给其他函数（称为高阶函数）。</p>
+<p>通常会将所有的客户端代码封装在 <code>window</code> 对象的 <code>load</code> 事件监听器中,其仅在页面准备就绪时才会运行回调函数:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&#x27;load&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// window 已被加载</span></span><br><span class="line">  <span class="comment">// 做需要做的</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>回调无处不在，不仅在 DOM 事件中。</p>
+<p>一个常见的示例是使用定时器：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 2 秒之后运行</span></span><br><span class="line">&#125;, <span class="number">2000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>XHR 请求也接受回调，在此示例中，会将一个函数分配给一个属性，该属性会在发生特定事件时被调用，在该示例中是请求状态的改变：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">xhr.onreadystatechange = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (xhr.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">    xhr.status === <span class="number">200</span> ? <span class="built_in">console</span>.log(xhr.responseText) : <span class="built_in">console</span>.error(<span class="string">&#x27;出错&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">xhr.open(<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;http://nodejs.cn&#x27;</span>)</span><br><span class="line">xhr.send()</span><br></pre></td></tr></table></figure>
+
+<h2 id="处理回调中的错误"><a href="#处理回调中的错误" class="headerlink" title="处理回调中的错误"></a>处理回调中的错误</h2><p>如何处理回调中的错误？一种非常常见的方式是使用 Node.js 所采用的方式：<strong>任何回调函数的第一个参数为错误对象（即错误优先的回调）</strong></p>
+<p>如果没有错误，则该对象为 <code>null</code> 。如果有错误，则它会包含对该错误的描述以及其他信息。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(<span class="string">&#x27;/文件/.json&#x27;</span>, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (err !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 处理错误</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 没有错误，则处理数据</span></span><br><span class="line">  <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="回调的问题"><a href="#回调的问题" class="headerlink" title="回调的问题"></a>回调的问题</h2><p>回调适用于简单的场景！</p>
+<p>但是，每隔回调都可以添加嵌套的层级，并且当有很多回调时，代码就会很快变得非常复杂：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&#x27;load&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;button&#x27;</span>).addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      items.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 你的代码在这里</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;，<span class="number">2000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这是一个简单的 4 个层级的代码，但还有更多层级的嵌套，这很不好。</p>
+<p>该如何解决？</p>
+<h2 id="回调的替代方法"><a href="#回调的替代方法" class="headerlink" title="回调的替代方法"></a>回调的替代方法</h2><p>从 ES6 开始，JavaScript 引入了一些特性，可以帮助处理异步代码而不涉及使用回调：Promise（ES6）和 Async/Await（ES2017）。</p>
 
     </div>
 
@@ -313,7 +339,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%BC%82%E6%AD%A5%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">编程语言中的异步性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript"><span class="nav-number">2.</span> <span class="nav-text">JavaScript</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%BC%82%E6%AD%A5%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">编程语言中的异步性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript"><span class="nav-number">2.</span> <span class="nav-text">JavaScript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83"><span class="nav-number">3.</span> <span class="nav-text">回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%9B%9E%E8%B0%83%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF"><span class="nav-number">4.</span> <span class="nav-text">处理回调中的错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">回调的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83%E7%9A%84%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">回调的替代方法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
