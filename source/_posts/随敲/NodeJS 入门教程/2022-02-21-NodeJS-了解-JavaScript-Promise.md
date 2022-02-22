@@ -19,4 +19,39 @@ Promise 是一种处理异步代码同时规避掉回调地狱的方式。
 
 <!-- more -->
 
-## Promise 如何运作
+### Promise 如何运作
+
+当 promise 被调用时，它会以 **处理中状态开始**，这意味着函数会继续执行，而 promise 仍处于处理中直到解决为止，从而为调用的函数提供所请求的任何数据。
+
+被创建的 promise 最终会以 **被解决状态** 或 **被拒绝状态** 结束,并在完成时调用相应的回调函数（传给 `then` 和 `catch` ）。
+
+### 哪些 JS API 使用了 Promsie？
+
+除了自己的代码和库代码，标准的现代 Web API 也使用了 promise，例如：
+
+1. Battery API
+2. Fetch API
+3. Service Worker
+
+在现代 JavaScript 中，不太可能没有使用 promise，因此让我们开始深入研究它们
+
+---
+
+## 创建 Promise
+
+Promise API 公开了一个 Promise 构造函数，可以使用 `new Promise()` 对其进行初始化：
+
+```js
+let done = true
+const isItDoneYet = new Promise((reslove, reject) => {
+  if (done) {
+    const workDone = '这是创建的东西'
+    resolve(workDone)
+  } else {
+    const why = '仍然在处理其他事情'
+    reject(why)
+  }
+})
+```
+
+如你所见，promise 检查了全局变量 `done` ,如果为真，则 promise 进入 **被解决** 状态（因为调用了 `resolve` 回调）
