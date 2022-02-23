@@ -54,4 +54,6 @@ const isItDoneYet = new Promise((reslove, reject) => {
 })
 ```
 
-如你所见，promise 检查了全局变量 `done` ,如果为真，则 promise 进入 **被解决** 状态（因为调用了 `resolve` 回调）
+如你所见，promise 检查了全局变量 `done` ,如果为真，则 promise 进入 **被解决** 状态（因为调用了 `resolve` 回调）;否则，则执行 `reject` 回调，将 promise 状态改为被拒绝。如果在执行路径中从未调用过这些函数之一，则 promise 会保持处理中状态。
+
+使用 `resolve` 和 `reject` ，可以向调用者传达最终的 promise 状态以及该如何处理。在上述示例中只返回一个字符串，但是它可以是一个对象，也可以是 `null` 。由于已经在上述的代码片段中创建了 promise，因此它已经开始执行。这对了解下面的 `消费promise` 章节很重要。
