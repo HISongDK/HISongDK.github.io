@@ -57,3 +57,25 @@ const isItDoneYet = new Promise((reslove, reject) => {
 如你所见，promise 检查了全局变量 `done` ,如果为真，则 promise 进入 **被解决** 状态（因为调用了 `resolve` 回调）;否则，则执行 `reject` 回调，将 promise 状态改为被拒绝。如果在执行路径中从未调用过这些函数之一，则 promise 会保持处理中状态。
 
 使用 `resolve` 和 `reject` ，可以向调用者传达最终的 promise 状态以及该如何处理。在上述示例中只返回一个字符串，但是它可以是一个对象，也可以是 `null` 。由于已经在上述的代码片段中创建了 promise，因此它已经开始执行。这对了解下面的 `消费promise` 章节很重要。
+
+一个更常见的示例是一种被称为 Promisifying 的技术。这项技术能够使用经典的 JavaScript 函数来接受回调并使其返回 promise：
+
+```js
+const fs = require('fs')
+
+const getFile = (fileName) => {
+  fs.readFile(fileName, (err, data) => {
+    if (err) {
+      reject(err)
+      return
+    }
+    resolve(data)
+  })
+}
+
+getFile('/etc/passwd')
+  .then((data) => console.log(data))
+  .catch((err) => console.error(err))
+```
+
+> 在最新版本的 Node.js 中，无需为大多数 API 进行手动地转换。如果需要 promisifying 的函数具有争取的签名，则 `util 模块` 中有一个 promisifying 的函数可以完成此操作
