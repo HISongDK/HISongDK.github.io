@@ -79,3 +79,136 @@ getFile('/etc/passwd')
 ```
 
 > 在最新版本的 Node.js 中，无需为大多数 API 进行手动地转换。如果需要 promisifying 的函数具有争取的签名，则 `util 模块` 中有一个 promisifying 的函数可以完成此操作
+
+## 消费 Promise
+
+在上一章节中，介绍了如何创建 promise。
+
+现在看看，如何消费或使用 promise。
+
+```js
+const isItDoneYet = new Promise(/* 如上所述 */)
+//...
+
+const checkIfItsDone = () => {
+  isItDoneYet
+    .then((ok) => {
+      console.log(ok)
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+```
+
+运行 checkIfItsDone() 会指定当 isItDoneYet promise 被解决（在 `then` 调用中）或被拒绝（在 `catch` 调用中）时执行的函数
+
+## 链式 promise
+
+Promise 可以返回到另一个 promise ，从而实现一个 promise 链。
+
+链式 promise 的一个很好的示例是 Fetch API，可以用于获取资源，且当资源被获取时将 promise 链式排队进行执行。
+
+Fetch API 是基于 promise 的机制，调用 fetch() 相当于 new Promise() 来定义 promise。
+
+### 链式 promsie 示例
+
+```js
+const status = (response) => {
+  if (response.status >= 200 && response.status < 300) {
+    return Promise.resolve(response)
+  }
+  return Promise.reject(new Error(response.statusText))
+}
+
+const json = (response) => response.json()
+
+fetch('/todos.json')
+  .then(status) // 注意，status 函数在此处被调用，并且同样返回 promise
+  .then(json) // 这里唯一的区别是 json 函数会返回解决时传入 data 的 promise
+  .then((data) => {
+    //这是 data 会在此处作为匿名函数的第一个参数的原因。
+    console.log('请求成功获得 JSON 响应', data)
+  })
+  .catch((err) => {
+    console.log('请求失败', err)
+  })
+```
+
+在此示例中，调用 `fetch()` 从域根目录中的 todos.json 文件中获取 TODO 项目的列表，并创建一个 promise 链。
+
+运行 `fetch()` 会返回一个响应，该响应具有许多属性，在属性中引用了：
+
+- `status` ，表示 HTTP 状态码的数值。
+- `statusText` ，状态消息，如果请求成功则为 `OK` 。
+
+`response` 还有一个 `json()` 方法，该方法返回一个 promise ，该 promise 解决时会传入已处理并转换为 JSON 的响应体内容。
+
+因此，考虑到这些前提，发生的过程是：链中的第一个 promise 是我们定义的函数，即 `status()` ,它会检查响应状态，如果不是响应成功（介于 200 和 299 之间），则它会拒绝 promise。
+
+此操作会导致 promise 链跳过列出的所有被链的 promise，且会直接跳到底部的 `catch()` 语句（记录 `请求失败`文本和 `err` 错误信息 ）
+
+如果成功，则会调用定义的 `json()` 函数。由于上一个 promise 成功后返回了 response 对象，因此将其作为第二个 promise 的输入。
+
+在此示例中，返回处理后的 JSON 数据，因此第三个 promise 直接接收 JSON：
+
+```js
+.then(data=>{
+  console.log('请求成功获得 JSON 响应', data)
+})
+```
+
+只需将其记录到控制台即可。
+
+## 处理错误
+
+在上一节的示例中，有个 `catch` 被附加到了 promise 链上。
+
+当 promise 链中的任何内容失败并引发错误或拒绝 promise 时，则控制权会转到链中最近的 `catch()` 语句。
+
+```js
+new Promise((resolve, reject) => {
+  throw new Error('错误')
+}).catch((err) => {
+  console.log(err)
+})
+
+// 或
+
+new Promise((resolve, reject) => {
+  reject('错误')
+}).catch((err) => {
+  console.error(err)
+})
+```
+
+### 级联错误
+
+如果在 `catch()` 内部引发错误，则可以附加第二个 `catch()` 来处理，以此类推。
+
+```js
+new Promise((resolve, reject)=>{
+  throw new Error('错误')
+}).catch(err=>{
+throw new Error('错误)
+}).catch(err=>{
+  console.log(err)
+})
+```
+
+## 编排 promise
+
+### `Promise.all()`
+
+如果需要同步不同的 promise，则 `Promise.all()` 可以帮助定义 promise 列表，并在所有 promise 都被解决后执行一些操作。
+
+示例：
+
+```js
+const f1 = fetch('/something.json')
+const f2 = fetch('/something2.json')
+
+Promise.all([f1, f2]).then((res) => {
+  console.log('结果的数组', res)
+}).componentDidCatch
+```
