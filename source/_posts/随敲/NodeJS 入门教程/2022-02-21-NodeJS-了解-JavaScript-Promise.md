@@ -216,3 +216,40 @@ Promise.all([f1, f2])
     console.error(err)
   })
 ```
+
+ES2015 解构赋值语法也可以执行：
+
+```js
+Promise.all([f1, f2]).then(([res1, res2]) => {
+  console.log('结果', res1, res2)
+})
+```
+
+当然，不限于使用 `fetch` ，任何 promise 都可以以这种方式使用。
+
+### `Promise.race()`
+
+当传给其的首个 promise 被解决时，则 `Promise.race()`开始运行，并且只运行一次附加的回调（传入第一个被解决的 promise 结果）。
+
+示例：
+
+```js
+const first = new Promise((resolve, reject) => {
+  setTimeout(resolve, 500, '第一个')
+})
+const second = new Promise((resolve, reject) => {
+  setTimeout(resolve, 100, '第二个')
+})
+
+Promise.race([first, second]).then(console.log) // “第二个”
+```
+
+## 常见的错误
+
+### caught TypeError:undefined is not a promise\*\*
+
+如果在控制台中收到 `Uncaught TypeError:undefined is not a promise` 错误，则请确保使用 `new Promise()` 而不是 `Promise()`
+
+### UnHandledPromiseRejectionWarning
+
+这意味着调用的 promise 被拒绝，但是没有用于处理错误的 `catch` 。在 `then` 之后添加 `catch` 则可以正确地处理。
