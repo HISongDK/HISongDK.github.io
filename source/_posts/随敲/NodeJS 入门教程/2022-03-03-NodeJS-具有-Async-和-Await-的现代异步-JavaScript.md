@@ -99,4 +99,75 @@ const aFunction = () => {
 aFunction().then(alert) // 这会 alert '测试'
 ```
 
-##
+## 代码更容易阅读
+
+如在上面的示例中所见，代码看起来非常简单，相对于使用普通的 promise 、链式和回调函数的代码。
+
+这是一个非常简单的示例，主要的好处要在代码更复杂得多时才能显现。
+
+例如，这是使用 promise 获取并解析 JSON 资源的方法：
+
+```js
+const getFirstUserData = () => {
+  return fetch('/user.json') // 获取用户列表
+    .then((res) => res.json()) // 解析 JSON
+    .then((users) => users[0]) // 选择第一个用户
+    .then((user) => fetch(`/users/${user.name}`)) // 获取用户数据
+    .then((userRes) => userRes.json()) // 解析 JSON
+}
+```
+
+这是使用 async/await 提供相同的功能：
+
+```js
+const getFirstUserData = async () => {
+  const res = await fetch('/user.json')
+  const users = await users.json()
+  const user = user[0]
+  const userRes = fetch(`/users/${user.name}`)
+  const userData = await userRes.json()
+  return userData
+}
+```
+
+<!-- 确实，好处要在代码更复杂的情况下才能显现。那就是更他妈复杂了 -->
+
+## 多个异步函数串联
+
+异步函数可以很容易链接起来，并且语法比普通 promise 更加易读：
+
+```js
+const promiseToDoSomething = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('做些事情')
+    }, 10000)
+  })
+}
+
+const watchOverSomeoneDoingSomething = async () => {
+  const something = await promiseToDoSomething()
+  return something + ' 查看'
+}
+
+const watchOverSomeoneWatchingSomeoneDoingSomething = async () => {
+  const something = await watchOverSomeoneDoingSomething()
+  return something + ' 再次查看'
+}
+
+watchOverSomeoneWatchingSomeoneDoingSomething().then((res) => {
+  console.log(res)
+})
+```
+
+这会打印：
+
+```js
+做些事情 查看 再次查看
+```
+
+## 更容易调试
+
+调试 promise 很难，因为调试器不会跳过异步的代码。
+
+Async/await 使这非常容易，因为对应于编译器而言，它就像同步代码一样。
