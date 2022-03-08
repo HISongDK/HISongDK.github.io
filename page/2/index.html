@@ -157,6 +157,112 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BB%8E-Node-js-%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BB%8E-Node-js-%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA/" class="post-title-link" itemprop="url">NodeJS | 如何从 Node.js 程序退出</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-25 00:05:18 / 修改时间：22:43:31" itemprop="dateCreated datePublished" datetime="2022-01-25T00:05:18+08:00">2022-01-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>有很多种方法可以终止 Node.js 应用程序。</p>
+<p>当在控制台中运行的时候,可以使用 <code>ctrl-C</code> 将其关闭，但是这里要讨论的是以编程的方式退出。</p>
+<p><code>process</code> 核心模块提供了一种便利的方法，可以以编程的方式推出 Node.js 程序：</p>
+<p><code>process.exit()</code> 。</p>
+<p>当 Node.js 运行此行程序时，进程会被立即强制终止。</p>
+<p>这意味着任何待处理的回调、仍在发送中的任何网络请求、任何文件系统访问、或正在写入 <code>stdout</code> 或 <code>stderr</code> 的进程，所有这些都会被立即非正常的终止。</p>
+<p>可以传入一个整数，向操作系统发送退出码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.exit(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，退出码为 <code>0</code> ，表示成功。不同的退出码具有不同的含义，可以在系统中用于程序和其他程序的通信。</p>
+<p>有关退出码的信息，详见 <a target="_blank" rel="noopener" href="http://nodejs.cn/api/process.html#process_exit_codes">http://nodejs.cn/api/process.html#process_exit_codes</a></p>
+<p>也可以设置 <code>process.exitCode</code> 属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.exitCode = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>当程序结束时，Node.js 会返回该退出码。</p>
+<p>当进程完成所有处理后，程序会正常地退出。</p>
+<p>使用 Node.js 启动服务器，例如 HTTP 服务器：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  res.send(<span class="string">&#x27;你好&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>,<span class="function">()=&gt;</span><span class="built_in">console</span>.log(<span class="string">&#x27;服务器已就绪&#x27;</span>);)</span><br></pre></td></tr></table></figure>
+
+<p>这个程序永远不会结束。如果调用 <code>process.exit()</code> ,则任何当前等待中或运行中的请求都会被中止。这不太友好。</p>
+<p>在这种情况这，需要向该命令发送 SIGTERM 信号，并使用进程的信号处理程序进行处理：</p>
+<blockquote>
+<p>注意：<code>process</code> 不需要”require”,它是自动可用的。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.send(<span class="string">&#x27;你好&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = app.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;服务器已就绪&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">process.on(<span class="string">&#x27;SIGTERM&#x27;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">  server.close(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;进程已终止);</span></span><br><span class="line"><span class="string">  &#125;)</span></span><br><span class="line"><span class="string">&#125;)</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>什么是信号？信号是一个 POSIX 内部通信系统：发送通知给进程，以告知其发生的事件。</p>
+</blockquote>
+<p><code>SIGKILL</code> 是告诉进程立即终止的信号，理想情况下，其行为类似于 <code>process.exit()</code>。</p>
+<p><code>SIGTERM</code> 是告诉进程要正常终止的信号。它是从进程管理者（如 <code>upstart</code> 或 <code>supervisord</code> ）等发出的信号。</p>
+<p>可以从程序内部另一个函数中发送此信号：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.kill(process.pid, <span class="string">&#x27;SIGTERM&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>或是从另一个正在运行的 Node.js 程序、或从系统中运行的其他任何的应用程序（能知道要终止进程的 PID）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/24/NodeJS-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BF%90%E8%A1%8C-Node-js-%E8%84%9A%E6%9C%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1837,92 +1943,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/30/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-30-TS%E8%BF%9B%E9%98%B6-%E5%85%83%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/30/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-30-TS%E8%BF%9B%E9%98%B6-%E5%85%83%E7%BB%84/" class="post-title-link" itemprop="url">TS进阶-元组</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-08-30 00:00:15" itemprop="dateCreated datePublished" datetime="2021-08-30T00:00:15+08:00">2021-08-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>数组合并了相同类型的对象，而元组（Tuple）合并了不同类型的对象。</p>
-<p>元组起源于函数编程语言（如 F#），这些语言中会频繁使用元组。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/30/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-30-TS%E8%BF%9B%E9%98%B6-%E5%85%83%E7%BB%84/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1992,7 +2012,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
