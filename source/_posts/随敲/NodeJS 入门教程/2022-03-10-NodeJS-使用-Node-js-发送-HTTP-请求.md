@@ -33,3 +33,38 @@ req.on('error', (err) => {
 
 req.end()
 ```
+
+## 执行 POST 请求
+
+```js
+const https = require('https')
+const data = JSON.stringify({
+    todo: '做点事情',
+})
+
+const options = {
+    hostname: 'nodejs.cn',
+    port: 443,
+    path: '/todos',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length,
+    },
+}
+
+const req = https.request(options, (res) => {
+    console.log(`状态码：${res.statusCode}`)
+
+    res.on('data', (d) => {
+        process.stdout.write(d)
+    })
+})
+
+req.on('error', (err) => {
+    console.log(err)
+})
+
+req.write(data) // 这又是什么稀奇古怪的方法
+req.end()
+```
