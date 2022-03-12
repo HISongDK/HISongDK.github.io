@@ -68,3 +68,7 @@ req.on('error', (err) => {
 req.write(data) // 这又是什么稀奇古怪的方法
 req.end()
 ```
+
+## PUT 和 DELETE
+
+PUT 和 DELETE 请求使用相同的 POST 请求格式，只需要改 `options.method` 的值即可。
