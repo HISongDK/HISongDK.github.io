@@ -157,6 +157,123 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/10/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-REACT-%E4%BA%95%E5%AD%97%E6%A3%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/10/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-REACT-%E4%BA%95%E5%AD%97%E6%A3%8B/" class="post-title-link" itemprop="url">REACT 井字棋</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-10 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-10T00:00:00+08:00">2021-07-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/Hooks/" itemprop="url" rel="index"><span itemprop="name">Hooks</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><a href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87">环境准备</a><ul>
+<li><a href="#%E6%96%B9%E5%BC%8F%E4%B8%80%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%811">方式一：在浏览器中编写代码<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></a></li>
+<li><a href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83">方式二：搭建本地环境</a></li>
+</ul>
+</li>
+<li><a href="#%E6%A6%82%E8%A7%88">概览</a><ul>
+<li><a href="#react-%E6%98%AF%E4%BB%80%E4%B9%88">React 是什么</a></li>
+<li><a href="#%E9%98%85%E8%AF%BB%E5%88%9D%E5%A7%8B%E4%BB%A3%E7%A0%81">阅读初始代码</a></li>
+<li><a href="#%E9%80%9A%E8%BF%87-props-%E4%BC%A0%E9%80%92%E6%95%B0%E6%8D%AE">通过 Props 传递数据</a></li>
+<li><a href="#%E7%BB%99%E7%BB%84%E4%BB%B6%E6%B7%BB%E5%8A%A0%E4%BA%A4%E4%BA%92%E5%8A%9F%E8%83%BD">给组件添加交互功能</a></li>
+<li><a href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7">开发者工具</a></li>
+<li><a href="#%E6%B8%B8%E6%88%8F%E5%AE%8C%E5%96%84">游戏完善</a></li>
+<li><a href="#%E7%8A%B6%E6%80%81%E6%8F%90%E5%8D%87">状态提升</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%80%A7%E5%9C%A8-react-%E4%B8%AD%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81">为什么不可变性在 React 中非常重要</a><ul>
+<li><a href="#%E7%AE%80%E5%8C%96%E5%A4%8D%E6%9D%82%E7%9A%84%E5%8A%9F%E8%83%BD">简化复杂的功能</a></li>
+<li><a href="#%E8%B7%9F%E8%B8%AA%E6%95%B0%E6%8D%AE%E7%9A%84%E5%8F%98%E5%8C%96">跟踪数据的变化</a></li>
+<li><a href="#%E7%A1%AE%E5%AE%9A%E5%9C%A8-react-%E4%B8%AD%E4%BD%95%E6%97%B6%E9%87%8D%E6%96%B0%E6%B8%B2%E6%9F%93">确定在 React 中何时重新渲染</a></li>
+<li><a href="#%E5%87%BD%E6%95%B0%E7%BB%84%E4%BB%B6">函数组件</a></li>
+</ul>
+</li>
+<li><a href="#%E8%BD%AE%E6%B5%81%E8%90%BD%E5%AD%90">轮流落子</a></li>
+<li><a href="#%E5%88%A4%E6%96%AD%E5%87%BA%E8%83%9C%E8%80%85">判断出胜者</a></li>
+<li><a href="#%E6%97%B6%E9%97%B4%E6%97%85%E8%A1%8C">时间旅行</a><ul>
+<li><a href="#%E4%BF%9D%E5%AD%98%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95">保存历史记录</a></li>
+<li><a href="#%E5%86%8D%E6%AC%A1%E6%8F%90%E5%8D%87%E7%8A%B6%E6%80%81">再次提升状态</a></li>
+<li><a href="#%E9%80%89%E6%8B%A9%E4%B8%80%E4%B8%AA-key">选择一个 key</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0%E6%97%B6%E9%97%B4%E6%97%85%E8%A1%8C">实现时间旅行</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a><!-- # 井字棋 -->
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/10/%E9%9A%8F%E6%95%B2-React-Hooks-%E6%96%87%E6%A1%A3-REACT-%E4%BA%95%E5%AD%97%E6%A3%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/08/2021-07-08-%E9%BC%93%E6%8D%A3%E4%B8%80%E5%A4%A9%E7%9B%AE%E5%BD%95%E7%BB%84%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1563,73 +1680,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/29/2021-05-29-%E5%BF%85%E5%BA%94%E5%A3%81%E7%BA%B8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/29/2021-05-29-%E5%BF%85%E5%BA%94%E5%A3%81%E7%BA%B8/" class="post-title-link" itemprop="url">必应壁纸</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-29 22:27:55" itemprop="dateCreated datePublished" datetime="2021-05-29T22:27:55+08:00">2021-05-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前,就从网上找到一个 python + windows 的批处理文件的脚本,每天同步必应壁纸为 windows 桌面。<br>还挺好用的，只是每次下载好的图片，下次执行就设定清除了，我觉得有必要都保存下来，作为以后博客的插图。昨天就看看改了一下, 使用 python 的 <code>datetime.datetime.now().date()</code> 给下载的图片拼接上了日期,也挺有意思。</p>
-<p>就是可惜，博客我还都不会加图片，那些页面模板的样式也都不会改。ejs 其实之前也用过一下，不过都忘了。</p>
-<p>现在是觉得 hexo 自动部署博客页面，文件全部上传覆盖之前分支太慢了，我看看自己手动上传会不会好一点。现在试验一下。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1699,7 +1749,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">106</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
