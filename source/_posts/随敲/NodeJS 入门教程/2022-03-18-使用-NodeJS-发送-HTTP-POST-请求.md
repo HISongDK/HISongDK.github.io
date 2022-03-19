@@ -28,3 +28,38 @@ axios
 ```
 
 Axios 需要使用第三方库。
+
+<!-- more -->
+
+也可以只使用 Node.js 的标准模块来发送 POST 请求，尽管它比前面的选择冗长些：
+
+```js
+const https = require('https')
+const data = JSON.stringify({ todo: 'doSomething' })
+
+const options = {
+    hostname: 'nodejs.cn',
+    post: 443,
+    path: '/todos',
+    methods: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length,
+    },
+}
+
+const req = https.request(options, (res) => {
+    console.log(`状态码：${res.statusCode}`)
+
+    res.on('data', (d) => {
+        process.stdout.write(d)
+    })
+})
+
+req.on('error', (error) => {
+    console.log(error)
+})
+
+req.write(data)
+req.end()
+```
