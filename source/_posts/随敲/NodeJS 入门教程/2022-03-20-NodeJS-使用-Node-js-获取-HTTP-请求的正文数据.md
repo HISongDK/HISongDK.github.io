@@ -14,3 +14,24 @@ date: 2022-03-20 23:50:28
 <!-- more -->
 
 例如，获取此请求的正文：
+
+```js
+const axios = require('axios')
+axios.post('http://nodejs.cn/todos', {
+    todo: '做点事情',
+})
+```
+
+这是对应的服务器端代码：
+
+```js
+const express = require('express')
+const app = express()
+
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
+app.post('/todos', (req, res) => {
+    console.log(req.body.todo)
+})
+```
