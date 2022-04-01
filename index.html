@@ -157,6 +157,100 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/01/NodeJS-Node-js-%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/01/NodeJS-Node-js-%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/" class="post-title-link" itemprop="url">NodeJS | Node.js 文件属性</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-01 23:52:51" itemprop="dateCreated datePublished" datetime="2022-04-01T23:52:51+08:00">2022-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-02 00:12:09" itemprop="dateModified" datetime="2022-04-02T00:12:09+08:00">2022-04-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>每隔文件都带有一组详细信息，可以使用 Node.js 进行检查。</p>
+<p>具体地说，使用 <code>fs</code> 模块提供的 <code>stat</code> 方法。</p>
+<p>调用时传入文件的路径，一旦 Node.js 获得文件的详细信息，则会调用传入的回调函数，并带上两个参数：错误消息和文件属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line">fs.stat(<span class="string">&#x27;/Users/joe/test/.txt&#x27;</span>, <span class="function">(<span class="params">err, stats</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 可以访问 `stats` 中的文件属性</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Node.js 也提供了同步的方法，该方法会阻塞线程，直到文件属性准备就绪位置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> stats = fs.stat(<span class="string">&#x27;/Users/joe/test.txt&#x27;</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>文件的信息包含在属性的变量之中。可以通过属性提取哪些信息呢？</p>
+<p>很多，包括：</p>
+<ul>
+<li>  使用 <code>stats.isFile()</code> 和 <code>stats.isDirectory()</code></li>
+<li>  使用 <code>stats.isSymbolicLink()</code> 判断文件是否符号链接。</li>
+<li>  使用 <code>stats.size</code> 获取文件的大小，以字节为单位</li>
+</ul>
+<p>还有其他的一些高级用法，但是在日常编程中会使用的大部分是这些。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line">fs.stat(<span class="string">&#x27;/Users/joe/test.txt&#x27;</span>, <span class="function">(<span class="params">err, stats</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    stats.isFile() <span class="comment">// true</span></span><br><span class="line">    stats.isDirectory() <span class="comment">// false</span></span><br><span class="line">    stats.isSymbolicLink() <span class="comment">// false</span></span><br><span class="line">    stats.size <span class="comment">// 1024000 // = 1MB</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/01/NodeJS-%E5%9C%A8-Node-js-%E4%B8%AD%E8%AF%95%E7%94%A8%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2058,105 +2152,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/NodeJS-%E4%BD%BF%E7%94%A8-exports-%E4%BB%8E-Node-js-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%85%AC%E5%BC%80%E5%8A%9F%E8%83%BD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/30/NodeJS-%E4%BD%BF%E7%94%A8-exports-%E4%BB%8E-Node-js-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%85%AC%E5%BC%80%E5%8A%9F%E8%83%BD/" class="post-title-link" itemprop="url">NodeJS | 使用 exports 从 Node.js 文件中公开功能</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-30 13:27:22 / 修改时间：13:44:38" itemprop="dateCreated datePublished" datetime="2022-01-30T13:27:22+08:00">2022-01-30</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Node.js 具有内置的模块系统。</p>
-<p>Node.js 可以导入其他 Node.js 文件公开的功能。</p>
-<p>当想要导入某些东西时，使用</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> library = <span class="built_in">require</span>(<span class="string">&#x27;./library&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>可以导入存在于当前文件夹中的 <code>library.js</code> 文件中的公开功能。</p>
-<p>在此文件中，必须先公开功能，然后其他文件才能导入。</p>
-<p>默认情况下，文件中任何定义的其他对象或变量都是私有的，不会公开给外界。</p>
-<p>这就是 <a target="_blank" rel="noopener" href="http://nodejs.cn/api/modules.html"><code>module</code> 系统</a>提供的 <code>module.exports</code> API 可以做的事。</p>
-<p>当将对象或函数赋值给 exports 属性时，这就是要被公开的内容，因此可以将其导入应用程序的其他部分或者其他应用程序中。</p>
-<p>可以通过两种方式进行操作。</p>
-<p>第一种方式是将对象赋值给 <code>module.exports</code> (这是模块系统提供的对象),这会使文件只导出该对象：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> car = &#123;</span><br><span class="line">    <span class="attr">brand</span>: <span class="string">&#x27;Ford&#x27;</span>,</span><br><span class="line">    <span class="attr">model</span>: <span class="string">&#x27;Fiesta&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = car</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在另一个文件中</span></span><br><span class="line"><span class="keyword">const</span> car = <span class="built_in">require</span>(<span class="string">&#x27;./car&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>第二种方式是将要导出的对象添加为 exports 的属性。这种方式可以到处多个对象、函数或数据：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> car = &#123;</span><br><span class="line">    <span class="attr">brand</span>: <span class="string">&#x27;Ford&#x27;</span>,</span><br><span class="line">    <span class="attr">model</span>: <span class="string">&#x27;Fiesta&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.car = car</span><br></pre></td></tr></table></figure>
-
-<p>或直接</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exports</span>.car = &#123;</span><br><span class="line">    <span class="attr">brand</span>: <span class="string">&#x27;Ford&#x27;</span>,</span><br><span class="line">    <span class="attr">model</span>: <span class="string">&#x27;Fiesta&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在另一个文件中，则通过引用导入的属性来使用它：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> items = <span class="built_in">require</span>(<span class="string">&#x27;./items&#x27;</span>)</span><br><span class="line">items.car</span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> car = <span class="built_in">require</span>(<span class="string">&#x27;./items&#x27;</span>).car</span><br></pre></td></tr></table></figure>
-
-<p><code>module.exports</code> 和 <code>exports</code> 之间用什么区别？</p>
-<p><strong>前者公开了它指向的对象。后者公开了它指向的对象的属性</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2226,7 +2221,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
