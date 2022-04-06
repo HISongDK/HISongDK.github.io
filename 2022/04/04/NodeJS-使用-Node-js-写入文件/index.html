@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="数组合并了相同类型的对象，而元组（Tuple）合并了不同类型的对象。 元组起源于函数编程语言（如 F#），这些语言中会频繁使用元组。">
+  <meta name="description" content="在 Node.js 中写入文件最简单的方式是使用 fs.writeFile() API。 例如： 12345678910const fs &#x3D; require(&amp;#x27;fs&amp;#x27;)const content &#x3D; &amp;#x27;一些内容&amp;#x27;fs.writeFile(&amp;#x27;&#x2F;Users&#x2F;joe&#x2F;test.txt&amp;#x27;, content, (err) &#x3D;&gt; &amp;#123;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TS进阶-元组">
-<meta property="og:url" content="http://example.com/2021/08/30/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-30-TS%E8%BF%9B%E9%98%B6-%E5%85%83%E7%BB%84/index.html">
+<meta property="og:title" content="NodeJS | 使用 Node.js 写入文件">
+<meta property="og:url" content="http://example.com/2022/04/04/NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="某人写字的地方">
-<meta property="og:description" content="数组合并了相同类型的对象，而元组（Tuple）合并了不同类型的对象。 元组起源于函数编程语言（如 F#），这些语言中会频繁使用元组。">
+<meta property="og:description" content="在 Node.js 中写入文件最简单的方式是使用 fs.writeFile() API。 例如： 12345678910const fs &#x3D; require(&amp;#x27;fs&amp;#x27;)const content &#x3D; &amp;#x27;一些内容&amp;#x27;fs.writeFile(&amp;#x27;&#x2F;Users&#x2F;joe&#x2F;test.txt&amp;#x27;, content, (err) &#x3D;&gt; &amp;#123;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-08-29T16:00:15.000Z">
-<meta property="article:modified_time" content="2022-04-05T05:15:31.278Z">
+<meta property="article:published_time" content="2022-04-04T10:30:26.000Z">
+<meta property="article:modified_time" content="2022-04-05T05:18:38.636Z">
 <meta property="article:author" content="Somebody">
-<meta property="article:tag" content="TypeScript">
+<meta property="article:tag" content="NodeJS">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/08/30/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-30-TS%E8%BF%9B%E9%98%B6-%E5%85%83%E7%BB%84/">
+<link rel="canonical" href="http://example.com/2022/04/04/NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>TS进阶-元组 | 某人写字的地方</title>
+  <title>NodeJS | 使用 Node.js 写入文件 | 某人写字的地方</title>
   
 
 
@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/30/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-30-TS%E8%BF%9B%E9%98%B6-%E5%85%83%E7%BB%84/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/04/NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,7 +174,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          TS进阶-元组
+          NodeJS | 使用 Node.js 写入文件
         </h1>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-08-30 00:00:15" itemprop="dateCreated datePublished" datetime="2021-08-30T00:00:15+08:00">2021-08-30</time>
+              <time title="创建时间：2022-04-04 18:30:26" itemprop="dateCreated datePublished" datetime="2022-04-04T18:30:26+08:00">2022-04-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-05 13:15:31" itemprop="dateModified" datetime="2022-04-05T13:15:31+08:00">2022-04-05</time>
+                <time title="修改时间：2022-04-05 13:18:38" itemprop="dateModified" datetime="2022-04-05T13:18:38+08:00">2022-04-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
                 </span>
             </span>
 
@@ -218,26 +218,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>数组合并了相同类型的对象，而元组（Tuple）合并了不同类型的对象。</p>
-<p>元组起源于函数编程语言（如 F#），这些语言中会频繁使用元组。</p>
+        <p>在 Node.js 中写入文件最简单的方式是使用 <code>fs.writeFile()</code> API。</p>
+<p>例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> content = <span class="string">&#x27;一些内容&#x27;</span></span><br><span class="line"></span><br><span class="line">fs.writeFile(<span class="string">&#x27;/Users/joe/test.txt&#x27;</span>, content, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 文件写入成功</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
 <span id="more"></span>
 
-<h2 id="简单的例子"><a href="#简单的例子" class="headerlink" title="简单的例子"></a>简单的例子</h2><p>定义一对值分别为 string 和 number 的元组：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> tom: [<span class="built_in">number</span>, <span class="built_in">string</span>] = [<span class="string">&#x27;Tom&#x27;</span>, <span class="number">25</span>]</span><br></pre></td></tr></table></figure>
+<p>另外，也可以使用同步的版本 <code>fs.writeFileSync()</code> :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> content = <span class="string">&#x27;一些内容&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = fs.writeFileSync(<span class="string">&#x27;/Users/joe/test.txt&#x27;</span>, content)</span><br><span class="line">    <span class="comment">// 文件写入成功</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>当赋值或访问一个已知的索引元素时，会得到正确的类型：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> tom: [<span class="built_in">string</span>, <span class="built_in">number</span>]</span><br><span class="line">tom[<span class="number">0</span>] = <span class="string">&#x27;Tom&#x27;</span></span><br><span class="line">tom[<span class="number">1</span>] = <span class="number">25</span></span><br><span class="line"></span><br><span class="line">tom[<span class="number">0</span>].slice(<span class="number">1</span>)</span><br><span class="line">tom[<span class="number">1</span>].toFixed(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>默认情况下，此 API 会替换文件的内容。</p>
+<p>可以通过指定标志修改默认行为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.writeFile(<span class="string">&#x27;/Users/joe/test.txt&#x27;</span>, content, &#123; <span class="attr">flag</span>: <span class="string">&#x27;a+&#x27;</span> &#125;, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>也可以值赋值其中一项：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> tom: [<span class="built_in">string</span>, <span class="built_in">number</span>]</span><br><span class="line">tom[<span class="number">0</span>] = <span class="string">&#x27;Tom&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>可能会使用的标志有：</p>
+<ul>
+<li>  <code>r+</code> 打开文件用于读写</li>
+<li>  <code>w+</code> 打开文件用于读写,将流定位到文件的开头，如果文件不存在则创建</li>
+<li>  <code>a</code> 打开文件用于追加，将流定位到文件的末尾，如果文件不存在则创建</li>
+<li>  <code>a+</code> 打开文件用于读写，将流定位到文件的末尾，如果文件不存在则创建</li>
+</ul>
+<p>（可以在 <a target="_blank" rel="noopener" href="http://nodejs.cn/api/fs.html#fs_file_system_flags"><a target="_blank" rel="noopener" href="http://nodejs.cn/api/fs.html#fs_file_system_flags">text</a></a>中查看更多标志）</p>
+<h2 id="追加到文件"><a href="#追加到文件" class="headerlink" title="追加到文件"></a>追加到文件</h2><p>将内容追加到文件末尾的便捷方法是 <code>fs.appendFile()</code> 及其对应的同步版本 <code>fs.appendFileSync()</code> :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> content = <span class="string">&#x27;一些内容&#x27;</span></span><br><span class="line">fs.appendFile(<span class="string">&#x27;file.log&#x27;</span>, content, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 完成</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>但是当直接对元组类型的变量进行初始化或者赋值的时候，需要提供所有元组类型中指定的项。</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> tom: [<span class="built_in">string</span>, <span class="built_in">number</span>]</span><br><span class="line">tom = [<span class="string">&#x27;Tom&#x27;</span>, <span class="number">25</span>]</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> tom: [<span class="built_in">string</span>, <span class="built_in">number</span>]</span><br><span class="line">tom = [<span class="string">&#x27;Tom&#x27;</span>]</span><br><span class="line"><span class="comment">// Property &#x27;1&#x27; is missing in type &#x27;[string]&#x27; but required in type &#x27;[string,number]&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="越界的元素"><a href="#越界的元素" class="headerlink" title="越界的元素"></a>越界的元素</h2><p>当添加越界的元素时，它的类型会被限制为元组中每个类型的联合类型：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> tom: [<span class="built_in">string</span>, <span class="built_in">number</span>]</span><br><span class="line">tom = [<span class="string">&#x27;Tom&#x27;</span>, <span class="number">25</span>]</span><br><span class="line">tom.push(<span class="string">&#x27;male&#x27;</span>)</span><br><span class="line">tom.push(<span class="literal">true</span>)</span><br><span class="line"><span class="comment">// Argument fo type &#x27;true&#x27; is not assignable to parameter of type &#x27;string | number&#x27;.</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用流"><a href="#使用流" class="headerlink" title="使用流"></a>使用流</h2><p>所有这些方法，都是在将全部内容写入文件之后才会将控制权返回给程序（在异步的版本中，这意味着执行回调）。</p>
+<p>在这种情况下，更好的选择是使用流写入文件的内容。</p>
 
     </div>
 
@@ -247,7 +253,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+              <a href="/tags/NodeJS/" rel="tag"># NodeJS</a>
           </div>
 
         
@@ -256,12 +262,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/08/29/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-29-TS%E8%BF%9B%E9%98%B6-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AD%97%E9%9D%A2%E9%87%8F%E7%B1%BB%E5%9E%8B/" rel="prev" title="TS进阶-字符串字面量类型">
-      <i class="fa fa-chevron-left"></i> TS进阶-字符串字面量类型
+    <a href="/2022/04/04/NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6/" rel="prev" title="NodeJS | 使用 Node.js 读取文件">
+      <i class="fa fa-chevron-left"></i> NodeJS | 使用 Node.js 读取文件
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/08/30/%E9%9A%8F%E6%95%B2-TypeScript-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2021-08-30-TS%E8%BF%9B%E9%98%B6-%E6%9E%9A%E4%B8%BE/" rel="next" title="TS进阶-枚举">
-      TS进阶-枚举 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/04/05/NodeJS-%E5%9C%A8-Node-js-%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%96%87%E4%BB%B6%E5%A4%B9/" rel="next" title="NodeJS | 在 Node.js 中使用文件夹">
+      NodeJS | 在 Node.js 中使用文件夹 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -321,7 +327,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">简单的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%8A%E7%95%8C%E7%9A%84%E5%85%83%E7%B4%A0"><span class="nav-number">2.</span> <span class="nav-text">越界的元素</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%BD%E5%8A%A0%E5%88%B0%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">追加到文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%B5%81"><span class="nav-number">2.</span> <span class="nav-text">使用流</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
