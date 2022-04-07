@@ -157,6 +157,115 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/03/NodeJS-package-lock-json-%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/03/NodeJS-package-lock-json-%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">NodeJS | package-lock.json 文件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-03 13:03:15 / 修改时间：13:47:23" itemprop="dateCreated datePublished" datetime="2022-02-03T13:03:15+08:00">2022-02-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在版本 5 中，npm 引入了 <code>package-lock.json</code> 文件。</p>
+<p>那是什么？您可能知道 <code>package.json</code> 文件，它更常见并且存在的时间更长。</p>
+<p>该文件旨在跟踪被安装的每隔软件包的确切版本，以便产品可以被相同的方式 100%复制（即使软件包的维护者更新了软件包）。</p>
+<p>这解决了 <code>package.json</code> 一直未解决的特殊问题。在 package.json 中，可以使用 semver 表示法设置要升级的版本（补丁版本或次版本），例如：</p>
+<ul>
+<li>  如果写入的是 <code>~0.13.0</code> 则只需更新补丁版本：即 <code>0.13.1</code> 可以，但 <code>0.14.0</code> 不可以。</li>
+<li>  如果写入的是 <code>^0.18.0</code> ,则需要更新补丁版本和次版本：即 <code>0.13.1</code> 、<code>0.14.0</code> 、依此类推。</li>
+<li>  如果写入的是 <code>0.13.0</code> ,则始终使用确切的版本。</li>
+</ul>
+<p>无需将 node_modules 文件夹（该文件夹通常很大）提交到 Git，当尝试使用 <code>npm install</code> 命令在另一台机器上复制项目时，如果指定了 <code>~</code> 语法并且软件包发布了补丁版本，则该软件包会被安装。<code>^</code> 和次版本也一样。</p>
+<blockquote>
+<p>如果指定确切的版本,例如示例中 <code>0.13.0</code> ，则不会受到此问题的影响。</p>
+</blockquote>
+<p>可能是你，或者是其他人，会在某处尝试通过运行 <code>npm install</code> 初始化项目。</p>
+<p>因此，原始的项目和新初始化的项目实际上是不同的。即使补丁版本不应该引入重大的更改，但还是可能引入缺陷。</p>
+<p><code>package-lock.json</code> 会固化当前安装的每个软件包的版本，当运行 <code>npm install</code> 时， <code>npm</code> 会使用这些确切的版本。</p>
+<p>这个概念并不心想，其他编程语言的软件包管理器（例如 PHP 中的 Conposer）使用类似的系统已有多年。</p>
+<p><code>package-lock.json</code> 文件需要被提交到 Git 仓库，以便被其他人获取（如果项目是公开的或有合作者，或者将 Git 作为部署源）。</p>
+<p>当运行 <code>npm undate</code> 时，<code>package-lock.json</code> 文件中的依赖项版本会被更新。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>这是在空文件夹中运行 <code>npm install cowsay</code> 时获得的 <code>package-lock.json</code> 文件的示例结构：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;requires&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;lockfileVersion&quot;</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;ansi-regex&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;3.0.0&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resolved&quot;</span>: <span class="string">&quot;https://registry.npmjs.org/ansi-regex/-/ansi-regex-3.</span></span><br><span class="line"><span class="string">0.0.tgz&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;integrity&quot;</span>: <span class="string">&quot;sha1-7QMXwyIGT3lGbAKWa922Bas32Zg=&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;cowsay&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;1.3.1&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resolved&quot;</span>: <span class="string">&quot;https://registry.npmjs.org/cowsay/-/cowsay-1.3.1.tgz&quot;</span></span><br><span class="line">,</span><br><span class="line">      <span class="attr">&quot;integrity&quot;</span>: <span class="string">&quot;sha512-3PVFe6FePVtPj1HTeLin9v8WyLl+VmM1l1H/5P+BTTDkM</span></span><br><span class="line"><span class="string">Ajufp+0F9eLjzRnOHzVAYeIYFF5po5NjRrgefnRMQ==&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;requires&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;get-stdin&quot;</span>: <span class="string">&quot;^5.0.1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;optimist&quot;</span>: <span class="string">&quot;~0.6.1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;string-width&quot;</span>: <span class="string">&quot;~2.1.1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;strip-eof&quot;</span>: <span class="string">&quot;^1.0.0&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;get-stdin&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;5.0.1&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resolved&quot;</span>: <span class="string">&quot;https://registry.npmjs.org/get-stdin/-/get-stdin-5.0.</span></span><br><span class="line"><span class="string">1.tgz&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;integrity&quot;</span>: <span class="string">&quot;sha1-Ei4WFZHiH/TFJTAwVpPyDmOTo5g=&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;is-fullwidth-code-point&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;2.0.0&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resolved&quot;</span>: <span class="string">&quot;https://registry.npmjs.org/is-fullwidth-code-point/-/</span></span><br><span class="line"><span class="string">is-fullwidth-code-point-2.0.0.tgz&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;integrity&quot;</span>: <span class="string">&quot;sha1-o7MKXE8ZkYMWeqq5O+764937ZU8=&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;minimist&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;0.0.10&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resolved&quot;</span>: <span class="string">&quot;https://registry.npmjs.org/minimist/-/minimist-0.0.10</span></span><br><span class="line"><span class="string">.tgz&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;integrity&quot;</span>: <span class="string">&quot;sha1-3j+YVD2/lggr5IrRoMfNqDYwHc8=&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;optimist&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;0.6.1&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resolved&quot;</span>: <span class="string">&quot;https://registry.npmjs.org/optimist/-/optimist-0.6.1.tgz&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;integrity&quot;</span>: <span class="string">&quot;sha1-2j6nRob6IaGaERwybpDrFaAZZoY=&quot;</span>,</span><br><span class="line"></span><br><span class="line">      <span class="attr">&quot;requires&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;minimist&quot;</span>: <span class="string">&quot;~0.0.1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;wordwrap&quot;</span>: <span class="string">&quot;~0.0.2&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;string-width&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;2.1.1&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resolved&quot;</span>: <span class="string">&quot;https://registry.npmjs.org/string-width/-/string-width-2.1.1.tgz&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;integrity&quot;</span>: <span class="string">&quot;sha512-nOqH59deCq9SRHlxq1Aw85Jnt4w6KvLKqWVik6oA9ZklXLNIOlqg4F2yrT1MVaTjAqvVwdfeZ7w7aCvJD7ugkw==&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;requires&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;is-fullwidth-code-point&quot;</span>: <span class="string">&quot;^2.0.0&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;strip-ansi&quot;</span>: <span class="string">&quot;^4.0.0&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;strip-ansi&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;4.0.0&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resolved&quot;</span>: <span class="string">&quot;https://registry.npmjs.org/strip-ansi/-/strip-ansi-4.0.0.tgz&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;integrity&quot;</span>: <span class="string">&quot;sha1-qEeQIusaw2iocTibY1JixQXuNo8=&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;requires&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;ansi-regex&quot;</span>: <span class="string">&quot;^3.0.0&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;strip-eof&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;1.0.0&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resolved&quot;</span>: <span class="string">&quot;https://registry.npmjs.org/strip-eof/-/strip-eof-1.0.0.tgz&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;integrity&quot;</span>: <span class="string">&quot;sha1-u0P/VZim6wXYm1n80SnJgzE2Br8=&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;wordwrap&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;0.0.3&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resolved&quot;</span>: <span class="string">&quot;https://registry.npmjs.org/wordwrap/-/wordwrap-0.0.3.tgz&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;integrity&quot;</span>: <span class="string">&quot;sha1-o9XabNXAvAAI03I0u68b7WMFkQc=&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>安装 cowsay，其依赖于：</p>
+<ul>
+<li>  get-stdin</li>
+<li>  optimist</li>
+<li>  string-width</li>
+<li>  strip-eof</li>
+</ul>
+<p>这些软件包还需要其他软件包，正如 <code>require</code> 属性可以看到的：</p>
+<ul>
+<li>  ansi-regex</li>
+<li>  is-fullwidth-code-point</li>
+<li>  minimist</li>
+<li>  wordwrap</li>
+<li>  string-eof</li>
+</ul>
+<p>他们会按照字母顺序被添加到文件中，每隔都有 <code>version</code> 字段、指向软件包位置的 <code>resolved</code> 字段、以及用于校验软件包的 <code>integrity</code> 字符串。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/31/NodeJS-package-json-%E6%8C%87%E5%8D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2050,112 +2159,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/27/Write-Down-Everything/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/27/Write-Down-Everything/" class="post-title-link" itemprop="url">Write Down Everything</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-27 23:56:46" itemprop="dateCreated datePublished" datetime="2021-11-27T23:56:46+08:00">2021-11-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-28 00:33:48" itemprop="dateModified" datetime="2021-11-28T00:33:48+08:00">2021-11-28</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="记下一切"><a href="#记下一切" class="headerlink" title="记下一切"></a>记下一切</h2><p>这是一个很大的野心啊。但是执行的可能性是很低的，其实没有什么太大东西去记录。</p>
-<p>现在觉得即使是一些鸡毛蒜皮的小事，或者简简单单的东西。哪怕是仔细看过，不久还是会完全忘记。自然就想将好多好多的事和知识就完全记录下来。</p>
-<p>有些不切实际了</p>
-<hr>
-<div align="center">
-<h2>太多与太少</h2>
-
-<p>耶胡达·阿米亥<p>
-<pre>
-太多橄榄树在山谷
-太多石头在山坡
-太多死者，太少
-土地把他们全部掩埋
-而我必须回到钞票上描画的
-山水之间
-回到硬币上我父亲的面容前
-
-<b>
-太多纪念日，太少
-记忆。我的朋友已经忘记
-他们年少时学过的东西
-</b>
-我的女友躺在一个隐蔽的地方
-而我总在外边，是饥饿的风的食物
-太多厌倦，太少眼睛
-盛放它们。太多钟表
-太少时间。太多手按起《圣经》
-宣誓，太多公路，太少
-我们能真正行走的道路：人走向各自的命运
-太多希望
-从它们的主人那里逃走
-太多梦者，太少梦，
-其译解或与会改变世界的历史
-像法老的长梦
-我的生活在我身后关上门。我在门外，一只
-总是被残酷、盲目的风抵触脊梁的
-狗。我训练有素：我翻身坐起
-等待它引领我穿过生命之街
-沿途寻找真正的自己
-</pre>
-
-</div>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2225,7 +2228,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">113</span>
+          <span class="site-state-item-count">114</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
