@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="因为无能为力，所以顺其自然，我实在是太废了。 我应该早就隐隐意识到自己一直不怎么努力时因为怕真的面对这么菜的自己。虚荣的怕不如别人就索性不去比，用夫唯不争故天下莫能与之争那套糊弄自己，就什么都不做还装作一副自己只要做了就能做成的样子。">
+  <meta name="description" content="path 模块提供了许多非常实用的函数来访问文件系统，并与文件系统进行交互。   无需安装，你可以通过简单的引用来使用它： 1const path &#x3D; require(&amp;#x27;path&amp;#x27;)       该模块提供了 path.sep 和 path.delimiter   path.sep: 作为路径分隔符，在Windows上是 \,在 Linux&#x2F;macOS 上是 &#x2F;   path.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="躺平">
-<meta property="og:url" content="http://example.com/2021/07/31/2021-07-31-%E8%BA%BA%E5%B9%B3/index.html">
+<meta property="og:title" content="NodeJS | Node.js 路径模块">
+<meta property="og:url" content="http://example.com/2022/04/08/NodeJS-Node-js-%E8%B7%AF%E5%BE%84%E6%A8%A1%E5%9D%97/index.html">
 <meta property="og:site_name" content="某人写字的地方">
-<meta property="og:description" content="因为无能为力，所以顺其自然，我实在是太废了。 我应该早就隐隐意识到自己一直不怎么努力时因为怕真的面对这么菜的自己。虚荣的怕不如别人就索性不去比，用夫唯不争故天下莫能与之争那套糊弄自己，就什么都不做还装作一副自己只要做了就能做成的样子。">
+<meta property="og:description" content="path 模块提供了许多非常实用的函数来访问文件系统，并与文件系统进行交互。   无需安装，你可以通过简单的引用来使用它： 1const path &#x3D; require(&amp;#x27;path&amp;#x27;)       该模块提供了 path.sep 和 path.delimiter   path.sep: 作为路径分隔符，在Windows上是 \,在 Linux&#x2F;macOS 上是 &#x2F;   path.">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-07-31T14:03:18.000Z">
-<meta property="article:modified_time" content="2021-11-05T15:56:23.976Z">
+<meta property="article:published_time" content="2022-04-08T15:19:03.000Z">
+<meta property="article:modified_time" content="2022-04-08T15:42:42.096Z">
 <meta property="article:author" content="Somebody">
+<meta property="article:tag" content="NodeJS">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/07/31/2021-07-31-%E8%BA%BA%E5%B9%B3/">
+<link rel="canonical" href="http://example.com/2022/04/08/NodeJS-Node-js-%E8%B7%AF%E5%BE%84%E6%A8%A1%E5%9D%97/">
 
 
 <script id="page-configurations">
@@ -45,7 +46,7 @@
   };
 </script>
 
-  <title>躺平 | 某人写字的地方</title>
+  <title>NodeJS | Node.js 路径模块 | 某人写字的地方</title>
   
 
 
@@ -160,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/31/2021-07-31-%E8%BA%BA%E5%B9%B3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/08/NodeJS-Node-js-%E8%B7%AF%E5%BE%84%E6%A8%A1%E5%9D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -173,7 +174,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          躺平
+          NodeJS | Node.js 路径模块
         </h1>
 
         <div class="post-meta">
@@ -182,16 +183,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-07-31 22:03:18" itemprop="dateCreated datePublished" datetime="2021-07-31T22:03:18+08:00">2021-07-31</time>
+              <time title="创建时间：2022-04-08 23:19:03 / 修改时间：23:42:42" itemprop="dateCreated datePublished" datetime="2022-04-08T23:19:03+08:00">2022-04-08</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
 
           
 
@@ -204,13 +212,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>因为无能为力，所以顺其自然，我实在是太废了。</p>
-<p>我应该早就隐隐意识到自己一直不怎么努力时因为怕真的面对这么菜的自己。虚荣的怕不如别人就索性不去比，用夫唯不争故天下莫能与之争那套糊弄自己，就什么都不做还装作一副自己只要做了就能做成的样子。</p>
-<a id="more"></a>
+        <p><code>path</code> 模块提供了许多非常实用的函数来访问文件系统，并与文件系统进行交互。</p>
+<!-- 这话看着耳熟 -->
 
-<p>夏目漱石说：不过是些太平盛世的逸民，就像随风摇摆的丝瓜，却又声称不受外物影响，争胜之心在言语中也可见端倪，不过是和他们鄙视的凡夫俗子是一丘之貉罢了</p>
-<p>那些想去很高很高地方的人，最后都醉倒在无名酒馆的地板上，被人拖走</p>
-<p>这是我写给那些无名酒鬼的颂歌，不曾因绝望而发笑的人无法领会。</p>
+<p>无需安装，你可以通过简单的引用来使用它：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<details>
+    <summary>该模块提供了 <code>path.sep</code> 和 <code>path.delimiter</code></summary>
+  <li>path.sep: 作为路径分隔符，在Windows上是 <code>\</code>,在 Linux/macOS 上是 <code>/</code></li>
+  <li>path.delimiter: 作为路径定界符，在Windows上是 <code>;</code>,在 Linux/macOS 上是 <code>:</code></li>
+</details>
+
+<p>还有这些 <code>path</code> 方法：</p>
+<h2 id="path-basename"><a href="#path-basename" class="headerlink" title="path.basename()"></a><code>path.basename()</code></h2><p>返回路径的最后一部分。第二个参数可以指定过滤掉扩展名</p>
+<h2 id="path-dirname"><a href="#path-dirname" class="headerlink" title="path.dirname()"></a><code>path.dirname()</code></h2><p>返回路径的目录部分，亦即 path.basename 前的部分</p>
+<h2 id="path-extname"><a href="#path-extname" class="headerlink" title="path.extname()"></a><code>path.extname()</code></h2><p>返回路径的扩展名</p>
+<h2 id="path-isAbsolute"><a href="#path-isAbsolute" class="headerlink" title="path.isAbsolute()"></a><code>path.isAbsolute()</code></h2><p>判断路径是否为绝对路径，返回布尔值</p>
+<h2 id="path-join"><a href="#path-join" class="headerlink" title="path.join()"></a><code>path.join()</code></h2><p>拼接多个路径部分 <!-- 我有点理解不了这和字符串拼接的区别 --></p>
+<h2 id="path-normalize"><a href="#path-normalize" class="headerlink" title="path.normalize()"></a><code>path.normalize()</code></h2><p>将包含 <code>.</code> 、<code>..</code>的相对路径计算为实际的路径</p>
+<h2 id="path-parse"><a href="#path-parse" class="headerlink" title="path.parse()"></a><code>path.parse()</code></h2><p>将路径解析成组成他的信息片段：</p>
+<ul>
+<li>  <code>root</code>: 根路径</li>
+<li>  <code>dir</code>: 从根路径开始的文件夹路径</li>
+<li>  <code>base</code>: 文件名 + 扩展名</li>
+<li>  <code>name</code>: 文件名</li>
+<li>  <code>ext</code>: 扩展名</li>
+</ul>
+<h2 id="path-relative"><a href="#path-relative" class="headerlink" title="path.relative()"></a><code>path.relative()</code></h2><p>接收两个路径作为参数，基于当前工作目录，返回从第一个路径到第二个路径的相对路径。</p>
+<h2 id="path-resolve"><a href="#path-resolve" class="headerlink" title="path.resolve()"></a><code>path.resolve()</code></h2><p>可以使用 <code>path.resolve()</code> 获取相对路径的绝对路径计算</p>
+<p>通过指定第二个参数，<code>resolve</code>会将第一个路径作为第二个的基准，再计算出二者拼接后所在的绝对路径</p>
+<p>如果第一个参数以斜杠开头，就表示它是绝对路径</p>
 
     </div>
 
@@ -219,6 +251,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NodeJS/" rel="tag"># NodeJS</a>
+          </div>
 
         
 
@@ -226,13 +261,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/07/29/2021-07-29-%E5%A4%AA%E5%B0%91%E8%AE%B0%E5%BF%86/" rel="prev" title="太少记忆">
-      <i class="fa fa-chevron-left"></i> 太少记忆
+    <a href="/2022/04/07/NodeJS-Node-js-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A8%A1%E5%9D%97/" rel="prev" title="NodeJS | Node.js 文件系统模块">
+      <i class="fa fa-chevron-left"></i> NodeJS | Node.js 文件系统模块
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/08/02/2021-08-02-%E5%AD%94%E9%9B%80%E7%BF%8E/" rel="next" title="孔雀翎">
-      孔雀翎 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -291,6 +323,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#path-basename"><span class="nav-number">1.</span> <span class="nav-text">path.basename()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#path-dirname"><span class="nav-number">2.</span> <span class="nav-text">path.dirname()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#path-extname"><span class="nav-number">3.</span> <span class="nav-text">path.extname()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#path-isAbsolute"><span class="nav-number">4.</span> <span class="nav-text">path.isAbsolute()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#path-join"><span class="nav-number">5.</span> <span class="nav-text">path.join()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#path-normalize"><span class="nav-number">6.</span> <span class="nav-text">path.normalize()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#path-parse"><span class="nav-number">7.</span> <span class="nav-text">path.parse()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#path-relative"><span class="nav-number">8.</span> <span class="nav-text">path.relative()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#path-resolve"><span class="nav-number">9.</span> <span class="nav-text">path.resolve()</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
