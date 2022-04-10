@@ -157,6 +157,92 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/05/NodeJS-%E5%AE%89%E8%A3%85-npm-%E5%8C%85%E7%9A%84%E6%97%A7%E7%89%88%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/05/NodeJS-%E5%AE%89%E8%A3%85-npm-%E5%8C%85%E7%9A%84%E6%97%A7%E7%89%88%E6%9C%AC/" class="post-title-link" itemprop="url">NodeJS | 安装 npm 包的旧版本</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-05 20:21:49 / 修改时间：20:29:57" itemprop="dateCreated datePublished" datetime="2022-02-05T20:21:49+08:00">2022-02-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>可以使用 <code>@</code> 语法来安装 npm 软件包的旧版本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install &lt;package&gt;@&lt;version&gt;</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install cowsay</span><br></pre></td></tr></table></figure>
+
+<p>以上命令会安装 1.3.1 版本（在撰写本文时）</p>
+<p>使用以下命令可以安装 1.2.0 版本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install cowsay@<span class="number">1.2</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+
+<p>全局的软件包也可以这样做：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g webpack@<span class="number">4.16</span><span class="number">.4</span></span><br></pre></td></tr></table></figure>
+
+<p>可能还需要列出软件包所有的版本。可以使用 <code>npm view &lt;package&gt; versions</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> npm view cowsay versions</span><br><span class="line"></span><br><span class="line">[ <span class="string">&#x27;1.0.0&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.0.1&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.0.2&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.0.3&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.1.0&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.1.1&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.1.2&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.1.3&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.1.4&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.1.5&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.1.6&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.1.7&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.1.8&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.1.9&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.2.0&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.2.1&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.3.0&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1.3.1&#x27;</span> ]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/04/NodeJS-%E6%9F%A5%E7%9C%8B-npm-%E5%8C%85%E5%AE%89%E8%A3%85%E7%9A%84%E7%89%88%E6%9C%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2081,99 +2167,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/22/NodeJS-Node-js%E7%AE%80%E4%BB%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/22/NodeJS-Node-js%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">NodeJS | Node.js简介</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-22 23:58:10" itemprop="dateCreated datePublished" datetime="2022-01-22T23:58:10+08:00">2022-01-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-23 22:11:27" itemprop="dateModified" datetime="2022-01-23T22:11:27+08:00">2022-01-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Node.js 是一个开源和跨平台的 js 运行时环境。它几乎是任何项目的流行工具！</p>
-<p>Node.js 在浏览器之外运行 V8 JavaScript 引擎（Google Chrome 的内核）。这使得 Node.js 的性能非常好。</p>
-<!-- 可真能吹啊 -->
-
-<p>Node.js 应用程序在单个进程中运行，无需为每个请求创建新的进程。Node.js 在其标准库中提供了一组异步的 I/O 原语，以防止 JavaScript 代码阻塞，通常，Node.js 中的库是使用非阻塞范式编写的，使得阻塞行为成为异步而不是常态。</p>
-<p>当 Node.js 执行 I/O 操作时（比如从网络读取、访问数据库或文件系统），Node.js 将在响应返回时恢复操作（而不是阻塞线程浪费 CPU 周期等待）。</p>
-<p>这允许 Node.js 使用单个处理器处理数千个并发连接，而不会引入管理线程并发（这可能是错误的重要来源）的负担。</p>
-<p>Node.js 具有独特的优势，因为数百万为浏览器编写 JavaScript 的前端开发者现在无需学习完全不同的语言，就可以编写除客户端外的服务端代码。</p>
-<p>在 Node.js 中，可以毫无疑问地使用新的 ECMAScript 标准，因为你不必等待所有用户更新他们的浏览器，你负责通过更改 Node.js 版本来决定使用哪个 ECMAScript 版本，你还可以通过运行带有标志的 Node.js 来启用特定的实验性功能。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/22/NodeJS-Node-js%E7%AE%80%E4%BB%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2243,7 +2236,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-count">116</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
