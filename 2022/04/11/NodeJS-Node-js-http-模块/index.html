@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="累死累活，费了九牛二虎吃奶的劲，终于把这个用 hexo + travis + github pages 的个人博客部署上去了。 谁料，处理完两处 travis 的报错，本以为终于成功了，却发现 github pages 页面找不到，travis 自动生成的文件，仿佛也都是空的。 简直莫名其妙。">
+  <meta name="description" content="HTTP 核心模块是 Node.js 网络的关键模块。 可以使用以下代码： 1const http &#x3D; require(&amp;#x27;http&amp;#x27;)  该模块提供了一些属性、方法、以及类。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="成功了，但不是很成功">
-<meta property="og:url" content="http://example.com/2021/05/23/2021-05-23-%E6%88%90%E5%8A%9F%E4%BA%86%EF%BC%8C%E4%BD%86%E4%B8%8D%E6%98%AF%E5%BE%88%E6%88%90%E5%8A%9F/index.html">
+<meta property="og:title" content="NodeJS | Node.js http 模块">
+<meta property="og:url" content="http://example.com/2022/04/11/NodeJS-Node-js-http-%E6%A8%A1%E5%9D%97/index.html">
 <meta property="og:site_name" content="某人写字的地方">
-<meta property="og:description" content="累死累活，费了九牛二虎吃奶的劲，终于把这个用 hexo + travis + github pages 的个人博客部署上去了。 谁料，处理完两处 travis 的报错，本以为终于成功了，却发现 github pages 页面找不到，travis 自动生成的文件，仿佛也都是空的。 简直莫名其妙。">
+<meta property="og:description" content="HTTP 核心模块是 Node.js 网络的关键模块。 可以使用以下代码： 1const http &#x3D; require(&amp;#x27;http&amp;#x27;)  该模块提供了一些属性、方法、以及类。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-23T12:26:21.000Z">
-<meta property="article:modified_time" content="2021-11-05T15:56:23.963Z">
+<meta property="article:published_time" content="2022-04-11T15:27:09.000Z">
+<meta property="article:modified_time" content="2022-04-11T15:46:06.076Z">
 <meta property="article:author" content="Somebody">
+<meta property="article:tag" content="NodeJS">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/05/23/2021-05-23-%E6%88%90%E5%8A%9F%E4%BA%86%EF%BC%8C%E4%BD%86%E4%B8%8D%E6%98%AF%E5%BE%88%E6%88%90%E5%8A%9F/">
+<link rel="canonical" href="http://example.com/2022/04/11/NodeJS-Node-js-http-%E6%A8%A1%E5%9D%97/">
 
 
 <script id="page-configurations">
@@ -45,7 +46,7 @@
   };
 </script>
 
-  <title>成功了，但不是很成功 | 某人写字的地方</title>
+  <title>NodeJS | Node.js http 模块 | 某人写字的地方</title>
   
 
 
@@ -160,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/23/2021-05-23-%E6%88%90%E5%8A%9F%E4%BA%86%EF%BC%8C%E4%BD%86%E4%B8%8D%E6%98%AF%E5%BE%88%E6%88%90%E5%8A%9F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/11/NodeJS-Node-js-http-%E6%A8%A1%E5%9D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -173,7 +174,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          成功了，但不是很成功
+          NodeJS | Node.js http 模块
         </h1>
 
         <div class="post-meta">
@@ -182,16 +183,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-05-23 20:26:21" itemprop="dateCreated datePublished" datetime="2021-05-23T20:26:21+08:00">2021-05-23</time>
+              <time title="创建时间：2022-04-11 23:27:09 / 修改时间：23:46:06" itemprop="dateCreated datePublished" datetime="2022-04-11T23:27:09+08:00">2022-04-11</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
 
           
 
@@ -204,9 +212,35 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>累死累活，费了九牛二虎吃奶的劲，终于把这个用 hexo + travis + github pages 的个人博客部署上去了。</p>
-<p>谁料，处理完两处 travis 的报错，本以为终于成功了，却发现 github pages 页面找不到，travis 自动生成的文件，仿佛也都是空的。</p>
-<p>简直莫名其妙。</p>
+        <p>HTTP 核心模块是 Node.js 网络的关键模块。</p>
+<p>可以使用以下代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>该模块提供了一些属性、方法、以及类。</p>
+<span id="more"></span>
+
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><h3 id="http-METHODS"><a href="#http-METHODS" class="headerlink" title="http.METHODS"></a><code>http.METHODS</code></h3><p>此属性列出了所有支持的 HTTP 方法</p>
+<h3 id="http-STATUS-CODES"><a href="#http-STATUS-CODES" class="headerlink" title="http.STATUS_CODES"></a><code>http.STATUS_CODES</code></h3><p>此属性列出了所有 http 状态码及其描述</p>
+<h3 id="http-globalAgent"><a href="#http-globalAgent" class="headerlink" title="http.globalAgent"></a><code>http.globalAgent</code></h3><p>指向 Agent 对象的全局实例，该实例是 <code>http.Agent</code> 类实例。</p>
+<p>用于管理 HTTP 客户端连接的持久性和服用，它是 Node.js HTTP 网络的关键组件。</p>
+<p>稍后会在 <code>http.Agent</code> 类的说明中提供更多的描述。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="http-createServer"><a href="#http-createServer" class="headerlink" title="http.createServer()"></a><code>http.createServer()</code></h3><p>返回 <code>http.Server</code> 类的新实例。</p>
+<p>用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 使用此回调处理每个单独的请求。</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="http-request"><a href="#http-request" class="headerlink" title="http.request()"></a><code>http.request()</code></h3><p>发送 HTTP 请求到服务器，并创建 <code>http.ClientRequest</code> 类的实例。</p>
+<h3 id="http-get"><a href="#http-get" class="headerlink" title="http.get()"></a><code>http.get()</code></h3><p>类似于 <code>http.request()</code> ,但会自动设置 HTTP 方法为 GET，并自动调用 <code>req.end()</code></p>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>HTTP 模块提供了五个类：</p>
+<ul>
+<li>  <code>http.Agent</code></li>
+<li>  <code>http.ClientRequest</code></li>
+<li>  <code>http.Server</code></li>
+<li>  <code>http.ServerResponse</code></li>
+<li>  <code>http.IncomingMessage</code></li>
+</ul>
+<h3 id="http-Agent"><a href="#http-Agent" class="headerlink" title="http.Agent"></a><code>http.Agent</code></h3><p>Node.js 会创建 http.Agent 类的全局实例，以管理 HTTP 客户端的持久性和服用，这是 Node.js HTTP 网络的关键组成部分。</p>
+<p>该对象会确保对服务器的每个请求进行排队并且当个 socket 被复用。</p>
+<p>他还维护一个 socket 池。出于性能原因，这是关键。</p>
 
     </div>
 
@@ -215,6 +249,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NodeJS/" rel="tag"># NodeJS</a>
+          </div>
 
         
 
@@ -222,13 +259,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/05/19/2021-05-19-%E5%A6%88%E7%9A%84-%E6%88%91%E5%A5%BD%E7%94%9F%E5%90%8E%E6%82%94/" rel="prev" title="妈的 我好生后悔">
-      <i class="fa fa-chevron-left"></i> 妈的 我好生后悔
+    <a href="/2022/04/10/NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9D%97/" rel="prev" title="NodeJS | Node.js 事件模块">
+      <i class="fa fa-chevron-left"></i> NodeJS | Node.js 事件模块
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/05/24/2021-05-24-%E8%8F%9C%E9%B8%A1%E6%9D%82%E8%AE%B0/" rel="next" title="菜鸡杂记">
-      菜鸡杂记 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -287,6 +321,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#http-METHODS"><span class="nav-number">1.1.</span> <span class="nav-text">http.METHODS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-STATUS-CODES"><span class="nav-number">1.2.</span> <span class="nav-text">http.STATUS_CODES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-globalAgent"><span class="nav-number">1.3.</span> <span class="nav-text">http.globalAgent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#http-createServer"><span class="nav-number">2.1.</span> <span class="nav-text">http.createServer()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-request"><span class="nav-number">2.2.</span> <span class="nav-text">http.request()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-get"><span class="nav-number">2.3.</span> <span class="nav-text">http.get()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#http-Agent"><span class="nav-number">3.1.</span> <span class="nav-text">http.Agent</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
