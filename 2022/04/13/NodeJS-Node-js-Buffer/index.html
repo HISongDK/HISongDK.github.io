@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="就有一个疑问: 我就真的这么虚么? 天天也不怎么加班,朝九晚六. 回来之后,吃完饭,就只能瘫在床上看手机了,动都不想动. 本来还打算学学 redux hooks 呢. 还是明天开始吧,虽说明天上班应该也还是挺难熬. 不过好在明天我的腹灵 980 就到了 不说了,还是明天开始看 react 开始学 毕竟也是周五了,时间比较充裕">
+  <meta name="description" content="什么是 Buffer?Buffer 是内存区域。JavaScript 开发者可能对这个概念并不熟悉，比每天与内存交互的 C、C++ 或 Go 开发者（或使用系统编程语言的任何程序员）要少得多。 它表示 V8 JavaScript 引擎外部分配的固定大小的内存块（无法调整大小） 可以将 buffer 视为整数数组，每个整数代表一个数据字节。 它由 Node.js Buffer 类实现。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="筋疲力尽">
-<meta property="og:url" content="http://example.com/2021/07/01/2021-07-01-%E7%AD%8B%E7%96%B2%E5%8A%9B%E5%B0%BD/index.html">
+<meta property="og:title" content="NodeJS | Node.js Buffer">
+<meta property="og:url" content="http://example.com/2022/04/13/NodeJS-Node-js-Buffer/index.html">
 <meta property="og:site_name" content="某人写字的地方">
-<meta property="og:description" content="就有一个疑问: 我就真的这么虚么? 天天也不怎么加班,朝九晚六. 回来之后,吃完饭,就只能瘫在床上看手机了,动都不想动. 本来还打算学学 redux hooks 呢. 还是明天开始吧,虽说明天上班应该也还是挺难熬. 不过好在明天我的腹灵 980 就到了 不说了,还是明天开始看 react 开始学 毕竟也是周五了,时间比较充裕">
+<meta property="og:description" content="什么是 Buffer?Buffer 是内存区域。JavaScript 开发者可能对这个概念并不熟悉，比每天与内存交互的 C、C++ 或 Go 开发者（或使用系统编程语言的任何程序员）要少得多。 它表示 V8 JavaScript 引擎外部分配的固定大小的内存块（无法调整大小） 可以将 buffer 视为整数数组，每个整数代表一个数据字节。 它由 Node.js Buffer 类实现。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-07-01T13:48:37.000Z">
-<meta property="article:modified_time" content="2021-11-05T15:56:23.971Z">
+<meta property="article:published_time" content="2022-04-13T15:31:03.000Z">
+<meta property="article:modified_time" content="2022-04-13T15:45:52.434Z">
 <meta property="article:author" content="Somebody">
+<meta property="article:tag" content="NodeJS">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/07/01/2021-07-01-%E7%AD%8B%E7%96%B2%E5%8A%9B%E5%B0%BD/">
+<link rel="canonical" href="http://example.com/2022/04/13/NodeJS-Node-js-Buffer/">
 
 
 <script id="page-configurations">
@@ -45,7 +46,7 @@
   };
 </script>
 
-  <title>筋疲力尽 | 某人写字的地方</title>
+  <title>NodeJS | Node.js Buffer | 某人写字的地方</title>
   
 
 
@@ -160,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/01/2021-07-01-%E7%AD%8B%E7%96%B2%E5%8A%9B%E5%B0%BD/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/13/NodeJS-Node-js-Buffer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -173,7 +174,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          筋疲力尽
+          NodeJS | Node.js Buffer
         </h1>
 
         <div class="post-meta">
@@ -182,16 +183,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-07-01 21:48:37" itemprop="dateCreated datePublished" datetime="2021-07-01T21:48:37+08:00">2021-07-01</time>
+              <time title="创建时间：2022-04-13 23:31:03 / 修改时间：23:45:52" itemprop="dateCreated datePublished" datetime="2022-04-13T23:31:03+08:00">2022-04-13</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
 
           
 
@@ -204,14 +212,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>就有一个疑问: 我就真的这么虚么?</p>
-<p>天天也不怎么加班,朝九晚六.</p>
-<p>回来之后,吃完饭,就只能瘫在床上看手机了,动都不想动.</p>
-<p>本来还打算学学 redux hooks 呢.</p>
-<p>还是明天开始吧,虽说明天上班应该也还是挺难熬.</p>
-<p>不过好在明天我的腹灵 980 就到了</p>
-<p>不说了,还是明天开始看 react 开始学</p>
-<p>毕竟也是周五了,时间比较充裕</p>
+        <h2 id="什么是-Buffer"><a href="#什么是-Buffer" class="headerlink" title="什么是 Buffer?"></a>什么是 Buffer?</h2><p>Buffer 是内存区域。JavaScript 开发者可能对这个概念并不熟悉，比每天与内存交互的 C、C++ 或 Go 开发者（或使用系统编程语言的任何程序员）要少得多。</p>
+<p>它表示 V8 JavaScript 引擎外部分配的固定大小的内存块（无法调整大小）</p>
+<p>可以将 buffer 视为整数数组，每个整数代表一个数据字节。</p>
+<p>它由 Node.js Buffer 类实现。</p>
+<span id="more"></span>
+
+<h2 id="为什么需要-buffer"><a href="#为什么需要-buffer" class="headerlink" title="为什么需要 buffer"></a>为什么需要 buffer</h2><p>Buffer 用以处理二进制数据，传统只是处理字符串而非二进制数据。</p>
+<p>Buffer 与流紧密相连。当流处理器接受数据的速度快于消化的速度时，则会将数据放入 buffer 中。</p>
+<p>一个简单的场景是：当观看 YouTube 视频时，红线超过了观看点：即下载数据的速度比查看数据的速度快，浏览器会对数据进行缓冲。</p>
 
     </div>
 
@@ -220,6 +229,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NodeJS/" rel="tag"># NodeJS</a>
+          </div>
 
         
 
@@ -227,13 +239,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/06/30/2021-06-30-%E6%8B%94%E6%8E%89%E9%82%A3%E6%A3%B5%E5%B0%8F%E6%A0%91/" rel="prev" title="拔掉那棵小树">
-      <i class="fa fa-chevron-left"></i> 拔掉那棵小树
+    <a href="/2022/04/11/NodeJS-Node-js-http-%E6%A8%A1%E5%9D%97/" rel="prev" title="NodeJS | Node.js http 模块">
+      <i class="fa fa-chevron-left"></i> NodeJS | Node.js http 模块
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/07/02/2021-07-02-%E5%8F%88%E6%90%9E%E4%BA%86%E4%B8%80%E6%8A%8A%E9%94%AE%E7%9B%98/" rel="next" title="又搞了一把键盘">
-      又搞了一把键盘 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -292,6 +301,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Buffer"><span class="nav-number">1.</span> <span class="nav-text">什么是 Buffer?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-buffer"><span class="nav-number">2.</span> <span class="nav-text">为什么需要 buffer</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
