@@ -28,7 +28,7 @@
 <meta property="og:description" content="什么是 Buffer?Buffer 是内存区域。JavaScript 开发者可能对这个概念并不熟悉，比每天与内存交互的 C、C++ 或 Go 开发者（或使用系统编程语言的任何程序员）要少得多。 它表示 V8 JavaScript 引擎外部分配的固定大小的内存块（无法调整大小） 可以将 buffer 视为整数数组，每个整数代表一个数据字节。 它由 Node.js Buffer 类实现。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-04-13T15:31:03.000Z">
-<meta property="article:modified_time" content="2022-04-14T15:51:32.675Z">
+<meta property="article:modified_time" content="2022-04-17T15:57:05.533Z">
 <meta property="article:author" content="Somebody">
 <meta property="article:tag" content="NodeJS">
 <meta name="twitter:card" content="summary">
@@ -191,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-14 23:51:32" itemprop="dateModified" datetime="2022-04-14T23:51:32+08:00">2022-04-14</time>
+                <time title="修改时间：2022-04-17 23:57:05" itemprop="dateModified" datetime="2022-04-17T23:57:05+08:00">2022-04-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,6 +241,36 @@
 
 <p>虽然 <code>alloc</code> 和 <code>allocUnsafe</code> 均分指定大小的 <code>Buffer</code> (以字节为单位),但是 <code>alloc</code> 创建的 <code>Buffer</code> 会被使用 0 进行初始化，而 <code>allocUnsafe</code> 创建的 <code>Buffer</code> 不会被初始化。这意味着，尽管 <code>allocUnsafe</code> 比 <code>alloc</code> 要快得多，但是分配的内存片段可能包含敏感的旧数据。</p>
 <p>当 <code>Buffer</code> 内存被读取时，如果内存中存在较旧的数据，则可以被访问或泄露。这就是真正使 <code>allocUnsafe</code> 不安全的原因，在使用它时必须格外小心。</p>
+<h2 id="使用-buffer"><a href="#使用-buffer" class="headerlink" title="使用 buffer"></a>使用 buffer</h2><h3 id="访问-buffer-的内容"><a href="#访问-buffer-的内容" class="headerlink" title="访问 buffer 的内容"></a>访问 buffer 的内容</h3><p>Buffer(字节数组)可以像数组一样被访问:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buf = Buffer.from(<span class="string">&#x27;hey!&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(buf[<span class="number">0</span>]) <span class="comment">// 72</span></span><br><span class="line"><span class="built_in">console</span>.log(buf[<span class="number">1</span>]) <span class="comment">// 101</span></span><br><span class="line"><span class="built_in">console</span>.log(buf[<span class="number">2</span>]) <span class="comment">// 121</span></span><br></pre></td></tr></table></figure>
+
+<p>这些数字是 Unicode 码，用于标识 buffer 位置中的字符（H =&gt; 71、e =&gt; 101、y =&gt; 121）。</p>
+<p>可以使用 <code>toString()</code> 方法打印 buffer 的全部内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(buf.toString())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意，如果使用数字设置大小初始化 buffer，则可以访问到包含随机数据的已预初始化的内存，而不是空的 buffer!</p>
+</blockquote>
+<h3 id="获取-buffer-的长度"><a href="#获取-buffer-的长度" class="headerlink" title="获取 buffer 的长度"></a>获取 buffer 的长度</h3><p>使用 <code>length</code> 属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buf = Buffer.from(<span class="string">&#x27;Hey!&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(buf.length)</span><br></pre></td></tr></table></figure>
+
+<h3 id="迭代-buffer-内容"><a href="#迭代-buffer-内容" class="headerlink" title="迭代 buffer 内容"></a>迭代 buffer 内容</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buf = Buffer.from(<span class="string">&#x27;hey!&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> buf) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(item) <span class="comment">// 72 101 121 33</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="更改-buffer-内容"><a href="#更改-buffer-内容" class="headerlink" title="更改 buffer 内容"></a>更改 buffer 内容</h3><p>可以使用 <code>write()</code> 方法将整个字符串数据写入 buffer:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buf = Buffer.alloc(<span class="number">4</span>)</span><br><span class="line">buf.write(<span class="string">&#x27;hey!&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>就像可以使用数组索引语法访问 buffer 一样，你也可以使用相同的方法设置 buffer 的内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buf = Buffer.from(<span class="string">&#x27;hey!&#x27;</span>)</span><br><span class="line">buf[<span class="number">1</span>] = <span class="number">111</span> <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(buf.toString()) <span class="comment">// hoy!</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="复制-buffer"><a href="#复制-buffer" class="headerlink" title="复制 buffer"></a>复制 buffer</h3><p>使用 copy 方法可以复制 buffer:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buf = Buffer.from(<span class="string">&#x27;hey!&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> bufcopy = Buffer.alloc(<span class="number">4</span>)</span><br><span class="line">buf.copy(bufcopy)</span><br><span class="line">bufcopy.toString() <span class="comment">// hey!</span></span><br></pre></td></tr></table></figure>
+
+<p>默认情况下会复制整个 buffer。另外三个参数可以定义：开始位置、结束位置、新 buffer 长度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buf = Buffer.from(<span class="string">&#x27;hey!&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> bufcopy = Buffer.alloc(<span class="number">2</span>)</span><br><span class="line">buf.copy(bufcope, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">bufcopy.toString() <span class="comment">// he</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="切片-buffer"><a href="#切片-buffer" class="headerlink" title="切片 buffer"></a>切片 buffer</h3><p>如果要创建 buffer 的局部视图，可以创建切片。切片不是副本：原始 buffer 仍然是真正的来源。如果那改变了，buffer 切片视图也会改变。</p>
+<p>使用 <code>slice()</code> 方法创建，第一个参数是起始位置，第二个参数是结束位置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buf = Buffer.from(<span class="string">&#x27;hey!&#x27;</span>)</span><br><span class="line">buf.slice(<span class="number">0</span>).toString() <span class="comment">//Hey!</span></span><br><span class="line"><span class="keyword">const</span> slice = buf.slice(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line"><span class="built_in">console</span>.log(slice.toString()) <span class="comment">//He</span></span><br><span class="line">buf[<span class="number">1</span>] = <span class="number">111</span> <span class="comment">//o</span></span><br><span class="line"><span class="built_in">console</span>.log(slice.toString()) <span class="comment">//Ho</span></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -262,7 +292,10 @@
     <a href="/2022/04/11/NodeJS-Node-js-http-%E6%A8%A1%E5%9D%97/" rel="prev" title="NodeJS | Node.js http 模块">
       <i class="fa fa-chevron-left"></i> NodeJS | Node.js http 模块
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/20/NodeJS-Node-js-%E6%B5%81/" rel="next" title="NodeJS | Node.js 流">
+      NodeJS | Node.js 流 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -321,7 +354,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Buffer"><span class="nav-number">1.</span> <span class="nav-text">什么是 Buffer?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-buffer"><span class="nav-number">2.</span> <span class="nav-text">为什么需要 buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA-buffer"><span class="nav-number">3.</span> <span class="nav-text">如何创建 buffer</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Buffer"><span class="nav-number">1.</span> <span class="nav-text">什么是 Buffer?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-buffer"><span class="nav-number">2.</span> <span class="nav-text">为什么需要 buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA-buffer"><span class="nav-number">3.</span> <span class="nav-text">如何创建 buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-buffer"><span class="nav-number">4.</span> <span class="nav-text">使用 buffer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE-buffer-%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">4.1.</span> <span class="nav-text">访问 buffer 的内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96-buffer-%E7%9A%84%E9%95%BF%E5%BA%A6"><span class="nav-number">4.2.</span> <span class="nav-text">获取 buffer 的长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3-buffer-%E5%86%85%E5%AE%B9"><span class="nav-number">4.3.</span> <span class="nav-text">迭代 buffer 内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9-buffer-%E5%86%85%E5%AE%B9"><span class="nav-number">4.4.</span> <span class="nav-text">更改 buffer 内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6-buffer"><span class="nav-number">4.5.</span> <span class="nav-text">复制 buffer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E7%89%87-buffer"><span class="nav-number">4.6.</span> <span class="nav-text">切片 buffer</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -335,7 +368,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">118</span>
+          <span class="site-state-item-count">119</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

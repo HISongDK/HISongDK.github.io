@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Node.js 具有内置的模块系统。 Node.js 可以导入其他 Node.js 文件公开的功能。 当想要导入某些东西时，使用 1const library &#x3D; require(&amp;#x27;.&#x2F;library&amp;#x27;)  可以导入存在于当前文件夹中的 library.js 文件中的公开功能。 在此文件中，必须先公开功能，然后其他文件才能导入。 默认情况下，文件中任何定义的其他对象或变量都是私">
+  <meta name="description" content="什么是流流是为 Node.js 应用程序提供动力的基本概念之一。 它们是以一种高效的方式处理读&#x2F;写文件、网络通信、或任何类型的端到端的信息交换。 流不是 Node.js 特有的概念。它们是几十年前在 Unix 操作系统中引入的，程序可以通过管道运算符（|）对流进行相互交互。 例如，在传统的方式中，当告诉程序读取文件时，这将会将文件从头到尾读入内存，然后进行处理。 使用流，则可以逐个片段的读取并处理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NodeJS | 使用 exports 从 Node.js 文件中公开功能">
-<meta property="og:url" content="http://example.com/2022/01/30/NodeJS-%E4%BD%BF%E7%94%A8-exports-%E4%BB%8E-Node-js-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%85%AC%E5%BC%80%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:title" content="NodeJS | Node.js 流">
+<meta property="og:url" content="http://example.com/2022/04/20/NodeJS-Node-js-%E6%B5%81/index.html">
 <meta property="og:site_name" content="某人写字的地方">
-<meta property="og:description" content="Node.js 具有内置的模块系统。 Node.js 可以导入其他 Node.js 文件公开的功能。 当想要导入某些东西时，使用 1const library &#x3D; require(&amp;#x27;.&#x2F;library&amp;#x27;)  可以导入存在于当前文件夹中的 library.js 文件中的公开功能。 在此文件中，必须先公开功能，然后其他文件才能导入。 默认情况下，文件中任何定义的其他对象或变量都是私">
+<meta property="og:description" content="什么是流流是为 Node.js 应用程序提供动力的基本概念之一。 它们是以一种高效的方式处理读&#x2F;写文件、网络通信、或任何类型的端到端的信息交换。 流不是 Node.js 特有的概念。它们是几十年前在 Unix 操作系统中引入的，程序可以通过管道运算符（|）对流进行相互交互。 例如，在传统的方式中，当告诉程序读取文件时，这将会将文件从头到尾读入内存，然后进行处理。 使用流，则可以逐个片段的读取并处理">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-30T05:27:22.000Z">
-<meta property="article:modified_time" content="2022-01-30T05:44:38.516Z">
+<meta property="article:published_time" content="2022-04-20T15:03:12.000Z">
+<meta property="article:modified_time" content="2022-04-20T15:36:03.485Z">
 <meta property="article:author" content="Somebody">
 <meta property="article:tag" content="NodeJS">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2022/01/30/NodeJS-%E4%BD%BF%E7%94%A8-exports-%E4%BB%8E-Node-js-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%85%AC%E5%BC%80%E5%8A%9F%E8%83%BD/">
+<link rel="canonical" href="http://example.com/2022/04/20/NodeJS-Node-js-%E6%B5%81/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>NodeJS | 使用 exports 从 Node.js 文件中公开功能 | 某人写字的地方</title>
+  <title>NodeJS | Node.js 流 | 某人写字的地方</title>
   
 
 
@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/NodeJS-%E4%BD%BF%E7%94%A8-exports-%E4%BB%8E-Node-js-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%85%AC%E5%BC%80%E5%8A%9F%E8%83%BD/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/20/NodeJS-Node-js-%E6%B5%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,7 +174,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          NodeJS | 使用 exports 从 Node.js 文件中公开功能
+          NodeJS | Node.js 流
         </h1>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-01-30 13:27:22 / 修改时间：13:44:38" itemprop="dateCreated datePublished" datetime="2022-01-30T13:27:22+08:00">2022-01-30</time>
+              <time title="创建时间：2022-04-20 23:03:12 / 修改时间：23:36:03" itemprop="dateCreated datePublished" datetime="2022-04-20T23:03:12+08:00">2022-04-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -212,34 +212,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Node.js 具有内置的模块系统。</p>
-<p>Node.js 可以导入其他 Node.js 文件公开的功能。</p>
-<p>当想要导入某些东西时，使用</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> library = <span class="built_in">require</span>(<span class="string">&#x27;./library&#x27;</span>)</span><br></pre></td></tr></table></figure>
+        <h2 id="什么是流"><a href="#什么是流" class="headerlink" title="什么是流"></a>什么是流</h2><p>流是为 Node.js 应用程序提供动力的基本概念之一。</p>
+<p>它们是以一种高效的方式处理读/写文件、网络通信、或任何类型的端到端的信息交换。</p>
+<p>流不是 Node.js 特有的概念。它们是几十年前在 Unix 操作系统中引入的，程序可以通过管道运算符（<code>|</code>）对流进行相互交互。</p>
+<p>例如，在传统的方式中，当告诉程序读取文件时，这将会将文件从头到尾读入内存，然后进行处理。</p>
+<p>使用流，则可以逐个片段的读取并处理（而无需全部保存在内存中）</p>
+<p>Node.js 的 <code>stream</code> 模块提供了构建所有流 API 的基础。所有的流都是 <code>EventEmitter</code> 的实例。</p>
+<h2 id="为什么是流"><a href="#为什么是流" class="headerlink" title="为什么是流"></a>为什么是流</h2><p>相对于使用其他的数据处理方法，流基本上提供了两个主要有点：</p>
+<ul>
+<li>  <code>内存效率</code> 无需加载大量的数据到内存中即可处理。</li>
+<li>  <code>时间效率</code> 当获得数据之后即可立即处理数据，这样所需的时间更少，而不必等到整个数据有效负载可用才开始</li>
+</ul>
+<h2 id="流的示例"><a href="#流的示例" class="headerlink" title="流的示例"></a>流的示例</h2><p>一个典型的例子是从磁盘读取文件。</p>
+<p>使用 Node.js 的 <code>fs</code> 模块，可以读取文件，并在与 HTTP 服务器建立新连接时通过 HTTP 提供文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    fs.readFile(__dirname + <span class="string">&#x27;/data.txt&#x27;</span>, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">        res.end(data)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>可以导入存在于当前文件夹中的 <code>library.js</code> 文件中的公开功能。</p>
-<p>在此文件中，必须先公开功能，然后其他文件才能导入。</p>
-<p>默认情况下，文件中任何定义的其他对象或变量都是私有的，不会公开给外界。</p>
-<p>这就是 <a target="_blank" rel="noopener" href="http://nodejs.cn/api/modules.html"><code>module</code> 系统</a>提供的 <code>module.exports</code> API 可以做的事。</p>
-<p>当将对象或函数赋值给 exports 属性时，这就是要被公开的内容，因此可以将其导入应用程序的其他部分或者其他应用程序中。</p>
-<p>可以通过两种方式进行操作。</p>
-<p>第一种方式是将对象赋值给 <code>module.exports</code> (这是模块系统提供的对象),这会使文件只导出该对象：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> car = &#123;</span><br><span class="line">    <span class="attr">brand</span>: <span class="string">&#x27;Ford&#x27;</span>,</span><br><span class="line">    <span class="attr">model</span>: <span class="string">&#x27;Fiesta&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = car</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在另一个文件中</span></span><br><span class="line"><span class="keyword">const</span> car = <span class="built_in">require</span>(<span class="string">&#x27;./car&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><code>readFile()</code> 读取文件的全部内容，并在完成时调用回调函数。</p>
+<p>回调中的 <code>res.end(data)</code> 会返回文件的内容给 HTTP 客户端。</p>
+<p>如果文件很大，则该操作会花费较多的时间。以下是使用流编写的相同内容。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">const</span> stream = fs.createReadStream(__dirname + <span class="string">&#x27;/data.txt)</span></span><br><span class="line"><span class="string">	stream.pipe(res);</span></span><br><span class="line"><span class="string">&#125;)</span></span><br></pre></td></tr></table></figure>
 
-<p>第二种方式是将要导出的对象添加为 exports 的属性。这种方式可以到处多个对象、函数或数据：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> car = &#123;</span><br><span class="line">    <span class="attr">brand</span>: <span class="string">&#x27;Ford&#x27;</span>,</span><br><span class="line">    <span class="attr">model</span>: <span class="string">&#x27;Fiesta&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.car = car</span><br></pre></td></tr></table></figure>
-
-<p>或直接</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exports</span>.car = &#123;</span><br><span class="line">    <span class="attr">brand</span>: <span class="string">&#x27;Ford&#x27;</span>,</span><br><span class="line">    <span class="attr">model</span>: <span class="string">&#x27;Fiesta&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在另一个文件中，则通过引用导入的属性来使用它：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> items = <span class="built_in">require</span>(<span class="string">&#x27;./items&#x27;</span>)</span><br><span class="line">items.car</span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> car = <span class="built_in">require</span>(<span class="string">&#x27;./items&#x27;</span>).car</span><br></pre></td></tr></table></figure>
-
-<p><code>module.exports</code> 和 <code>exports</code> 之间用什么区别？</p>
-<p><strong>前者公开了它指向的对象。后者公开了它指向的对象的属性</strong></p>
+<p>当要发送的数据块已获得时就立即开始将其流式传输到 HTTP 客户端，而不是等待文件被完全读取。</p>
 
     </div>
 
@@ -258,13 +251,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/01/30/NodeJS-%E5%9C%A8-Node-js-%E4%B8%AD%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E8%BE%93%E5%85%A5/" rel="prev" title="NodeJS | 在 Node.js 中从命令行接收输入">
-      <i class="fa fa-chevron-left"></i> NodeJS | 在 Node.js 中从命令行接收输入
+    <a href="/2022/04/13/NodeJS-Node-js-Buffer/" rel="prev" title="NodeJS | Node.js Buffer">
+      <i class="fa fa-chevron-left"></i> NodeJS | Node.js Buffer
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/01/30/NodeJS-npm-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/" rel="next" title="NodeJS | npm 包管理器简介">
-      NodeJS | npm 包管理器简介 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -323,6 +313,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%B5%81"><span class="nav-number">1.</span> <span class="nav-text">什么是流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E6%B5%81"><span class="nav-number">2.</span> <span class="nav-text">为什么是流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%9A%84%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">流的示例</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

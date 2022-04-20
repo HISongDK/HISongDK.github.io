@@ -157,6 +157,98 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/20/NodeJS-Node-js-%E6%B5%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/20/NodeJS-Node-js-%E6%B5%81/" class="post-title-link" itemprop="url">NodeJS | Node.js 流</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-20 23:03:12 / 修改时间：23:36:03" itemprop="dateCreated datePublished" datetime="2022-04-20T23:03:12+08:00">2022-04-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="什么是流"><a href="#什么是流" class="headerlink" title="什么是流"></a>什么是流</h2><p>流是为 Node.js 应用程序提供动力的基本概念之一。</p>
+<p>它们是以一种高效的方式处理读/写文件、网络通信、或任何类型的端到端的信息交换。</p>
+<p>流不是 Node.js 特有的概念。它们是几十年前在 Unix 操作系统中引入的，程序可以通过管道运算符（<code>|</code>）对流进行相互交互。</p>
+<p>例如，在传统的方式中，当告诉程序读取文件时，这将会将文件从头到尾读入内存，然后进行处理。</p>
+<p>使用流，则可以逐个片段的读取并处理（而无需全部保存在内存中）</p>
+<p>Node.js 的 <code>stream</code> 模块提供了构建所有流 API 的基础。所有的流都是 <code>EventEmitter</code> 的实例。</p>
+<h2 id="为什么是流"><a href="#为什么是流" class="headerlink" title="为什么是流"></a>为什么是流</h2><p>相对于使用其他的数据处理方法，流基本上提供了两个主要有点：</p>
+<ul>
+<li>  <code>内存效率</code> 无需加载大量的数据到内存中即可处理。</li>
+<li>  <code>时间效率</code> 当获得数据之后即可立即处理数据，这样所需的时间更少，而不必等到整个数据有效负载可用才开始</li>
+</ul>
+<h2 id="流的示例"><a href="#流的示例" class="headerlink" title="流的示例"></a>流的示例</h2><p>一个典型的例子是从磁盘读取文件。</p>
+<p>使用 Node.js 的 <code>fs</code> 模块，可以读取文件，并在与 HTTP 服务器建立新连接时通过 HTTP 提供文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    fs.readFile(__dirname + <span class="string">&#x27;/data.txt&#x27;</span>, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">        res.end(data)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><code>readFile()</code> 读取文件的全部内容，并在完成时调用回调函数。</p>
+<p>回调中的 <code>res.end(data)</code> 会返回文件的内容给 HTTP 客户端。</p>
+<p>如果文件很大，则该操作会花费较多的时间。以下是使用流编写的相同内容。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">const</span> stream = fs.createReadStream(__dirname + <span class="string">&#x27;/data.txt)</span></span><br><span class="line"><span class="string">	stream.pipe(res);</span></span><br><span class="line"><span class="string">&#125;)</span></span><br></pre></td></tr></table></figure>
+
+<p>当要发送的数据块已获得时就立即开始将其流式传输到 HTTP 客户端，而不是等待文件被完全读取。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/13/NodeJS-Node-js-Buffer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -188,7 +280,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-14 23:51:32" itemprop="dateModified" datetime="2022-04-14T23:51:32+08:00">2022-04-14</time>
+                <time title="修改时间：2022-04-17 23:57:05" itemprop="dateModified" datetime="2022-04-17T23:57:05+08:00">2022-04-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1920,117 +2012,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/09/NodeJS-%E6%8E%A2%E7%B4%A2-JavaScript-%E5%AE%9A%E6%97%B6%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/09/NodeJS-%E6%8E%A2%E7%B4%A2-JavaScript-%E5%AE%9A%E6%97%B6%E5%99%A8/" class="post-title-link" itemprop="url">NodeJS | 探索 JavaScript 定时器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-09 17:18:00" itemprop="dateCreated datePublished" datetime="2022-02-09T17:18:00+08:00">2022-02-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-05 13:18:38" itemprop="dateModified" datetime="2022-04-05T13:18:38+08:00">2022-04-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout()"></a><code>setTimeout()</code></h2><p>当编写 JavaScript 代码时，可能希望延迟函数的执行。</p>
-<p>这就是 setTimeout 的工作。指定一个回调函数供稍后执行，并指定延迟的时间：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 2 秒后执行</span></span><br><span class="line">&#125;, <span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 50 豪秒后执行</span></span><br><span class="line">&#125;, <span class="number">50</span>)</span><br></pre></td></tr></table></figure>
-
-<p>该语法定义了一个新函数。可在其中调用任何所需的其他函数，也可以传入现有的函数名称和一组函数：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myFunction = <span class="function">(<span class="params">firstParam, secondParam</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 做些事情</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 两秒后执行</span></span><br><span class="line"><span class="built_in">setTimeout</span>(myFunction, <span class="number">2000</span>, firstParam, secondParam)</span><br></pre></td></tr></table></figure>
-
-<p><code>setTimeout</code> 会返回定时器的 id。通常不使用它，但是可以保存此 id，并在要删除此安排的函数执行时清除它：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> id = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 两秒后执行</span></span><br><span class="line">&#125;, <span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改主意了</span></span><br><span class="line"><span class="built_in">clearTimeout</span>(id)</span><br></pre></td></tr></table></figure>
-
-<h3 id="零延迟"><a href="#零延迟" class="headerlink" title="零延迟"></a>零延迟</h3><p>如果将尝试延迟指定为 0，则回调函数会尽快执行，但是是在当前函数执行之后：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;后者&#x27;</span>)</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;前者&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>会打印 <code>前者\n后者</code> 。</p>
-<p>通过在调度程序中排队函数，可以避免在执行繁重的任务时阻塞 CPU，并在执行繁重的计算时执行其他函数。</p>
-<blockquote>
-<p>某些浏览器实现的（IE 和 Edge） <code>setImmediate()</code> 方法具有相同的确切功能，但是不是标准的，并且在其他浏览器上不可用。但是在 node.js 中它是标准的函数。</p>
-</blockquote>
-<h2 id="setInterval"><a href="#setInterval" class="headerlink" title="setInterval()"></a><code>setInterval()</code></h2><p><code>setInterval</code> 是一个类似 <code>setTimeout</code> 的函数，不同之处在于：它会在指定的待定时间一直运行回调函数，而不只是运行一次：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 每两秒运行一次</span></span><br><span class="line">&#125;, <span class="number">2000</span>)</span><br></pre></td></tr></table></figure>
-
-<p>上面的函数每隔 2 秒运行一次，除非是用 <code>clearInterval</code> 告诉它停止（传入 <code>setInterval</code> 返回的间隔定时器 id):</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> id = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;&#125;, <span class="number">2000</span>)</span><br><span class="line"><span class="built_in">clearInterval</span>(id)</span><br></pre></td></tr></table></figure>
-
-<p><strong>通常在 <code>setInterval</code> 回调函数中调用 <code>clearInterval</code>,以使其自行判断是否应该再次运行或停止。</strong>例如，此代码会运行某些事情，除非 <code>App.somethingIWait</code> 具有值 <code>arrived</code> ：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> interval = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (App.somethingIWait === <span class="string">&#x27;arrived&#x27;</span>) &#123;</span><br><span class="line">        <span class="built_in">clearInterval</span>(interval)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="递归的-setTimeout"><a href="#递归的-setTimeout" class="headerlink" title="递归的 setTimeout"></a>递归的 setTimeout</h2><p><code>setInterval</code> 每 n 毫秒启动一个函数，而无需考虑函数何时完成执行。</p>
-<p>如果一个函数总是花费相同的时间，就没有问题了。函数可能需要不同的执行时间，这具体取决于网络条件，也许一个较长时间的执行会与下一次执行重叠。</p>
-<p>为了避免这种情况，可以在回调函数完成时，安排要被调用的递归的 setTimeout：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myFunction = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">setTimeout</span>(myFunction, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(myFunction, <span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
-
-<p><code>setTimeout</code> 和 <code>setInterval</code> 可通过定时器模块在 Node.js 中使用。</p>
-<p>Node.js 还提供 <code>setImmediate()</code> ,通常用于与 Node.js 事件循环配合使用。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2100,7 +2081,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">118</span>
+          <span class="site-state-item-count">119</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
