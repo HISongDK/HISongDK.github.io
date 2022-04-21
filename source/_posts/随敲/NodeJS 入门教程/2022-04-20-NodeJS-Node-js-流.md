@@ -62,3 +62,24 @@ const server = http.createServer((req, res) =>{
 ```
 
 当要发送的数据块已获得时就立即开始将其流式传输到 HTTP 客户端，而不是等待文件被完全读取。
+
+## pipe()
+
+上面的示例使用了 `stream.pipe(res)` 这行代码：在文件流上调用 `pipe()` 方法。
+
+改行代码的作用是什么？它获取来源流，并通过管道将其传输到目标流。
+
+在来源流上调用它，在该示例中，文件通过管道传输到 HTTP 响应。
+
+`pipe()` 方法的返回值是目标流，这是非常方便的事情，它使得 `pipe()` 可以链式调用，如下所示：
+
+```js
+src.pipe(dest1).pipe(dest2)
+```
+
+此构造相对于:
+
+```js
+src.pipe(dest1)
+dest1.pipe(dest2)
+```
