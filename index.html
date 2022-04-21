@@ -180,10 +180,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-20 23:03:12 / 修改时间：23:36:03" itemprop="dateCreated datePublished" datetime="2022-04-20T23:03:12+08:00">2022-04-20</time>
+              <time title="创建时间：2022-04-20 23:03:12" itemprop="dateCreated datePublished" datetime="2022-04-20T23:03:12+08:00">2022-04-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-21 23:10:41" itemprop="dateModified" datetime="2022-04-21T23:10:41+08:00">2022-04-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -230,6 +236,14 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">const</span> stream = fs.createReadStream(__dirname + <span class="string">&#x27;/data.txt)</span></span><br><span class="line"><span class="string">	stream.pipe(res);</span></span><br><span class="line"><span class="string">&#125;)</span></span><br></pre></td></tr></table></figure>
 
 <p>当要发送的数据块已获得时就立即开始将其流式传输到 HTTP 客户端，而不是等待文件被完全读取。</p>
+<h2 id="pipe"><a href="#pipe" class="headerlink" title="pipe()"></a>pipe()</h2><p>上面的示例使用了 <code>stream.pipe(res)</code> 这行代码：在文件流上调用 <code>pipe()</code> 方法。</p>
+<p>改行代码的作用是什么？它获取来源流，并通过管道将其传输到目标流。</p>
+<p>在来源流上调用它，在该示例中，文件通过管道传输到 HTTP 响应。</p>
+<p><code>pipe()</code> 方法的返回值是目标流，这是非常方便的事情，它使得 <code>pipe()</code> 可以链式调用，如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src.pipe(dest1).pipe(dest2)</span><br></pre></td></tr></table></figure>
+
+<p>此构造相对于:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">src.pipe(dest1)</span><br><span class="line">dest1.pipe(dest2)</span><br></pre></td></tr></table></figure>
 
       
     </div>
