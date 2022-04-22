@@ -83,3 +83,13 @@ src.pipe(dest1).pipe(dest2)
 src.pipe(dest1)
 dest1.pipe(dest2)
 ```
+
+## 流驱动的 Node.js API
+
+由于他们的优点，许多 Node.js 核心模块提供了原生的流处理功能，最值得注意的有：
+
+-   `process.stdin` 返回连接到 stdin 的流
+-   `process.stdout` 返回连接到 stdout 的流
+-   `process.stderr` 返回连接到 stderr 的流
+-   `fs.createReadStream()` 创建文件的可读流
+-   `fs.createWriteStream()` 创建文件的可写流
