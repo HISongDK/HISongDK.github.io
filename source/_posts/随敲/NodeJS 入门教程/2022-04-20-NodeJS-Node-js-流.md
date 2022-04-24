@@ -93,3 +93,18 @@ dest1.pipe(dest2)
 -   `process.stderr` 返回连接到 stderr 的流
 -   `fs.createReadStream()` 创建文件的可读流
 -   `fs.createWriteStream()` 创建文件的可写流
+-   `net.connect()` 启动基于流的链接
+-   `http.request()` 返回 http.ClientRequest 类的实例，该实例是可读流
+-   `zlib.createGzip()` 使用 gzip 压缩算法将数据压缩到流中。
+-   `zlib.createGunzip()` 解压缩 gzip 流
+-   `zlib.createDeflate()` 使用 deflate 压缩算法将数据压缩到流中
+-   `zlib.createInflate()` 解压缩 deflate 流
+
+## 不同类型的流
+
+流分为四类：
+
+-   `Readable` 可以通过管道读取、但不能通过管道写入的流（可以接受数据，但不能想起发送数据）。当推送数据到可读流中，会对其进行缓冲，知道使用者开始读取数据为止
+-   `Writable` 可以通过管道写入、但不能通过管道读取的流（可以发送数据，但不能从中接收数据）
+-   `Duplex` 可以通过管道读取和写入流，基本上相当于可读可写流的组合
+-   `Transform` 类似于双工流、但其输出是输入的转换的转换流
