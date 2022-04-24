@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-22 23:51:59" itemprop="dateModified" datetime="2022-04-22T23:51:59+08:00">2022-04-22</time>
+                <time title="修改时间：2022-04-24 23:06:50" itemprop="dateModified" datetime="2022-04-24T23:06:50+08:00">2022-04-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -252,6 +252,19 @@
 <li>  <code>process.stderr</code> 返回连接到 stderr 的流</li>
 <li>  <code>fs.createReadStream()</code> 创建文件的可读流</li>
 <li>  <code>fs.createWriteStream()</code> 创建文件的可写流</li>
+<li>  <code>net.connect()</code> 启动基于流的链接</li>
+<li>  <code>http.request()</code> 返回 http.ClientRequest 类的实例，该实例是可读流</li>
+<li>  <code>zlib.createGzip()</code> 使用 gzip 压缩算法将数据压缩到流中。</li>
+<li>  <code>zlib.createGunzip()</code> 解压缩 gzip 流</li>
+<li>  <code>zlib.createDeflate()</code> 使用 deflate 压缩算法将数据压缩到流中</li>
+<li>  <code>zlib.createInflate()</code> 解压缩 deflate 流</li>
+</ul>
+<h2 id="不同类型的流"><a href="#不同类型的流" class="headerlink" title="不同类型的流"></a>不同类型的流</h2><p>流分为四类：</p>
+<ul>
+<li>  <code>Readable</code> 可以通过管道读取、但不能通过管道写入的流（可以接受数据，但不能想起发送数据）。当推送数据到可读流中，会对其进行缓冲，知道使用者开始读取数据为止</li>
+<li>  <code>Writable</code> 可以通过管道写入、但不能通过管道读取的流（可以发送数据，但不能从中接收数据）</li>
+<li>  <code>Duplex</code> 可以通过管道读取和写入流，基本上相当于可读可写流的组合</li>
+<li>  <code>Transform</code> 类似于双工流、但其输出是输入的转换的转换流</li>
 </ul>
 
       
