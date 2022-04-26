@@ -108,3 +108,35 @@ dest1.pipe(dest2)
 -   `Writable` 可以通过管道写入、但不能通过管道读取的流（可以发送数据，但不能从中接收数据）
 -   `Duplex` 可以通过管道读取和写入流，基本上相当于可读可写流的组合
 -   `Transform` 类似于双工流、但其输出是输入的转换的转换流
+
+## 如何创建可读流
+
+从 `stream` 模块获取可读流，对其进行初始化并实现 `readable._read()` 方法。
+
+首先创建流对象：
+
+```js
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+```
+
+然后实现 `_read` :
+
+```js
+readableStream._read = () => {}
+```
+
+也可以使用 `read` 选项实现 `_read` :
+
+```js
+const readableStream = new Stream.Readable({
+    read() {},
+})
+```
+
+现在，流已经初始化，可以向其发送数据了：
+
+```js
+readableStream.push('hi!')
+readableStream.push('ho!')
+```
