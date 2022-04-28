@@ -140,3 +140,29 @@ const readableStream = new Stream.Readable({
 readableStream.push('hi!')
 readableStream.push('ho!')
 ```
+
+## 如何创建可写流
+
+若要创建可写流，需要其继承基本的 `Writable` 对象，并实现其 `_write()` 方法。
+
+首先创建流对象：
+
+```js
+const Stream = require('stream')
+const writableStream = new Stream.Writable()
+```
+
+然后实现 `_write` :
+
+```js
+writableStream._write = (chunk, encoding, next) => {
+    console.log(chunk.toString())
+    next()
+}
+```
+
+现在，可以通过以下方式传输可读流：
+
+```js
+process.stdin.pipe(writableStream)
+```
