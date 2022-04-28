@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-26 22:59:48" itemprop="dateModified" datetime="2022-04-26T22:59:48+08:00">2022-04-26</time>
+                <time title="修改时间：2022-04-28 23:55:45" itemprop="dateModified" datetime="2022-04-28T23:55:45+08:00">2022-04-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,6 +278,16 @@
 
 <p>现在，流已经初始化，可以向其发送数据了：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">readableStream.push(<span class="string">&#x27;hi!&#x27;</span>)</span><br><span class="line">readableStream.push(<span class="string">&#x27;ho!&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何创建可写流"><a href="#如何创建可写流" class="headerlink" title="如何创建可写流"></a>如何创建可写流</h2><p>若要创建可写流，需要其继承基本的 <code>Writable</code> 对象，并实现其 <code>_write()</code> 方法。</p>
+<p>首先创建流对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Stream = <span class="built_in">require</span>(<span class="string">&#x27;stream&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> writableStream = <span class="keyword">new</span> Stream.Writable()</span><br></pre></td></tr></table></figure>
+
+<p>然后实现 <code>_write</code> :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">writableStream._write = <span class="function">(<span class="params">chunk, encoding, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(chunk.toString())</span><br><span class="line">    next()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，可以通过以下方式传输可读流：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.stdin.pipe(writableStream)</span><br></pre></td></tr></table></figure>
 
       
     </div>

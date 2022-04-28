@@ -28,7 +28,7 @@
 <meta property="og:description" content="什么是流流是为 Node.js 应用程序提供动力的基本概念之一。 它们是以一种高效的方式处理读&#x2F;写文件、网络通信、或任何类型的端到端的信息交换。 流不是 Node.js 特有的概念。它们是几十年前在 Unix 操作系统中引入的，程序可以通过管道运算符（|）对流进行相互交互。 例如，在传统的方式中，当告诉程序读取文件时，这将会将文件从头到尾读入内存，然后进行处理。 使用流，则可以逐个片段的读取并处理">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-04-20T15:03:12.000Z">
-<meta property="article:modified_time" content="2022-04-26T14:59:48.271Z">
+<meta property="article:modified_time" content="2022-04-28T15:55:45.629Z">
 <meta property="article:author" content="Somebody">
 <meta property="article:tag" content="NodeJS">
 <meta name="twitter:card" content="summary">
@@ -191,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-26 22:59:48" itemprop="dateModified" datetime="2022-04-26T22:59:48+08:00">2022-04-26</time>
+                <time title="修改时间：2022-04-28 23:55:45" itemprop="dateModified" datetime="2022-04-28T23:55:45+08:00">2022-04-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,6 +282,16 @@
 <p>现在，流已经初始化，可以向其发送数据了：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">readableStream.push(<span class="string">&#x27;hi!&#x27;</span>)</span><br><span class="line">readableStream.push(<span class="string">&#x27;ho!&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
+<h2 id="如何创建可写流"><a href="#如何创建可写流" class="headerlink" title="如何创建可写流"></a>如何创建可写流</h2><p>若要创建可写流，需要其继承基本的 <code>Writable</code> 对象，并实现其 <code>_write()</code> 方法。</p>
+<p>首先创建流对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Stream = <span class="built_in">require</span>(<span class="string">&#x27;stream&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> writableStream = <span class="keyword">new</span> Stream.Writable()</span><br></pre></td></tr></table></figure>
+
+<p>然后实现 <code>_write</code> :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">writableStream._write = <span class="function">(<span class="params">chunk, encoding, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(chunk.toString())</span><br><span class="line">    next()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，可以通过以下方式传输可读流：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.stdin.pipe(writableStream)</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -361,7 +371,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%B5%81"><span class="nav-number">1.</span> <span class="nav-text">什么是流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E6%B5%81"><span class="nav-number">2.</span> <span class="nav-text">为什么是流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%9A%84%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">流的示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pipe"><span class="nav-number">4.</span> <span class="nav-text">pipe()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E9%A9%B1%E5%8A%A8%E7%9A%84-Node-js-API"><span class="nav-number">5.</span> <span class="nav-text">流驱动的 Node.js API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%B5%81"><span class="nav-number">6.</span> <span class="nav-text">不同类型的流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E5%8F%AF%E8%AF%BB%E6%B5%81"><span class="nav-number">7.</span> <span class="nav-text">如何创建可读流</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%B5%81"><span class="nav-number">1.</span> <span class="nav-text">什么是流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E6%B5%81"><span class="nav-number">2.</span> <span class="nav-text">为什么是流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%9A%84%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">流的示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pipe"><span class="nav-number">4.</span> <span class="nav-text">pipe()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E9%A9%B1%E5%8A%A8%E7%9A%84-Node-js-API"><span class="nav-number">5.</span> <span class="nav-text">流驱动的 Node.js API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%B5%81"><span class="nav-number">6.</span> <span class="nav-text">不同类型的流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E5%8F%AF%E8%AF%BB%E6%B5%81"><span class="nav-number">7.</span> <span class="nav-text">如何创建可读流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E5%8F%AF%E5%86%99%E6%B5%81"><span class="nav-number">8.</span> <span class="nav-text">如何创建可写流</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
