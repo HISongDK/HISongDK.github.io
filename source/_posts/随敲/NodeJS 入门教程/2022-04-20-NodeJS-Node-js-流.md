@@ -166,3 +166,64 @@ writableStream._write = (chunk, encoding, next) => {
 ```js
 process.stdin.pipe(writableStream)
 ```
+
+## 如何从可读流中获取数据
+
+如何从可读流中获取数据？使用可写流：
+
+```js
+const Stream = require('stream')
+const readableStream = new Stream.Readable({
+    read() {},
+})
+
+const writableStream = new Stream.Writable()
+writableStream._write = (chunk, encoding, next) => {
+    console.log(chunk.toString())
+    next()
+}
+
+readableStream.pipe(writableStream)
+
+readableStream.push('hi!')
+readableStream.push('ho!')
+```
+
+也可以使用 `readable` 事件直接地消费可读流：
+
+```js
+readableStream.on('readable', () => {
+    console.log(readableStream.read())
+})
+```
+
+## 如何发送数据到可写流
+
+使用流的 `write()` 方法：
+
+```js
+writableStream.write('hey!\n')
+```
+
+## 使用信号通知已结束写入的可写流
+
+使用 `end()` 方法：
+
+```js
+const Stream = require('stream')
+
+const readableStream = new Stream.Readable({ read() {} })
+
+const writableStream = new Stream.Writable()
+writableStream._write = (chunk, encoding, next) => {
+    console.log(chunk.toString())
+    next()
+}
+
+readableStream.pipe(writableStream)
+
+readableStream.push('hi!')
+readableStream.push('ho!')
+
+readableStream.end()
+```
