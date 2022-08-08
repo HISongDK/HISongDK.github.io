@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="代码分割 打包 代码分割 import() React.lazy 避免兜底   异常捕获边界（Error boundaries） 基于路由的代码分割 命名导出">
+  <meta name="description" content="代码分割   打包 代码分割   import()   React.lazy   避免兜底     异常捕获边界（Error boundaries）   基于路由的代码分割   命名导出">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React 文档">
 <meta property="og:url" content="http://example.com/2022/08/07/React-%E6%96%87%E6%A1%A3/index.html">
 <meta property="og:site_name" content="某人写字的地方">
-<meta property="og:description" content="代码分割 打包 代码分割 import() React.lazy 避免兜底   异常捕获边界（Error boundaries） 基于路由的代码分割 命名导出">
+<meta property="og:description" content="代码分割   打包 代码分割   import()   React.lazy   避免兜底     异常捕获边界（Error boundaries）   基于路由的代码分割   命名导出">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-06T16:06:08.000Z">
-<meta property="article:modified_time" content="2022-08-07T06:26:45.771Z">
+<meta property="article:modified_time" content="2022-08-08T01:35:01.524Z">
 <meta property="article:author" content="Somebody">
 <meta property="article:tag" content="React">
 <meta name="twitter:card" content="summary">
@@ -183,10 +183,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-08-07 00:06:08 / 修改时间：14:26:45" itemprop="dateCreated datePublished" datetime="2022-08-07T00:06:08+08:00">2022-08-07</time>
+              <time title="创建时间：2022-08-07 00:06:08" itemprop="dateCreated datePublished" datetime="2022-08-07T00:06:08+08:00">2022-08-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-08 09:35:01" itemprop="dateModified" datetime="2022-08-08T09:35:01+08:00">2022-08-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -214,16 +220,16 @@
       
         <ul>
 <li><a href="#%E4%BB%A3%E7%A0%81%E5%88%86%E5%89%B2">代码分割</a><ul>
-<li><a href="#%E6%89%93%E5%8C%85">打包</a></li>
+<li>  <a href="#%E6%89%93%E5%8C%85">打包</a></li>
 <li><a href="#%E4%BB%A3%E7%A0%81%E5%88%86%E5%89%B2-1">代码分割</a><ul>
-<li><a href="#import">import()</a></li>
-<li><a href="#reactlazy">React.lazy</a></li>
-<li><a href="#%E9%81%BF%E5%85%8D%E5%85%9C%E5%BA%95">避免兜底</a></li>
+<li>  <a href="#import">import()</a></li>
+<li>  <a href="#reactlazy">React.lazy</a></li>
+<li>  <a href="#%E9%81%BF%E5%85%8D%E5%85%9C%E5%BA%95">避免兜底</a></li>
 </ul>
 </li>
-<li><a href="#%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7%E8%BE%B9%E7%95%8Cerror-boundaries">异常捕获边界（Error boundaries）</a></li>
-<li><a href="#%E5%9F%BA%E4%BA%8E%E8%B7%AF%E7%94%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E5%88%86%E5%89%B2">基于路由的代码分割</a></li>
-<li><a href="#%E5%91%BD%E5%90%8D%E5%AF%BC%E5%87%BA">命名导出</a></li>
+<li>  <a href="#%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7%E8%BE%B9%E7%95%8Cerror-boundaries">异常捕获边界（Error boundaries）</a></li>
+<li>  <a href="#%E5%9F%BA%E4%BA%8E%E8%B7%AF%E7%94%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E5%88%86%E5%89%B2">基于路由的代码分割</a></li>
+<li>  <a href="#%E5%91%BD%E5%90%8D%E5%AF%BC%E5%87%BA">命名导出</a></li>
 </ul>
 </li>
 </ul>
@@ -294,6 +300,13 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MyComponent.js</span></span><br><span class="line"><span class="keyword">export</span> &#123; MyComponent <span class="keyword">as</span> <span class="keyword">default</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./ManyComponents&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MyApp.js</span></span><br><span class="line"><span class="keyword">import</span> React, &#123; lazy &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">const</span> MyComponent = lazy(<span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;./MyComponent&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><blockquote>
+<p>Context 提供了无需为每层组件手动添加 props,就能在组件树间进行数据传递的方法。</p>
+</blockquote>
+<p>在一个典型的 React 应用中，数据是通过 props 属性自上而下（由父及子）进行传递的，但此种方法对于某些类型的属性是极其繁琐的（例如：地区偏好，UI 主题），这些属性是应用程序中许多组件都需要的。Context 提供了一个在组件中共享此类值的方式，而不必显示地通过组件树的逐层传递 props。</p>
+<h3 id="何时使用-Context"><a href="#何时使用-Context" class="headerlink" title="何时使用 Context"></a>何时使用 Context</h3><p>Context 的设计目的是为了共享那些对于一个组件树而言是“全局”的数据，例如当前认证的用户、主题或首选语言。举个例子，在下面的代码中我们通过一个 “theme” 属性手动调整一个按钮组件的样式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -374,7 +387,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E5%89%B2"><span class="nav-number">1.</span> <span class="nav-text">代码分割</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%8C%85"><span class="nav-number">1.1.</span> <span class="nav-text">打包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E5%89%B2-1"><span class="nav-number">1.2.</span> <span class="nav-text">代码分割</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#import"><span class="nav-number">1.2.1.</span> <span class="nav-text">import()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#React-lazy"><span class="nav-number">1.2.2.</span> <span class="nav-text">React.lazy</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%85%9C%E5%BA%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">避免兜底</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7%E8%BE%B9%E7%95%8C%EF%BC%88Error-boundaries%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">异常捕获边界（Error boundaries）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B7%AF%E7%94%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E5%88%86%E5%89%B2"><span class="nav-number">1.4.</span> <span class="nav-text">基于路由的代码分割</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E5%AF%BC%E5%87%BA"><span class="nav-number">1.5.</span> <span class="nav-text">命名导出</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E5%89%B2"><span class="nav-number">1.</span> <span class="nav-text">代码分割</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%8C%85"><span class="nav-number">1.1.</span> <span class="nav-text">打包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E5%89%B2-1"><span class="nav-number">1.2.</span> <span class="nav-text">代码分割</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#import"><span class="nav-number">1.2.1.</span> <span class="nav-text">import()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#React-lazy"><span class="nav-number">1.2.2.</span> <span class="nav-text">React.lazy</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%85%9C%E5%BA%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">避免兜底</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7%E8%BE%B9%E7%95%8C%EF%BC%88Error-boundaries%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">异常捕获边界（Error boundaries）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B7%AF%E7%94%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E5%88%86%E5%89%B2"><span class="nav-number">1.4.</span> <span class="nav-text">基于路由的代码分割</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E5%AF%BC%E5%87%BA"><span class="nav-number">1.5.</span> <span class="nav-text">命名导出</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context"><span class="nav-number"></span> <span class="nav-text">Context</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%95%E6%97%B6%E4%BD%BF%E7%94%A8-Context"><span class="nav-number">1.</span> <span class="nav-text">何时使用 Context</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
