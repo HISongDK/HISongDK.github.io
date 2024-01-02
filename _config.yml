@@ -4,12 +4,12 @@
 
 # Site
 title: 某人写字的地方
-subtitle: ''
-description: 'My vegetable has exploded!'
+subtitle: ""
+description: "My vegetable has exploded!"
 keywords:
 author: Somebody
 language: zh-CN
-timezone: 'Asia/Shanghai'
+timezone: "Asia/Shanghai"
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
@@ -18,8 +18,8 @@ root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
-    trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
-    trailing_html: true # Set to false to remove trailing '.html' from permalinks
+  trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
+  trailing_html: true # Set to false to remove trailing '.html' from permalinks
 
 # Directory
 source_dir: source
@@ -33,42 +33,42 @@ i18n_dir: :lang
 
 # Writing
 # 通过修改新文件名称配置指定目录路径
-# new_post_name: :year-:month-:day-:title.md # File name of new posts
+new_post_name: :year-:month-:day-:title.md # File name of new posts
 # new_post_name: 随敲/:year-:month-:day-:title.md
 # new_post_name: 随敲/JavaScript面向对象编程指南/:year-:month-:day-:title.md # File name of new posts
-new_post_name: 随敲/React 文档/:year-:month-:day-:title.md # File name of new posts
+# new_post_name: 随敲/React 文档/:year-:month-:day-:title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link:
-    enable: true # Open external links in new tab
-    field: site # Apply to the whole site
-    exclude: ''
+  enable: true # Open external links in new tab
+  field: site # Apply to the whole site
+  exclude: ""
 filename_case: 0
 render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-    enable: true
-    line_number: true
-    auto_detect: false
-    tab_replace: ''
-    wrap: true
-    hljs: false
+  enable: true
+  line_number: true
+  auto_detect: false
+  tab_replace: ""
+  wrap: true
+  hljs: false
 prismjs:
-    enable: false
-    preprocess: true
-    line_number: true
-    tab_replace: ''
+  enable: false
+  preprocess: true
+  line_number: true
+  tab_replace: ""
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
 # per_page: Posts displayed per page. (0 = disable pagination)
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
-    path: ''
-    per_page: 20
-    order_by: -date
+  path: ""
+  per_page: 20
+  order_by: -date
 
 # Category & Tag
 default_category: uncategorized
@@ -86,7 +86,7 @@ meta_generator: true
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
 ## updated_option supports 'mtime', 'date', 'empty'
-updated_option: 'mtime'
+updated_option: "mtime"
 
 # Pagination
 ## Set per_page to 0 to disable pagination
@@ -107,22 +107,22 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-    type: git
-    repo: git@github.com:SongDeKang/SongDekang.github.io.git #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
-    branch: gh-pages
+  type: git
+  repo: git@github.com:SongDeKang/SongDekang.github.io.git #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
+  branch: gh-pages
 
 # markdown 支持脚注插件
 plugins:
-    - hexo-footnotes
+  - hexo-footnotes
 
 # 文章篇数
 # index_generator:
 # per_page: 5
 
 archive_generator:
-    per_page: 150
-    # yearly: true
-    monthly: true
+  per_page: 150
+  # yearly: true
+  monthly: true
 
 tag_generator:
-    per_page: 30
+  per_page: 30
