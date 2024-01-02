@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="编程语言中的异步性计算机在设计上是异步的。 异步意味着事情可以独立于主程序流发生。 在当前的用户计算机中，每个程序都运行于特定的时间段，然后停止执行，以让另一个程序继续执行。这件事运行得如此之快，以至于无法察觉。我们以为计算机可以同时运行许多程序，但这是一种错觉。（在多处理器计算机上除外） 程序在内部会使用中断，一种被发送到处理器以获取系统关注的信号。 这里不会深入探讨这个问题，只要记住，程序是异">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NodeJS | JavaScript 异步编程与回调">
+<meta property="og:url" content="http://example.com/2022/02/12/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-12-NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/index.html">
+<meta property="og:site_name" content="某人写字的地方">
+<meta property="og:description" content="编程语言中的异步性计算机在设计上是异步的。 异步意味着事情可以独立于主程序流发生。 在当前的用户计算机中，每个程序都运行于特定的时间段，然后停止执行，以让另一个程序继续执行。这件事运行得如此之快，以至于无法察觉。我们以为计算机可以同时运行许多程序，但这是一种错觉。（在多处理器计算机上除外） 程序在内部会使用中断，一种被发送到处理器以获取系统关注的信号。 这里不会深入探讨这个问题，只要记住，程序是异">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-12T15:43:46.000Z">
+<meta property="article:modified_time" content="2024-01-02T11:55:45.949Z">
+<meta property="article:author" content="Somebody">
+<meta property="article:tag" content="NodeJS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/02/12/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-12-NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NodeJS | JavaScript 异步编程与回调 | 某人写字的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">某人写字的地方</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-sitemap fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/12/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-12-NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NodeJS | JavaScript 异步编程与回调
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-12 23:43:46" itemprop="dateCreated datePublished" datetime="2022-02-12T23:43:46+08:00">2022-02-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="编程语言中的异步性"><a href="#编程语言中的异步性" class="headerlink" title="编程语言中的异步性"></a>编程语言中的异步性</h2><p>计算机在设计上是异步的。</p>
+<p>异步意味着事情可以独立于主程序流发生。</p>
+<p>在当前的用户计算机中，每个程序都运行于特定的时间段，然后停止执行，以让另一个程序继续执行。这件事运行得如此之快，以至于无法察觉。我们以为计算机可以同时运行许多程序，但这是一种错觉。（在多处理器计算机上除外）</p>
+<p>程序在内部会使用中断，一种被发送到处理器以获取系统关注的信号。</p>
+<p>这里不会深入探讨这个问题，只要记住，<strong>程序是异步的且会暂停执行知道需要关注</strong>，这使得计算机可以同时执行其他操作。当程序正在等待来自网络的响应时，则它无法在请求完成之前停止处理器。</p>
+<p>通常，编程语言是同步的，有些会在语言或库中提供管理异步性的方法。默认情况下，C、Java、C#、PHP、Go、Ruby、Swift 和 Python 都是同步的。其中一些语言通过使用线程来处理异步操作（衍生新的线程）。</p>
+<span id="more"></span>
+
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>JavaScript 默认情况下是同步的，并且是单线程。<strong>这意味着代码无法创建新的线程并且不能并行执行。</strong></p>
+<p>代码行是依次执行的，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="number">2</span></span><br><span class="line"><span class="keyword">const</span> c = a * b</span><br><span class="line"><span class="built_in">console</span>.log(c)</span><br><span class="line">doSomething()</span><br></pre></td></tr></table></figure>
+
+<p>但是 JavaScript 诞生于浏览器内部，一开始的主要工作是响应用户的操作，例如 <code>onClick</code> 、<code>onMouseOver</code> 、<code>onChange</code> 、<code>onSubmit</code> 等。使用同步的编程模型该如何做到这一点？</p>
+<p>答案就在于它的环境。浏览器通过提供一组可以处理这种功能的 API 来提供了一种实现方式。<!-- 没太懂啊 --></p>
+<p>更近点，Node.js 引入了非阻塞的 I/O 环境，以将该概念扩展到文件访问、网络调用等。</p>
+<h2 id="回调"><a href="#回调" class="headerlink" title="回调"></a>回调</h2><p>你不知道用户何时点击按钮。因此，为点击事件定义了一个事件处理程序。该事件处理程序会接受一个函数，该函数会在该事件触发时被调用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&#x27;button&#x27;</span>).addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 被点击</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这就是所谓的回调。</p>
+<p>回调是一个简单的函数，会作为值传给另一个函数，并且仅在事件发生时才执行。之所以这样做，是因为 JavaScript 具有顶级的函数，这些函数可以被分配给变量并传给其他函数（称为高阶函数）。</p>
+<p>通常会将所有的客户端代码封装在 <code>window</code> 对象的 <code>load</code> 事件监听器中,其仅在页面准备就绪时才会运行回调函数:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&#x27;load&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// window 已被加载</span></span><br><span class="line">  <span class="comment">// 做需要做的</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>回调无处不在，不仅在 DOM 事件中。</p>
+<p>一个常见的示例是使用定时器：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 2 秒之后运行</span></span><br><span class="line">&#125;, <span class="number">2000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>XHR 请求也接受回调，在此示例中，会将一个函数分配给一个属性，该属性会在发生特定事件时被调用，在该示例中是请求状态的改变：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">xhr.onreadystatechange = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (xhr.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">    xhr.status === <span class="number">200</span> ? <span class="built_in">console</span>.log(xhr.responseText) : <span class="built_in">console</span>.error(<span class="string">&#x27;出错&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">xhr.open(<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;http://nodejs.cn&#x27;</span>)</span><br><span class="line">xhr.send()</span><br></pre></td></tr></table></figure>
+
+<h2 id="处理回调中的错误"><a href="#处理回调中的错误" class="headerlink" title="处理回调中的错误"></a>处理回调中的错误</h2><p>如何处理回调中的错误？一种非常常见的方式是使用 Node.js 所采用的方式：<strong>任何回调函数的第一个参数为错误对象（即错误优先的回调）</strong></p>
+<p>如果没有错误，则该对象为 <code>null</code> 。如果有错误，则它会包含对该错误的描述以及其他信息。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(<span class="string">&#x27;/文件/.json&#x27;</span>, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (err !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 处理错误</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 没有错误，则处理数据</span></span><br><span class="line">  <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="回调的问题"><a href="#回调的问题" class="headerlink" title="回调的问题"></a>回调的问题</h2><p>回调适用于简单的场景！</p>
+<p>但是，每隔回调都可以添加嵌套的层级，并且当有很多回调时，代码就会很快变得非常复杂：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&#x27;load&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;button&#x27;</span>).addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      items.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 你的代码在这里</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;，<span class="number">2000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这是一个简单的 4 个层级的代码，但还有更多层级的嵌套，这很不好。</p>
+<p>该如何解决？</p>
+<h2 id="回调的替代方法"><a href="#回调的替代方法" class="headerlink" title="回调的替代方法"></a>回调的替代方法</h2><p>从 ES6 开始，JavaScript 引入了一些特性，可以帮助处理异步代码而不涉及使用回调：Promise（ES6）和 Async/Await（ES2017）。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NodeJS/" rel="tag"># NodeJS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/09/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-09-NodeJS-%E6%8E%A2%E7%B4%A2-JavaScript-%E5%AE%9A%E6%97%B6%E5%99%A8/" rel="prev" title="NodeJS | 探索 JavaScript 定时器">
+      <i class="fa fa-chevron-left"></i> NodeJS | 探索 JavaScript 定时器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/21/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-21-NodeJS-%E4%BA%86%E8%A7%A3-JavaScript-Promise/" rel="next" title="NodeJS | 了解 JavaScript Promise">
+      NodeJS | 了解 JavaScript Promise <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%BC%82%E6%AD%A5%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">编程语言中的异步性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript"><span class="nav-number">2.</span> <span class="nav-text">JavaScript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83"><span class="nav-number">3.</span> <span class="nav-text">回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%9B%9E%E8%B0%83%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF"><span class="nav-number">4.</span> <span class="nav-text">处理回调中的错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">回调的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83%E7%9A%84%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">回调的替代方法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Somebody</p>
+  <div class="site-description" itemprop="description">My vegetable has exploded!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Somebody</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

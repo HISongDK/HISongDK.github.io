@@ -157,7 +157,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/08/NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/09/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-03-09-NodeJS-%E6%90%AD%E5%BB%BA-HTTP-%E6%9C%8D%E5%8A%A1%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -171,7 +171,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/08/NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%99%A8/" class="post-title-link" itemprop="url">NodeJS | Node.js 事件触发器</a>
+            <a href="/2022/03/09/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-03-09-NodeJS-%E6%90%AD%E5%BB%BA-HTTP-%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="post-title-link" itemprop="url">NodeJS | 搭建 HTTP 服务器</a>
         </h2>
 
         <div class="post-meta">
@@ -180,10 +180,102 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-08 00:00:00 / 修改时间：18:00:37" itemprop="dateCreated datePublished" datetime="2022-03-08T00:00:00+08:00">2022-03-08</time>
+              <time title="创建时间：2022-03-09 20:26:20" itemprop="dateCreated datePublished" datetime="2022-03-09T20:26:20+08:00">2022-03-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这是一个简单的 HTTP web 服务器示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> port = <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.statusCode = <span class="number">200</span></span><br><span class="line">    res.setHeader(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;text/plain&#x27;</span>)</span><br><span class="line">    res.end(<span class="string">&#x27;你好世界\n&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`服务器运行在 http://<span class="subst">$&#123;hostname&#125;</span>:<span class="subst">$&#123;port&#125;</span>`</span>)</span><br><span class="line">    <span class="comment">// 欸！才知道还有 hostname 这个全局变量么这是</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/09/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-03-09-NodeJS-%E6%90%AD%E5%BB%BA-HTTP-%E6%9C%8D%E5%8A%A1%E5%99%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/08/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-03-08-NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/08/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-03-08-NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%99%A8/" class="post-title-link" itemprop="url">NodeJS | Node.js 事件触发器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-08 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-08T00:00:00+08:00">2022-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -259,7 +351,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/03/NodeJS-%E5%85%B7%E6%9C%89-Async-%E5%92%8C-Await-%E7%9A%84%E7%8E%B0%E4%BB%A3%E5%BC%82%E6%AD%A5-JavaScript/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/03/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-03-03-NodeJS-%E5%85%B7%E6%9C%89-Async-%E5%92%8C-Await-%E7%9A%84%E7%8E%B0%E4%BB%A3%E5%BC%82%E6%AD%A5-JavaScript/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -273,7 +365,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/03/NodeJS-%E5%85%B7%E6%9C%89-Async-%E5%92%8C-Await-%E7%9A%84%E7%8E%B0%E4%BB%A3%E5%BC%82%E6%AD%A5-JavaScript/" class="post-title-link" itemprop="url">NodeJS | 具有 Async 和 Await 的现代异步 JavaScript</a>
+            <a href="/2022/03/03/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-03-03-NodeJS-%E5%85%B7%E6%9C%89-Async-%E5%92%8C-Await-%E7%9A%84%E7%8E%B0%E4%BB%A3%E5%BC%82%E6%AD%A5-JavaScript/" class="post-title-link" itemprop="url">NodeJS | 具有 Async 和 Await 的现代异步 JavaScript</a>
         </h2>
 
         <div class="post-meta">
@@ -290,7 +382,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-06 22:05:12" itemprop="dateModified" datetime="2022-03-06T22:05:12+08:00">2022-03-06</time>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -320,7 +412,7 @@
           <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>JavaScript 在很短的时间内从回调发展到了 promise（ES2015）,且自 ES2017 以来，异步的 JavaScript 使用 async/await 语法甚至更加简单</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/03/NodeJS-%E5%85%B7%E6%9C%89-Async-%E5%92%8C-Await-%E7%9A%84%E7%8E%B0%E4%BB%A3%E5%BC%82%E6%AD%A5-JavaScript/#more" rel="contents">
+              <a class="btn" href="/2022/03/03/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-03-03-NodeJS-%E5%85%B7%E6%9C%89-Async-%E5%92%8C-Await-%E7%9A%84%E7%8E%B0%E4%BB%A3%E5%BC%82%E6%AD%A5-JavaScript/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -344,7 +436,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/21/NodeJS-%E4%BA%86%E8%A7%A3-JavaScript-Promise/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/21/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-21-NodeJS-%E4%BA%86%E8%A7%A3-JavaScript-Promise/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -358,7 +450,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/21/NodeJS-%E4%BA%86%E8%A7%A3-JavaScript-Promise/" class="post-title-link" itemprop="url">NodeJS | 了解 JavaScript Promise</a>
+            <a href="/2022/02/21/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-21-NodeJS-%E4%BA%86%E8%A7%A3-JavaScript-Promise/" class="post-title-link" itemprop="url">NodeJS | 了解 JavaScript Promise</a>
         </h2>
 
         <div class="post-meta">
@@ -375,7 +467,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-03 23:38:13" itemprop="dateModified" datetime="2022-03-03T23:38:13+08:00">2022-03-03</time>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -408,7 +500,7 @@
 <p><strong>异步函数</strong>在底层使用了 promise，因此了解 promise 的工作方式是了解 <code>async</code> 和 <code>await</code> 的基础。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/02/21/NodeJS-%E4%BA%86%E8%A7%A3-JavaScript-Promise/#more" rel="contents">
+              <a class="btn" href="/2022/02/21/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-21-NodeJS-%E4%BA%86%E8%A7%A3-JavaScript-Promise/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -432,7 +524,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/12/NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/12/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-12-NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -446,7 +538,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/12/NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/" class="post-title-link" itemprop="url">NodeJS | JavaScript 异步编程与回调</a>
+            <a href="/2022/02/12/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-12-NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/" class="post-title-link" itemprop="url">NodeJS | JavaScript 异步编程与回调</a>
         </h2>
 
         <div class="post-meta">
@@ -463,7 +555,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-16 23:16:34" itemprop="dateModified" datetime="2022-02-16T23:16:34+08:00">2022-02-16</time>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -498,7 +590,7 @@
 <p>通常，编程语言是同步的，有些会在语言或库中提供管理异步性的方法。默认情况下，C、Java、C#、PHP、Go、Ruby、Swift 和 Python 都是同步的。其中一些语言通过使用线程来处理异步操作（衍生新的线程）。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/02/12/NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/#more" rel="contents">
+              <a class="btn" href="/2022/02/12/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-12-NodeJS-JavaScript-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%9B%9E%E8%B0%83/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -522,7 +614,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/09/NodeJS-%E6%8E%A2%E7%B4%A2-JavaScript-%E5%AE%9A%E6%97%B6%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/09/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-09-NodeJS-%E6%8E%A2%E7%B4%A2-JavaScript-%E5%AE%9A%E6%97%B6%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -536,7 +628,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/09/NodeJS-%E6%8E%A2%E7%B4%A2-JavaScript-%E5%AE%9A%E6%97%B6%E5%99%A8/" class="post-title-link" itemprop="url">NodeJS | 探索 JavaScript 定时器</a>
+            <a href="/2022/02/09/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-09-NodeJS-%E6%8E%A2%E7%B4%A2-JavaScript-%E5%AE%9A%E6%97%B6%E5%99%A8/" class="post-title-link" itemprop="url">NodeJS | 探索 JavaScript 定时器</a>
         </h2>
 
         <div class="post-meta">
@@ -553,7 +645,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-05 13:18:38" itemprop="dateModified" datetime="2022-04-05T13:18:38+08:00">2022-04-05</time>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -633,7 +725,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/09/NodeJS-%E4%BA%86%E8%A7%A3-process-nextTick/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/09/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-09-NodeJS-%E4%BA%86%E8%A7%A3-process-nextTick/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -647,7 +739,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/09/NodeJS-%E4%BA%86%E8%A7%A3-process-nextTick/" class="post-title-link" itemprop="url">NodeJS | 了解 process.nextTick()</a>
+            <a href="/2022/02/09/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-09-NodeJS-%E4%BA%86%E8%A7%A3-process-nextTick/" class="post-title-link" itemprop="url">NodeJS | 了解 process.nextTick()</a>
         </h2>
 
         <div class="post-meta">
@@ -664,7 +756,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-05 13:18:38" itemprop="dateModified" datetime="2022-04-05T13:18:38+08:00">2022-04-05</time>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -720,7 +812,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/08/NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/08/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-08-NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -734,7 +826,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/08/NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">NodeJS | Node.js 事件循环</a>
+            <a href="/2022/02/08/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-08-NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">NodeJS | Node.js 事件循环</a>
         </h2>
 
         <div class="post-meta">
@@ -751,7 +843,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-05 13:18:38" itemprop="dateModified" datetime="2022-04-05T13:18:38+08:00">2022-04-05</time>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -788,7 +880,7 @@
 <p>主要需要关心代码在单个事件循环上运行，并且在编写代码时牢记这一点，以避免阻塞它。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/02/08/NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/#more" rel="contents">
+              <a class="btn" href="/2022/02/08/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-08-NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -812,7 +904,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/05/NodeJS-%E5%AE%89%E8%A3%85-npm-%E5%8C%85%E7%9A%84%E6%97%A7%E7%89%88%E6%9C%AC/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/05/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-05-NodeJS-%E5%AE%89%E8%A3%85-npm-%E5%8C%85%E7%9A%84%E6%97%A7%E7%89%88%E6%9C%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -826,7 +918,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/05/NodeJS-%E5%AE%89%E8%A3%85-npm-%E5%8C%85%E7%9A%84%E6%97%A7%E7%89%88%E6%9C%AC/" class="post-title-link" itemprop="url">NodeJS | 安装 npm 包的旧版本</a>
+            <a href="/2022/02/05/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-05-NodeJS-%E5%AE%89%E8%A3%85-npm-%E5%8C%85%E7%9A%84%E6%97%A7%E7%89%88%E6%9C%AC/" class="post-title-link" itemprop="url">NodeJS | 安装 npm 包的旧版本</a>
         </h2>
 
         <div class="post-meta">
@@ -835,10 +927,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-02-05 20:21:49 / 修改时间：20:29:57" itemprop="dateCreated datePublished" datetime="2022-02-05T20:21:49+08:00">2022-02-05</time>
+              <time title="创建时间：2022-02-05 20:21:49" itemprop="dateCreated datePublished" datetime="2022-02-05T20:21:49+08:00">2022-02-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -898,7 +996,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/04/NodeJS-%E6%9F%A5%E7%9C%8B-npm-%E5%8C%85%E5%AE%89%E8%A3%85%E7%9A%84%E7%89%88%E6%9C%AC/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/04/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-04-NodeJS-%E6%9F%A5%E7%9C%8B-npm-%E5%8C%85%E5%AE%89%E8%A3%85%E7%9A%84%E7%89%88%E6%9C%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -912,7 +1010,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/04/NodeJS-%E6%9F%A5%E7%9C%8B-npm-%E5%8C%85%E5%AE%89%E8%A3%85%E7%9A%84%E7%89%88%E6%9C%AC/" class="post-title-link" itemprop="url">NodeJS | 查看 npm 包安装的版本</a>
+            <a href="/2022/02/04/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-04-NodeJS-%E6%9F%A5%E7%9C%8B-npm-%E5%8C%85%E5%AE%89%E8%A3%85%E7%9A%84%E7%89%88%E6%9C%AC/" class="post-title-link" itemprop="url">NodeJS | 查看 npm 包安装的版本</a>
         </h2>
 
         <div class="post-meta">
@@ -921,10 +1019,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-02-04 20:48:27 / 修改时间：20:56:37" itemprop="dateCreated datePublished" datetime="2022-02-04T20:48:27+08:00">2022-02-04</time>
+              <time title="创建时间：2022-02-04 20:48:27" itemprop="dateCreated datePublished" datetime="2022-02-04T20:48:27+08:00">2022-02-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -988,7 +1092,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/03/NodeJS-package-lock-json-%E6%96%87%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/03/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-03-NodeJS-package-lock-json-%E6%96%87%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1002,7 +1106,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/03/NodeJS-package-lock-json-%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">NodeJS | package-lock.json 文件</a>
+            <a href="/2022/02/03/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-02-03-NodeJS-package-lock-json-%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">NodeJS | package-lock.json 文件</a>
         </h2>
 
         <div class="post-meta">
@@ -1011,10 +1115,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-02-03 13:03:15 / 修改时间：13:47:23" itemprop="dateCreated datePublished" datetime="2022-02-03T13:03:15+08:00">2022-02-03</time>
+              <time title="创建时间：2022-02-03 13:03:15" itemprop="dateCreated datePublished" datetime="2022-02-03T13:03:15+08:00">2022-02-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1097,7 +1207,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/31/NodeJS-package-json-%E6%8C%87%E5%8D%97/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/31/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-31-NodeJS-package-json-%E6%8C%87%E5%8D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1111,7 +1221,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/31/NodeJS-package-json-%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">NodeJS | package.json 指南</a>
+            <a href="/2022/01/31/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-31-NodeJS-package-json-%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">NodeJS | package.json 指南</a>
         </h2>
 
         <div class="post-meta">
@@ -1128,7 +1238,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-02 22:04:34" itemprop="dateModified" datetime="2022-02-02T22:04:34+08:00">2022-02-02</time>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1339,7 +1449,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/31/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E6%88%96%E6%89%A7%E8%A1%8C-npm-%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/31/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-31-NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E6%88%96%E6%89%A7%E8%A1%8C-npm-%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1353,7 +1463,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/31/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E6%88%96%E6%89%A7%E8%A1%8C-npm-%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85/" class="post-title-link" itemprop="url">NodeJS | 如何使用或执行 npm 安装的软件包</a>
+            <a href="/2022/01/31/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-31-NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E6%88%96%E6%89%A7%E8%A1%8C-npm-%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85/" class="post-title-link" itemprop="url">NodeJS | 如何使用或执行 npm 安装的软件包</a>
         </h2>
 
         <div class="post-meta">
@@ -1362,10 +1472,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-31 08:39:20 / 修改时间：22:00:54" itemprop="dateCreated datePublished" datetime="2022-01-31T08:39:20+08:00">2022-01-31</time>
+              <time title="创建时间：2022-01-31 08:39:20" itemprop="dateCreated datePublished" datetime="2022-01-31T08:39:20+08:00">2022-01-31</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1438,7 +1554,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/31/NodeJS-npm-%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%AE%89%E8%A3%85%E5%88%B0%E5%93%AA%E9%87%8C/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/31/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-31-NodeJS-npm-%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%AE%89%E8%A3%85%E5%88%B0%E5%93%AA%E9%87%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1452,7 +1568,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/31/NodeJS-npm-%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%AE%89%E8%A3%85%E5%88%B0%E5%93%AA%E9%87%8C/" class="post-title-link" itemprop="url">NodeJS | npm 软件包安装到哪里</a>
+            <a href="/2022/01/31/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-31-NodeJS-npm-%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%AE%89%E8%A3%85%E5%88%B0%E5%93%AA%E9%87%8C/" class="post-title-link" itemprop="url">NodeJS | npm 软件包安装到哪里</a>
         </h2>
 
         <div class="post-meta">
@@ -1461,10 +1577,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-31 08:17:58 / 修改时间：08:37:35" itemprop="dateCreated datePublished" datetime="2022-01-31T08:17:58+08:00">2022-01-31</time>
+              <time title="创建时间：2022-01-31 08:17:58" itemprop="dateCreated datePublished" datetime="2022-01-31T08:17:58+08:00">2022-01-31</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1528,7 +1650,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/NodeJS-npm-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-30-NodeJS-npm-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1542,7 +1664,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/30/NodeJS-npm-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">NodeJS | npm 包管理器简介</a>
+            <a href="/2022/01/30/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-30-NodeJS-npm-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">NodeJS | npm 包管理器简介</a>
         </h2>
 
         <div class="post-meta">
@@ -1551,10 +1673,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-30 14:00:03 / 修改时间：20:40:56" itemprop="dateCreated datePublished" datetime="2022-01-30T14:00:03+08:00">2022-01-30</time>
+              <time title="创建时间：2022-01-30 14:00:03" itemprop="dateCreated datePublished" datetime="2022-01-30T14:00:03+08:00">2022-01-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1643,7 +1771,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/NodeJS-%E4%BD%BF%E7%94%A8-exports-%E4%BB%8E-Node-js-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%85%AC%E5%BC%80%E5%8A%9F%E8%83%BD/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-30-NodeJS-%E4%BD%BF%E7%94%A8-exports-%E4%BB%8E-Node-js-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%85%AC%E5%BC%80%E5%8A%9F%E8%83%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1657,7 +1785,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/30/NodeJS-%E4%BD%BF%E7%94%A8-exports-%E4%BB%8E-Node-js-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%85%AC%E5%BC%80%E5%8A%9F%E8%83%BD/" class="post-title-link" itemprop="url">NodeJS | 使用 exports 从 Node.js 文件中公开功能</a>
+            <a href="/2022/01/30/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-30-NodeJS-%E4%BD%BF%E7%94%A8-exports-%E4%BB%8E-Node-js-%E6%96%87%E4%BB%B6%E4%B8%AD%E5%85%AC%E5%BC%80%E5%8A%9F%E8%83%BD/" class="post-title-link" itemprop="url">NodeJS | 使用 exports 从 Node.js 文件中公开功能</a>
         </h2>
 
         <div class="post-meta">
@@ -1666,10 +1794,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-30 13:27:22 / 修改时间：13:44:38" itemprop="dateCreated datePublished" datetime="2022-01-30T13:27:22+08:00">2022-01-30</time>
+              <time title="创建时间：2022-01-30 13:27:22" itemprop="dateCreated datePublished" datetime="2022-01-30T13:27:22+08:00">2022-01-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1742,7 +1876,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/NodeJS-%E5%9C%A8-Node-js-%E4%B8%AD%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E8%BE%93%E5%85%A5/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-30-NodeJS-%E5%9C%A8-Node-js-%E4%B8%AD%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E8%BE%93%E5%85%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1756,7 +1890,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/30/NodeJS-%E5%9C%A8-Node-js-%E4%B8%AD%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E8%BE%93%E5%85%A5/" class="post-title-link" itemprop="url">NodeJS | 在 Node.js 中从命令行接收输入</a>
+            <a href="/2022/01/30/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-30-NodeJS-%E5%9C%A8-Node-js-%E4%B8%AD%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E8%BE%93%E5%85%A5/" class="post-title-link" itemprop="url">NodeJS | 在 Node.js 中从命令行接收输入</a>
         </h2>
 
         <div class="post-meta">
@@ -1765,10 +1899,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-30 12:45:47 / 修改时间：13:25:49" itemprop="dateCreated datePublished" datetime="2022-01-30T12:45:47+08:00">2022-01-30</time>
+              <time title="创建时间：2022-01-30 12:45:47" itemprop="dateCreated datePublished" datetime="2022-01-30T12:45:47+08:00">2022-01-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1829,7 +1969,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/27/NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E8%BE%93%E5%87%BA%E5%88%B0%E5%91%BD%E4%BB%A4%E8%A1%8C/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/27/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-27-NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E8%BE%93%E5%87%BA%E5%88%B0%E5%91%BD%E4%BB%A4%E8%A1%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1843,7 +1983,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/27/NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E8%BE%93%E5%87%BA%E5%88%B0%E5%91%BD%E4%BB%A4%E8%A1%8C/" class="post-title-link" itemprop="url">NodeJS | 使用 Node.js 输出到命令行</a>
+            <a href="/2022/01/27/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-27-NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E8%BE%93%E5%87%BA%E5%88%B0%E5%91%BD%E4%BB%A4%E8%A1%8C/" class="post-title-link" itemprop="url">NodeJS | 使用 Node.js 输出到命令行</a>
         </h2>
 
         <div class="post-meta">
@@ -1860,7 +2000,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-05 13:18:38" itemprop="dateModified" datetime="2022-04-05T13:18:38+08:00">2022-04-05</time>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1898,7 +2038,7 @@
 <p>也可以通过传入变量和格式说明符来格式化用语。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/01/27/NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E8%BE%93%E5%87%BA%E5%88%B0%E5%91%BD%E4%BB%A4%E8%A1%8C/#more" rel="contents">
+              <a class="btn" href="/2022/01/27/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-27-NodeJS-%E4%BD%BF%E7%94%A8-Node-js-%E8%BE%93%E5%87%BA%E5%88%B0%E5%91%BD%E4%BB%A4%E8%A1%8C/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1922,7 +2062,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/26/NodeJS-Node-js-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/26/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-26-NodeJS-Node-js-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1936,7 +2076,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/26/NodeJS-Node-js-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">NodeJS | Node.js 从命令行接收参数</a>
+            <a href="/2022/01/26/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-26-NodeJS-Node-js-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">NodeJS | Node.js 从命令行接收参数</a>
         </h2>
 
         <div class="post-meta">
@@ -1953,7 +2093,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-05 13:18:38" itemprop="dateModified" datetime="2022-04-05T13:18:38+08:00">2022-04-05</time>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1998,7 +2138,7 @@
 <p>所有其他参数从第三个位置开始。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/01/26/NodeJS-Node-js-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0/#more" rel="contents">
+              <a class="btn" href="/2022/01/26/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-26-NodeJS-Node-js-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2022,7 +2162,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/25/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-25-NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -2036,7 +2176,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/" class="post-title-link" itemprop="url">NodeJS | 如何使用 Node.js REPL</a>
+            <a href="/2022/01/25/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-25-NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/" class="post-title-link" itemprop="url">NodeJS | 如何使用 Node.js REPL</a>
         </h2>
 
         <div class="post-meta">
@@ -2045,10 +2185,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-25 22:57:50 / 修改时间：23:41:23" itemprop="dateCreated datePublished" datetime="2022-01-25T22:57:50+08:00">2022-01-25</time>
+              <time title="创建时间：2022-01-25 22:57:50" itemprop="dateCreated datePublished" datetime="2022-01-25T22:57:50+08:00">2022-01-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -2085,92 +2231,12 @@
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/#more" rel="contents">
+              <a class="btn" href="/2022/01/25/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-01-25-NodeJS-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Node-js-REPL/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BB%8E-Node-js-%E8%AF%BB%E5%8F%96%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Somebody">
-      <meta itemprop="description" content="My vegetable has exploded!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="某人写字的地方">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/25/NodeJS-%E5%A6%82%E4%BD%95%E4%BB%8E-Node-js-%E8%AF%BB%E5%8F%96%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="post-title-link" itemprop="url">NodeJS | 如何从 Node.js 读取环境变量</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-25 22:49:24 / 修改时间：22:56:41" itemprop="dateCreated datePublished" datetime="2022-01-25T22:49:24+08:00">2022-01-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Node.js 的 <code>process</code> 核心模块提供了 <code>env</code> 属性，该属性承载了在启动进程时设置的所有环境变量。</p>
-<p>这是访问 NODE_ENV 环境变量的示例，该环境变量默认情况下被设置为 <code>development</code> 。</p>
-<blockquote>
-<p>注意 <code>process</code> 不需要 “require”,它是自动可用的</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.env.NODE_ENV <span class="comment">// &#x27;development&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>在脚本运行之前将其设置为 “production”,则可告诉 Node.js 这是生产环境。</p>
-<p>可以用相同的方式访问设置的任何自定义的环境变量</p>
-
       
     </div>
 
@@ -2254,7 +2320,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2267,7 +2333,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2294,7 +2360,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

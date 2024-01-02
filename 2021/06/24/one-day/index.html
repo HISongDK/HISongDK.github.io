@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="浮生一日我现在写的这点东西完全和初衷不相干 毕竟技术博客不是那么好些的 总结也是无米之炊,不太且实际 只能每天就零碎的的记几句废话 今天首先是(其实是这两天)发现 &lt;&lt;霍比特人:意外之旅&gt;&gt; 还挺好看 本来看完精灵宝钻和魔戒三部曲没什么感觉都不打算继续看了 可惜无聊还是翻开看了看,听惊喜的 其次,我真是佩服我们这之前这些写代码的耐心 就是我完全 c v 都写得不耐烦了 更别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="one day">
+<meta property="og:url" content="http://example.com/2021/06/24/one-day/index.html">
+<meta property="og:site_name" content="某人写字的地方">
+<meta property="og:description" content="浮生一日我现在写的这点东西完全和初衷不相干 毕竟技术博客不是那么好些的 总结也是无米之炊,不太且实际 只能每天就零碎的的记几句废话 今天首先是(其实是这两天)发现 &lt;&lt;霍比特人:意外之旅&gt;&gt; 还挺好看 本来看完精灵宝钻和魔戒三部曲没什么感觉都不打算继续看了 可惜无聊还是翻开看了看,听惊喜的 其次,我真是佩服我们这之前这些写代码的耐心 就是我完全 c v 都写得不耐烦了 更别">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-24T15:44:04.000Z">
+<meta property="article:modified_time" content="2021-11-05T15:56:23.968Z">
+<meta property="article:author" content="Somebody">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/06/24/one-day/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>one day | 某人写字的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">某人写字的地方</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-sitemap fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/24/one-day/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          one day
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-24 23:44:04" itemprop="dateCreated datePublished" datetime="2021-06-24T23:44:04+08:00">2021-06-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-05 23:56:23" itemprop="dateModified" datetime="2021-11-05T23:56:23+08:00">2021-11-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="浮生一日"><a href="#浮生一日" class="headerlink" title="浮生一日"></a>浮生一日</h2><p>我现在写的这点东西完全和初衷不相干</p>
+<p>毕竟技术博客不是那么好些的</p>
+<p>总结也是无米之炊,不太且实际</p>
+<p>只能每天就零碎的的记几句废话</p>
+<p>今天首先是(其实是这两天)发现 &lt;&lt;霍比特人:意外之旅&gt;&gt; 还挺好看</p>
+<p>本来看完精灵宝钻和魔戒三部曲没什么感觉都不打算继续看了</p>
+<p>可惜无聊还是翻开看了看,听惊喜的</p>
+<p>其次,我真是佩服我们这之前这些写代码的耐心</p>
+<p>就是我完全 c v 都写得不耐烦了</p>
+<p>更别说让我自己写了,哎,牛逼</p>
+<p>本来不觉得怎么样,后来越看越觉得这份毅力就望尘莫及</p>
+<span id="more"></span>
+
+<h3 id="一点莫名其妙"><a href="#一点莫名其妙" class="headerlink" title="一点莫名其妙"></a>一点莫名其妙</h3><p>就是今天这篇文章打不开</p>
+<p>本地服务运行起来,访问不了,不清楚</p>
+<h3 id="眼高手低"><a href="#眼高手低" class="headerlink" title="眼高手低"></a>眼高手低</h3><p>还有一点有必要提及:</p>
+<p>一是我确实挺像学点东西</p>
+<p>但是又觉得一点一点学来感觉毫无用处且不会有进展</p>
+<p>就一点都不愿意去慢慢寻找方向</p>
+<p>有点像那句深怕自己并非珠玉而不敢刻苦雕琢</p>
+<p>但又不全像,没有这种对自己的认知看法</p>
+<p>只是不愿做徒劳无功或者看似徒劳无功的事</p>
+<p>以至于让自己陷于真的无所事事,徒劳无功</p>
+<h3 id="竟然报错"><a href="#竟然报错" class="headerlink" title="竟然报错"></a>竟然报错</h3><p>竟然报错,生成不了博客,不管了,先提代码睡觉</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/23/%E5%89%8D%E8%BF%9B/" rel="prev" title="前进">
+      <i class="fa fa-chevron-left"></i> 前进
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/27/%E8%8F%9C%E4%B9%9F%E6%98%AF%E6%B2%A1%E6%9C%89%E5%8A%9E%E6%B3%95/" rel="next" title="菜也是没有办法">
+      菜也是没有办法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%AE%E7%94%9F%E4%B8%80%E6%97%A5"><span class="nav-number">1.</span> <span class="nav-text">浮生一日</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%82%B9%E8%8E%AB%E5%90%8D%E5%85%B6%E5%A6%99"><span class="nav-number">1.1.</span> <span class="nav-text">一点莫名其妙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9C%BC%E9%AB%98%E6%89%8B%E4%BD%8E"><span class="nav-number">1.2.</span> <span class="nav-text">眼高手低</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%9F%E7%84%B6%E6%8A%A5%E9%94%99"><span class="nav-number">1.3.</span> <span class="nav-text">竟然报错</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Somebody</p>
+  <div class="site-description" itemprop="description">My vegetable has exploded!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Somebody</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

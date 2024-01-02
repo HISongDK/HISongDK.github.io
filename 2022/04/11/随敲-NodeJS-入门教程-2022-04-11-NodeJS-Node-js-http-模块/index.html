@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="HTTP 核心模块是 Node.js 网络的关键模块。 可以使用以下代码： 1const http &#x3D; require(&amp;#x27;http&amp;#x27;)  该模块提供了一些属性、方法、以及类。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NodeJS | Node.js http 模块">
+<meta property="og:url" content="http://example.com/2022/04/11/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-04-11-NodeJS-Node-js-http-%E6%A8%A1%E5%9D%97/index.html">
+<meta property="og:site_name" content="某人写字的地方">
+<meta property="og:description" content="HTTP 核心模块是 Node.js 网络的关键模块。 可以使用以下代码： 1const http &#x3D; require(&amp;#x27;http&amp;#x27;)  该模块提供了一些属性、方法、以及类。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-11T15:27:09.000Z">
+<meta property="article:modified_time" content="2024-01-02T11:55:45.964Z">
+<meta property="article:author" content="Somebody">
+<meta property="article:tag" content="NodeJS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/04/11/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-04-11-NodeJS-Node-js-http-%E6%A8%A1%E5%9D%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NodeJS | Node.js http 模块 | 某人写字的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">某人写字的地方</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-sitemap fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/11/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-04-11-NodeJS-Node-js-http-%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Somebody">
+      <meta itemprop="description" content="My vegetable has exploded!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="某人写字的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NodeJS | Node.js http 模块
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-11 23:27:09" itemprop="dateCreated datePublished" datetime="2022-04-11T23:27:09+08:00">2022-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 19:55:45" itemprop="dateModified" datetime="2024-01-02T19:55:45+08:00">2024-01-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/" itemprop="url" rel="index"><span itemprop="name">随敲</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E6%95%B2/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>HTTP 核心模块是 Node.js 网络的关键模块。</p>
+<p>可以使用以下代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>该模块提供了一些属性、方法、以及类。</p>
+<span id="more"></span>
+
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><h3 id="http-METHODS"><a href="#http-METHODS" class="headerlink" title="http.METHODS"></a><code>http.METHODS</code></h3><p>此属性列出了所有支持的 HTTP 方法</p>
+<h3 id="http-STATUS-CODES"><a href="#http-STATUS-CODES" class="headerlink" title="http.STATUS_CODES"></a><code>http.STATUS_CODES</code></h3><p>此属性列出了所有 http 状态码及其描述</p>
+<h3 id="http-globalAgent"><a href="#http-globalAgent" class="headerlink" title="http.globalAgent"></a><code>http.globalAgent</code></h3><p>指向 Agent 对象的全局实例，该实例是 <code>http.Agent</code> 类实例。</p>
+<p>用于管理 HTTP 客户端连接的持久性和服用，它是 Node.js HTTP 网络的关键组件。</p>
+<p>稍后会在 <code>http.Agent</code> 类的说明中提供更多的描述。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="http-createServer"><a href="#http-createServer" class="headerlink" title="http.createServer()"></a><code>http.createServer()</code></h3><p>返回 <code>http.Server</code> 类的新实例。</p>
+<p>用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 使用此回调处理每个单独的请求。</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="http-request"><a href="#http-request" class="headerlink" title="http.request()"></a><code>http.request()</code></h3><p>发送 HTTP 请求到服务器，并创建 <code>http.ClientRequest</code> 类的实例。</p>
+<h3 id="http-get"><a href="#http-get" class="headerlink" title="http.get()"></a><code>http.get()</code></h3><p>类似于 <code>http.request()</code> ,但会自动设置 HTTP 方法为 GET，并自动调用 <code>req.end()</code></p>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>HTTP 模块提供了五个类：</p>
+<ul>
+<li>  <code>http.Agent</code></li>
+<li>  <code>http.ClientRequest</code></li>
+<li>  <code>http.Server</code></li>
+<li>  <code>http.ServerResponse</code></li>
+<li>  <code>http.IncomingMessage</code></li>
+</ul>
+<h3 id="http-Agent"><a href="#http-Agent" class="headerlink" title="http.Agent"></a><code>http.Agent</code></h3><p>Node.js 会创建 http.Agent 类的全局实例，以管理 HTTP 客户端的持久性和服用，这是 Node.js HTTP 网络的关键组成部分。</p>
+<p>该对象会确保对服务器的每个请求进行排队并且当个 socket 被复用。</p>
+<p>他还维护一个 socket 池。出于性能原因，这是关键。</p>
+<h3 id="http-ClientRequest"><a href="#http-ClientRequest" class="headerlink" title="http.ClientRequest"></a><code>http.ClientRequest</code></h3><p>当 <code>http.request()</code> 或 <code>http.on()</code> 被调用时，会创建 <code>http.ClientRequest</code> 对象。</p>
+<p>当响应被接收时，则会使用响应来调用 <code>response</code> 时间，参数为 <code>http.IncomingMessage</code> 实例</p>
+<p>返回的响应数据，可以通过以下两种方式读取：</p>
+<ul>
+<li>  可以调用 <code>response.read()</code> 方法</li>
+<li>  在 <code>response</code> 事件处理函数中，可以为 <code>data</code> 事件设置事件监听器，以便可以监听流入的数据。</li>
+</ul>
+<h3 id="http-Server"><a href="#http-Server" class="headerlink" title="http.Server"></a><code>http.Server</code></h3><p>当使用 <code>http.createServer()</code> 创建新的服务器时，通常会实例化并返回此类。</p>
+<p>拥有服务器对象后，就可以访问其方法：</p>
+<ul>
+<li>  <code>close()</code> 停止服务器，不再接收新的连接</li>
+<li>  <code>listen()</code> 启动 HTTP 服务器并监听连接。</li>
+</ul>
+<h3 id="http-ServerResponse"><a href="#http-ServerResponse" class="headerlink" title="http.ServerResponse"></a><code>http.ServerResponse</code></h3><p>由 <code>http.Server</code> 创建，并作为第二个参数传给他触发的 <code>request</code> 事件。</p>
+<p>代码中通常用作 <code>res</code> :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// res 是一个 http.ServerResponse 对象</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在事件处理函数中总是会调用的方法是 <code>res.end()</code> ,它会关闭响应，当消息完成时则服务器可以将其发送给客户端。必须在每个响应上调用它。</p>
+<p>以下这些方法用于与 HTTP 消息头进行交互：</p>
+<ul>
+<li>  <code>getHeaderNames</code> 获取已设置的 HTTP 消息头名称列表</li>
+<li>  <code>getHeaders()</code> 获取已设置的 HTTP 消息头的副本</li>
+<li>  <code>setHeader(&#39;headername&#39;, &#39;value&#39;)</code> 设置 HTTP 消息头的值</li>
+<li>  <code>getHeader(&#39;headername&#39;)</code> 获取已设置的 HTTP 消息头</li>
+<li>  <code>removeHeader(&#39;headername&#39;)</code> 删除已设置的 HTTP 消息头</li>
+<li>  <code>hasHeader(&#39;headername&#39;)</code> 如果已设置该消息头，返回 true</li>
+<li>  <code>headersSent()</code> 如果消息头已被发送给客户端，返回 true</li>
+</ul>
+<p>在处理消息头之后，可以通过调用 <code>response.writeHead()</code> （该方法接受 statusCode 作为第一个参数，可选的状态消息和消息头对象）将他们发送给客户端。</p>
+<p>若要在响应正文中发送数据给客户端，则使用 <code>write()</code>。它会发送缓冲的数据到 HTTP 响应流。</p>
+<p>如果消息头还未被发送，则使用 <code>response.writeHead()</code> 会先发送消息头，其中包含在请求中已被设置的状态码信息，可以通过设置 <code>statusCode</code> 和 <code>statusMessage</code> 属性的值进行编辑：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">response.statusCode = <span class="number">500</span></span><br><span class="line">response.statusMessage = <span class="string">&#x27;内部服务器错误&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="http-IncomingMessage"><a href="#http-IncomingMessage" class="headerlink" title="http.IncomingMessage"></a><code>http.IncomingMessage</code></h3><p><code>http.IncomingMessage</code> 对象可以通过以下方式创建：</p>
+<ul>
+<li>  <code>http.Server</code>,当监听 <code>request</code> 事件时</li>
+<li>  <code>http.ClientRequest</code>, 当监听 <code>response</code> 事件时</li>
+</ul>
+<p>它可以用来访问响应：</p>
+<ul>
+<li>  使用 <code>statusCode</code> 和 <code>statusMessage</code> 方法来获取访问状态</li>
+<li>  使用 <code>headers</code> 方法或者 <code>rowHeaders</code> 来访问消息头</li>
+<li>  使用 <code>httpVersion</code> 方法来访问 HTTP 方法。</li>
+<li>  使用 <code>method</code> 方法来访问 HTTP 方法</li>
+<li>  使用 <code>url</code> 方法来访问 URL</li>
+<li>  使用 <code>socket</code> 方法来访问底层的 socket<!-- 感觉不对劲，上面的方法应该时属性吧 --></li>
+</ul>
+<p><code>http.IncomingMessage</code> 实现了可读流接口，因此数据可以使用流访问。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NodeJS/" rel="tag"># NodeJS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/10/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-04-10-NodeJS-Node-js-%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9D%97/" rel="prev" title="NodeJS | Node.js 事件模块">
+      <i class="fa fa-chevron-left"></i> NodeJS | Node.js 事件模块
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/13/%E9%9A%8F%E6%95%B2-NodeJS-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-2022-04-13-NodeJS-Node-js-Buffer/" rel="next" title="NodeJS | Node.js Buffer">
+      NodeJS | Node.js Buffer <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#http-METHODS"><span class="nav-number">1.1.</span> <span class="nav-text">http.METHODS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-STATUS-CODES"><span class="nav-number">1.2.</span> <span class="nav-text">http.STATUS_CODES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-globalAgent"><span class="nav-number">1.3.</span> <span class="nav-text">http.globalAgent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#http-createServer"><span class="nav-number">2.1.</span> <span class="nav-text">http.createServer()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-request"><span class="nav-number">2.2.</span> <span class="nav-text">http.request()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-get"><span class="nav-number">2.3.</span> <span class="nav-text">http.get()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#http-Agent"><span class="nav-number">3.1.</span> <span class="nav-text">http.Agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-ClientRequest"><span class="nav-number">3.2.</span> <span class="nav-text">http.ClientRequest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-Server"><span class="nav-number">3.3.</span> <span class="nav-text">http.Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-ServerResponse"><span class="nav-number">3.4.</span> <span class="nav-text">http.ServerResponse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-IncomingMessage"><span class="nav-number">3.5.</span> <span class="nav-text">http.IncomingMessage</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Somebody</p>
+  <div class="site-description" itemprop="description">My vegetable has exploded!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Somebody</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
