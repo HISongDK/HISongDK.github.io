@@ -114,6 +114,28 @@ submit 触发的 action ，可以从 action 函数 `props.request.formData` 获�
 
 感觉操作还是有点奇怪啊，确实是有点理解不了。这个是用 `useSubmit` hook 获取 `submit` 方法，在 `input` onChange 的时候调用，将 `e.currentTarget.form` 传入 submit 方法。这就在 `input` 输入变化的时候就会自动触发 `url search` 变化。然后又会自动触发 `loader` 获取 query 参数查询
 
+`submit` 方法第二个配置项参数传入 `{replace: boolean}` 可以控制 submit 触发 url 变化的方式。
+
 #### navigation
 
 看后面的操作这个 `useNavigation` 返回的 `navigation` 是个在导航发生时才存在的动作。平常是空的，获取不到啥属性。就切换的时候可以获取 `state` 、`location` 等等，动作完成好像就没了。唉，也还是不太理解，觉得奇怪
+
+#### 无需导航的变动触发 action 、loader
+
+还是表单事件触发 `action` ，不同的是，表单组件使用 `useFetcher` 返回的 `fetcher` 的 `fetcher.Form` 包裹
+
+`fetcher` 上还挂载了 `formData` ，可以在调用接口的同时展示变动后的 UI
+
+#### 无路径路由，pathless routes
+
+就是没有 `path` 属性的路由配置项，应该是可以随意嵌套，相当于可以给这个无路径的路由配置指定 `errorElement` ，将其他的路由项作为他的 `children` 路由子项配置，子路由中出现的报错会显示该无路径路由的 `errorElement`
+
+报错内容就会被这个子级路由展示区域捕获展示。
+
+#### JSX Routes
+
+<!-- 应该是没有必要了，何必呢 -->
+
+是使用 jsx `Route` 组件，配置路由，将上述路由配置对象中的属性放到 `Route` 组件上就可以。
+
+前提是将对应 jsx 内容传入 `createRoutesFromElements` 方法
