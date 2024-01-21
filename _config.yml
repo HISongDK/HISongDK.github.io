@@ -37,7 +37,8 @@ i18n_dir: :lang
 # new_post_name: 随敲/:year-:month-:day-:title.md
 # new_post_name: 随敲/JavaScript面向对象编程指南/:year-:month-:day-:title.md # File name of new posts
 # new_post_name: 随敲/React 文档/:year-:month-:day-:title.md # File name of new posts
-new_post_name: React 重学/:year-:month-:day-:title.md # File name of new posts
+# new_post_name: React 重学/:year-:month-:day-:title.md # File name of new posts
+new_post_name: 配置/:year-:month-:day-:title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link:
